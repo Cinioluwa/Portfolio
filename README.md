@@ -3,7 +3,7 @@
 Welcome to my personal portfolio! Here, I showcase my skills and projects.
 
 ## Live Demo 🚀
-[Visit Portfolio](https://Cinioluwa.github.io)
+[Visit Portfolio](https://cinioluwa.github.io)
 
 ## Features
 - 🌙 Dark Mode Toggle
