@@ -6,7 +6,6 @@ Welcome to my personal portfolio! Here, I showcase my skills and projects.
 [Visit Portfolio](https://cinioluwa.github.io/Portfolio)
 
 ## Features
-- 🌙 Dark Mode Toggle
 - 💻 Responsive Design
 - 🎨 Smooth Animations
 
