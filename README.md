@@ -15,7 +15,7 @@ Welcome to my personal portfolio! Here, I showcase my skills and projects.
 - JavaScript
 
 ## Screenshot 📸
-![Portfolio Preview](screenshot.jpg)
+[Portfolio Preview](screenshot.jpg)
 
 ## About Me ✨
 I'm Covenant, a Web Developer, Data Analyst, and Cybersecurity Enthusiast. I build solutions that solve real-world problems.
