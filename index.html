@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to my Portfolio!</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/23ad9f7721.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id='header'>
+        <div class="container">
+            <nav>
+                <img src="images/logo.png" class="logo">
+                <ul id="sidemenu">
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <i class="fa-solid fa-circle-xmark" onclick="closemenu()"></i>
+                </ul>
+                <i class="fa-solid fa-bars" onclick="openmenu()"></i>
+            </nav>
+            <div class="header-text">
+                <p>Software Developer</p>
+                <h1>Hi, I'm <span>Covenant</span> <br>Adeogo From Nigeria</h1>
+            </div>
+        </div>
+    </div>
+    <!--About-->
+    <div id="about" class="fade-in">
+        <div class="container">
+            <div class="row">
+                <div class="about-col-1">
+                    <img src="images/user.png" alt="">
+                </div>
+                <div class="about-col-2">
+                    <h1 class="sub-title">About Me</h1>
+                    <p>I'm a forward-thinking Computer Engineering student at Covenant University, passionate about using technology to tackle real-world challenges. I see every problem as an opportunity to innovate—whether that's streamlining systems, enhancing digital security, or crafting intuitive user experiences. I thrive in collaborative environments where great ideas spark transformative solutions. Ready to build the future together? Let's connect and turn vision into reality!</p>
+                <div>
+                    
+                </div>
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Work Experience</p>
+                        <p class="tab-links" onclick="opentab('education')">Education</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                          <li>
+                            <span>Software Development</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 40%;"></span>
+                            </div>
+                          </li>
+                          <li>
+                            <span>Front-End Development</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 65%;"></span>
+                            </div>
+                          </li>
+                          <li>
+                            <span>UI/UX Design</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 85%;"></span>
+                            </div>
+                          </li>
+                          <li>
+                            <span>Git</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 70%;"></span>
+                            </div>
+                          </li>
+                          <li>
+                            <span>Networking Fundamentals</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 60%;"></span>
+                            </div>
+                          </li>
+                          <li>
+                            <span>Graphic Design</span>
+                            <div class="meter">
+                              <span class="meter-fill" style="width: 75%;"></span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>Aug 2024 - Sep 2024</span><br>Developed a word-game application using Python's pygame, optimized performance, and led version control with Git.</li>
+                            <li><span>May 2023 - May 2024</span><br>Designed and optimized a landing page using Hococos website builder, enhancing performance and mobile responsiveness.</li>
+                            <li><span>October 2024 - January 2025</span><br>Researched and designed UI concepts for an NFC-based transit payment system in it's early development phase.</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2022-2027</span><br>Computer Engineering Major at Covenant University, Ota.</li>
+                            <li><span>2016-2022</span><br>Redeemer's University Staff School, Ede</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--services-->
+    <div id="services"  class="fade-in">
+        <div class="container">
+            <h1 class="sub-title">My Services</h1>
+            <div class="services-list">
+                <div>
+                    <i class="fa-solid fa-code"></i>
+                    <h2 class="typewriter">Web Development</h2>
+                    <p class="serv-desc">Building responsive and interactive web interfaces using HTML, CSS, and JavaScript.</p>
+                </div>
+                <div>
+                    <i class="fa-brands fa-app-store"></i>
+                    <h2 class="typewriter">Software Development</h2>
+                    <p class="serv-desc">Designing, building, and optimizing applications using Python and Flutter.</p>
+                </div>
+                <div>
+                    <i class="fa-brands fa-figma"></i>
+                    <h2 class="typewriter">UI/UX Design</h2>
+                    <p class="serv-desc">Designing intuitive user interfaces and enhancing user experiences using Figma</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <h2 class="typewriter">Graphic Design</h2>
+                    <p class="serv-desc">Creating visually engaging designs using design tools like Canva and Adobe Photoshop.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--portfolio-->
+    <div id="portfolio"  class="fade-in">
+        <div class="container">
+            <h1 class="sub-title">My Work</h1>
+            <div class="work-list">
+                <div class="work">
+                    <img src="images/work-1.jpg" alt="">
+                    <div class="layer">
+                        <h3>Pion Website</h3>
+                        <p> Pion focuses on utilizing renewable energy by producing high-energy supercapacitors called Power Packs. Check them out!</p>
+                        <a href="https://boyd7818.hocoos.com/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/work-2.jpg" alt="">
+                    <div class="layer">
+                        <h3>Pict-o-Word App</h3>
+                        <p>A word-guessing game built entirely with Pygame!</p>
+                        <a href="https://github.com/Femitun/pict-o-word" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/work-3.jpg" alt="">
+                    <div class="layer">
+                        <h3>Synthwave Piano Web App</h3>
+                        <p>An interactive musical instrument simulator. It lets users play notes from a piano through simple web interactions</p>
+                        <a href="https://cinioluwa.github.io/piano/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/work-4.jpg" alt="">
+                    <div class="layer">
+                        <h3>Web-Ollama</h3>
+                        <p>Interact with your locally-hosted LLM on a web interface!</p>
+                        <a href="https://github.com/Cinioluwa/web-ollama" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="https://github.com/Cinioluwa" class="btn"  target="_blank">See more</a>
+            </div>
+        </div>
+    </div>
+
+    <!--contact-->
+    <div id="contact"  class="fade-in">
+        <div class="container">
+            <div class="row">
+                <div class="contact-left">
+                    <h1 class="sub-title">Contact Me</h1>
+                    <p><i class="fa-solid fa-envelope"></i>covkey13@gmail.com</p>
+                    <p><i class="fa-solid fa-phone"></i>09129408866</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/ct.inioluwa15/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://x.com/c_inioluwa"><i class="fa-brands fa-twitter-square"></i></a>
+                        <a href=" https://linkedin.com/in/covenant-a-b87988260/"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com/Cinioluwa"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                    <a href="Resume.pdf" download class="btn btn2">Checkout My Resume🚀</a>
+                </div>
+                <div class="contact-right">
+                    <form name="submit-to-google-sheet">
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="email" name="Email" placeholder="Your Email" required>
+                        <textarea name="Message" rows="7" placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn btn2" id="confettiBtn">Send</button>
+                    </form>
+                    <span id="msg"></span>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright © 2025. Made by CIA</p>
+        </div>
+    </div> 
+  <div class="custom-cursor" id="customCursor"></div>
+</body>
+</html>
