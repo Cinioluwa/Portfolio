@@ -50,6 +50,45 @@ function opentab(tabname) {
           ripple.remove();
         });
       });
+      const themeToggle = document.getElementById('themeToggle');
+      const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+      const aboutImage = document.getElementById('aboutImage');
+      
+      // Ensure dark mode is active by default
+      document.body.classList.remove('light-mode');
+      themeToggle.textContent = '☀️';
+      mobileThemeToggle.textContent = '☀️';
+      
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('light-mode')) {
+          // Switch to dark mode
+          document.body.classList.remove('light-mode');
+          themeToggle.textContent = '☀️';
+          aboutImage.src = aboutImage.getAttribute('data-dark');
+        } else {
+          // Switch to light mode
+          document.body.classList.add('light-mode');
+          themeToggle.textContent = '🌙';
+          aboutImage.src = aboutImage.getAttribute('data-light');
+        }
+
+        
+      });
+
+      mobileThemeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('light-mode')) {
+          // Switch back to dark mode
+          document.body.classList.remove('light-mode');
+          mobileThemeToggle.textContent = '☀️';
+        } else {
+          // Switch to light mode
+          document.body.classList.add('light-mode');
+          mobileThemeToggle.textContent = '🌙';
+        }
+        
+        
+      });
+      
     });
   
     // ----- Form Submission with Confetti -----
@@ -125,7 +164,26 @@ function opentab(tabname) {
         });
       });
     }
-  
+
+
+    // Scroll to Top Btn
+
+    // Show the button when user scrolls down 200px
+window.addEventListener('scroll', () => {
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollTopBtn.style.display = "block";
+  } else {
+    scrollTopBtn.style.display = "none";
+  }
+});
+
+// Scroll to top smoothly when button is clicked
+document.getElementById('scrollTopBtn').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
     // ----- Particles.js Initialization -----
     particlesJS("header", {
       "particles": {

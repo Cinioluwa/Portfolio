@@ -8,14 +8,51 @@ html{
     scroll-behavior: smooth;
 }
 
-body{
-    background-color: #080808;
-    color: #fff;
-}
+:root {
+    --bg-color: #080808;
+    --text-color: #fff;
+    --accent-color: #ff004f;
+    --container-bg: #262626;
+    --header-bg: #080808; /* For your header if you want to switch it too */
+    --footer-color: #262626;
+    --background-image: url('images/me.png');
+    --toggle-color: #cac0c0;
+    --bg-2:url('images/background.png')
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  /* Light mode overrides */
+body.light-mode {
+    --bg-color: #cac0c0;
+    --text-color: #000;
+    --accent-color: #ff004f; /* Keeping accent the same or adjust as needed */
+    --container-bg: #f0f0f0;
+    --header-bg: #fff;
+    --footer-color: #a3a1a1;
+    --background-image: url('images/me2.png');
+    --toggle-color: #000;
+    --bg-2:url('images/background2.png')
+  }
+
+  .theme-toggle {
+    background: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  
 #header{
     width: 100%;
     height: 100vh;
-    background-image: url(images/me.png);
+    background-image: var(--background-image);
     background-size: cover;
     background-position: center;
 }
@@ -42,7 +79,7 @@ nav ul li{
 }
 
 nav ul li a{
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
     font-size: 18px;
     position: relative;
@@ -71,12 +108,79 @@ nav ul li a:hover::after{
     font-size: 30px;
 }
 
+.header-text p{
+    font-family: 'Orbitron', sans-serif;
+    padding: 5px;
+    position: relative;
+    padding: 8px 12px;
+    margin: 0 0 10px; /* Optional: adds some vertical spacing */
+    z-index: 1;
+    opacity: 0; /* Start invisible for animation */
+    background: url('images/brush-effect.png');
+}
+
+.header-text p::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5; /* Adjust to taste */
+    z-index: -1;
+  }
+
+  .header-text p:hover{
+    color: var(--accent-color);
+    font-size: 1.8em;
+  }
+
+  /* Keyframe animations */
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-100%); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(100%); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes slideInTop {
+    0% { opacity: 0; transform: translateY(-100%); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Apply animations to each paragraph with delays */
+  .header-text p:nth-of-type(1) {
+    animation: slideInLeft 1.5s ease-out forwards;
+  }
+  
+  .header-text p:nth-of-type(2) {
+    animation: slideInRight 1.5s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+  .header-text p:nth-of-type(3) {
+    animation: slideInTop 1.5s ease-out forwards;
+    animation-delay: 0.6s;
+  }
+
 .header-text h1{
     font-family: 'Orbitron', sans-serif;
     font-size: 50px;
     margin-top: 20px;
     line-height: 1.35;
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: slideIn 2.5s ease-out forwards;
 }
+@keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
 .serv-desc{
     font-size: 15px;
@@ -92,7 +196,7 @@ nav ul li a:hover::after{
 
 #about{
     padding: 80px 0;
-    color: #ababab;
+    color: var(--text-color);
 }
 
 .row{
@@ -124,7 +228,7 @@ nav ul li a:hover::after{
     font-family: 'Press Start 2P', cursive;
     font-size: 60px;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
@@ -203,7 +307,7 @@ nav ul li a:hover::after{
   /* Meter container styling */
   .meter {
     height: 10px;
-    background-color: #080808d4;
+    background-color: var(--bg-color);
     border-radius: 5px;
     overflow: hidden;
   }
@@ -212,7 +316,7 @@ nav ul li a:hover::after{
   .meter-fill {
     display: block;
     height: 100%;
-    background-color: #d2cccc;
+    background-color: var(--text-color);
     border-radius: 5px;
     transition: width 0.5s ease-in-out;
   }
@@ -232,12 +336,19 @@ nav ul li a:hover::after{
 }
 
 .services-list div{
-    background: #262626;
     padding: 40px;
     font-size: 15px;
     font-weight: 300;
     border-radius: 10px;
     transition: background 0.5s, transform 0.5s;
+}
+
+.services-list div{
+  background: var(--container-bg);
+}
+
+.layer p, h3{
+    color: aliceblue;
 }
 
 .services-list div i{
@@ -430,12 +541,14 @@ form input, form textarea{
     width: 100%;
     border: 0;
     outline: none;
-    background: #262626;
     padding: 15px;
     margin: 15px 0;
-    color: #fff;
     font-size: 18px;
     border-radius: 6px;
+    background: var(--container-bg);
+    color: var(--text-color);
+    resize: none;
+    /* You might want to add a border color as well */
 }
 
 form .btn2{
@@ -449,7 +562,7 @@ form .btn2{
     width: 100%;
     text-align: center;
     padding: 25px 0;
-    background: #262626;
+    background: var(--footer-color);
     font-weight: 300;
     margin-top: 20px;
 }
@@ -464,10 +577,73 @@ nav .fa-solid{
     display: none;
 }
 
+#mobileThemeToggle {
+    display: none;
+  }
+
+  .vertical-text {
+    position: absolute;
+    top: 40%;
+    left: 20px; /* adjust as needed */
+    transform: translateY(-30%);
+    writing-mode: vertical-rl;
+    text-orientation: sideways-right;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 17px;
+    color: var(--text-color);
+    letter-spacing: 10px;
+  }
+
+  .vertical-text span{
+    color: #ff004f;
+  }
+
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none;
+    background-color: var(--text-color);
+    color: var(--text-color);
+    border-color: var(--accent-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+
 @media only screen and (max-width: 675px) {
+
+    .vertical-text {
+        font-size: 10px; /* Smaller font for mobile */
+        letter-spacing: 10px; /* Adjust letter spacing if needed */
+        left: 5px;
+      }
+
+    #mobileThemeToggle {
+        display: block;
+        position: relative;
+        top: 10px;
+        left: 10px;
+        padding: 8px 8px;
+        font-size: 14px;
+        z-index: 1000;
+        background: var(--toggle-color);
+        color: var(--text-color);
+        border-color: var(--accent-color);
+        border-radius: 16px;
+        cursor: pointer;
+      }
+
+      .theme-toggle{
+        display: none;
+      }
    
     #header{
-        background-image: url(images/background.png);
+        background-image: var(--bg-2)
     }
     .header-text{
         margin-top: 100%;
@@ -488,6 +664,7 @@ nav .fa-solid{
         right: 0;
         cursor: pointer;
         z-index: 2;
+        color: var(--text-color);
     }
 
     nav ul{
@@ -512,6 +689,7 @@ nav .fa-solid{
         top: 25px;
         right: 150px;
         cursor: pointer;
+        color: var(--text-color);
     }
     .sub-title{
         font-size: 40px;
@@ -573,4 +751,16 @@ nav .fa-solid{
     z-index: 10000;
   }
   
+ 
+
+  .theme-toggle {
+    background: var(--toggle-color);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 16px;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: auto; /* Pushes it to the far right in a flex container */
+  }
   
