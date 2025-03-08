@@ -53,41 +53,33 @@ function opentab(tabname) {
       const themeToggle = document.getElementById('themeToggle');
       const mobileThemeToggle = document.getElementById('mobileThemeToggle');
       const aboutImage = document.getElementById('aboutImage');
-      
+
       // Ensure dark mode is active by default
       document.body.classList.remove('light-mode');
       themeToggle.textContent = '☀️';
       mobileThemeToggle.textContent = '☀️';
-      
-      themeToggle.addEventListener('click', () => {
+
+      // Function to toggle theme and update image
+      function toggleTheme() {
         if (document.body.classList.contains('light-mode')) {
           // Switch to dark mode
           document.body.classList.remove('light-mode');
           themeToggle.textContent = '☀️';
+          mobileThemeToggle.textContent = '☀️';
           aboutImage.src = aboutImage.getAttribute('data-dark');
         } else {
           // Switch to light mode
           document.body.classList.add('light-mode');
           themeToggle.textContent = '🌙';
+          mobileThemeToggle.textContent = '🌙';
           aboutImage.src = aboutImage.getAttribute('data-light');
         }
+      }
 
-        
-      });
+      // Add event listeners for both buttons
+      themeToggle.addEventListener('click', toggleTheme);
+      mobileThemeToggle.addEventListener('click', toggleTheme);
 
-      mobileThemeToggle.addEventListener('click', () => {
-        if (document.body.classList.contains('light-mode')) {
-          // Switch back to dark mode
-          document.body.classList.remove('light-mode');
-          mobileThemeToggle.textContent = '☀️';
-        } else {
-          // Switch to light mode
-          document.body.classList.add('light-mode');
-          mobileThemeToggle.textContent = '🌙';
-        }
-        
-        
-      });
       
     });
   

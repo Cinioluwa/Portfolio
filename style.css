@@ -714,6 +714,10 @@ nav .fa-solid{
     .copyright{
         font-size: 14px;
     }
+
+    .custom-cursor{
+        display: none;
+    }
 } 
 
 #msg{
