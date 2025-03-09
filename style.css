@@ -16,7 +16,7 @@ html{
     --header-bg: #080808; /* For your header if you want to switch it too */
     --footer-color: #262626;
     --background-image: url('images/me.png');
-    --toggle-color: #cac0c0;
+    --toggle-color: #cac0c0a4;
     --bg-2:url('images/background.png')
   }
   
@@ -34,20 +34,9 @@ body.light-mode {
     --header-bg: #fff;
     --footer-color: #a3a1a1;
     --background-image: url('images/me2.png');
-    --toggle-color: #000;
+    --toggle-color: #000000a2;
     --bg-2:url('images/background2.png')
-  }
-
-  .theme-toggle {
-    background: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Montserrat', sans-serif;
-  }
-  
+  }  
   
 #header{
     width: 100%;
@@ -624,19 +613,22 @@ nav .fa-solid{
       }
 
     #mobileThemeToggle {
+        background: none;
         display: block;
         position: relative;
         top: 10px;
         left: 10px;
         padding: 8px 8px;
-        font-size: 14px;
+        font-size: larger;
         z-index: 1000;
-        background: var(--toggle-color);
-        color: var(--text-color);
-        border-color: var(--accent-color);
-        border-radius: 16px;
+        border-radius: 30px;
         cursor: pointer;
       }
+
+    #theme-toggle:hover{
+        transition: 0.8s;
+        background-color: var(--toggle-color);
+    }
 
       .theme-toggle{
         display: none;
@@ -758,13 +750,17 @@ nav .fa-solid{
  
 
   .theme-toggle {
-    background: var(--toggle-color);
-    color: var(--text-color);
+    background: none;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 8px;
     cursor: pointer;
-    border-radius: 16px;
+    border-radius: 30px;
     font-family: 'Montserrat', sans-serif;
     margin-left: auto; /* Pushes it to the far right in a flex container */
+    font-size: larger;
   }
   
+  .theme-toggle:hover{
+    transition: 0.8s;
+    background-color: var(--toggle-color);
+  }
