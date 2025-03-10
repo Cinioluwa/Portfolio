@@ -255,7 +255,7 @@ nav ul li a:hover::after{
     list-style: georgian;
     padding-left: 10px;
     border-left: 3px solid #ff004f; /* Adds a colored accent */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Adds subtle depth */
+    text-shadow: 1px 1px 3px rgb(75, 65, 65); /* Adds subtle depth */
     transition: transform 0.3s ease; /* Smooth hover animation */
 }
 
@@ -264,8 +264,8 @@ nav ul li a:hover::after{
 }
 
 .tab-contents ul li span{
-    color: #b54769;
-    font-size: 16px;
+    color: #ff637d;
+    font-size: 18px;
 }
 
 .tab-contents{
@@ -355,10 +355,6 @@ nav ul li a:hover::after{
     margin-bottom: 15px;
 }
 
-.services-list div p, .layer p{
-    text-shadow: 2px 2px 4px rgb(5, 5, 5);
-}
-
 .services-list div a{
     text-decoration: none;
     color: #fff;
@@ -368,7 +364,7 @@ nav ul li a:hover::after{
 }
 
 .services-list div:hover{
-    background-color: #ff004f;
+    background-color: #ff005120;
     transform: translateY(-10px);
 }
 
