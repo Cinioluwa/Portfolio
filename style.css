@@ -639,6 +639,10 @@ nav .fa-solid{
 
 @media only screen and (max-width: 675px) {
 
+    body{
+        cursor: none;
+    }
+
     .vertical-text {
         font-size: 10px; /* Smaller font for mobile */
         letter-spacing: 10px; /* Adjust letter spacing if needed */
@@ -750,7 +754,7 @@ nav .fa-solid{
     }
 
     .custom-cursor{
-        display: none;
+        display: none !important;
     }
 } 
 
