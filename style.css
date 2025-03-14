@@ -3,6 +3,7 @@
     padding: 0;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    cursor: none !important;
 }
 html{
     scroll-behavior: smooth;
@@ -41,6 +42,7 @@ html{
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    cursor: none;
   }
   
   /* Light mode overrides */
@@ -774,20 +776,88 @@ nav .fa-solid{
     transform: translateY(0);
   }
 
-  .custom-cursor {
+  /* The custom-cursor container */
+.custom-cursor {
+    position: fixed;
+    pointer-events: none;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    perspective: 600px; /* Adds depth to our 3D scene */
+  }
+  
+  /* The cube that will rotate */
+  .cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 3s infinite linear;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Style for each face of the cube */
+  .face {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ff004f;
+  }
+  
+  /* Positioning each face */
+  .face.front  { transform: translateZ(15px); }
+  .face.back   { transform: rotateY(180deg) translateZ(15px); }
+  .face.left   { transform: rotateY(-90deg) translateZ(15px); }
+  .face.right  { transform: rotateY(90deg) translateZ(15px); }
+  .face.top    { transform: rotateX(90deg) translateZ(15px); }
+  .face.bottom { transform: rotateX(-90deg) translateZ(15px); }
+  
+  /* Cube rotation animation */
+  @keyframes rotateCube {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to   { transform: rotateX(360deg) rotateY(360deg); }
+  }
+
+  /* === Custom Pointer (For clickable elements) === */
+.custom-pointer {
     position: fixed;
     pointer-events: none;
     width: 20px;
     height: 20px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 2px solid #ff004f;
-    border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out;
     z-index: 10000;
+    /* Start hidden by default; you can toggle its visibility based on hover */
+    display: none;
   }
   
- 
+  .arrow {
+    /* Create a simple arrow shape using CSS borders */
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 12px solid #ffffff;
+    /* Add subtle 3D flair with a slight tilt */
+    transform: perspective(300px) rotateX(10deg) rotateY(10deg);
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+  }
+
+  /* Styling for the Nigeria element */
+.header-text .location {
+  display: inline-block;  /* Default inline styling */
+  color: #f3f3f3;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(45deg, #c52457, #55061a);
+  padding: 5px 10px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
 
   .theme-toggle {
     background: none;

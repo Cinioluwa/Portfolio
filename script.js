@@ -28,6 +28,26 @@ function opentab(tabname) {
   // ================= DOMContentLoaded Section =================
   
   document.addEventListener('DOMContentLoaded', () => {
+    // ----- Custom Cursors ------
+    const cubeCursor = document.querySelector('.custom-cursor');
+  const pointerCursor = document.querySelector('.custom-pointer');
+
+  document.addEventListener('mousemove', (e) => {
+    // Update both cursor positions
+    cubeCursor.style.left = `${e.clientX}px`;
+    cubeCursor.style.top  = `${e.clientY}px`;
+    pointerCursor.style.left = `${e.clientX}px`;
+    pointerCursor.style.top  = `${e.clientY}px`;
+
+    // Check if the mouse is over a link (or any interactive element)
+    if (e.target.closest('a')) {
+      cubeCursor.style.display = 'none';
+      pointerCursor.style.display = 'block';
+    } else {
+      cubeCursor.style.display = 'block';
+      pointerCursor.style.display = 'none';
+    }
+  });
     // ----- Ripple Effect on Buttons -----
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
