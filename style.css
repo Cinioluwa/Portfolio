@@ -45,7 +45,7 @@ html{
   
   /* Light mode overrides */
 body.light-mode {
-    --bg-color: #e4dede;
+    --bg-color: #e4b9b9;
     --text-color: #000;
     --accent-color: #ff004f; /* Keeping accent the same or adjust as needed */
     --container-bg: #f0f0f0;
