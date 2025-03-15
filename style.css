@@ -640,8 +640,15 @@ nav .fa-solid{
 @media only screen and (max-width: 675px) {
 
     body{
-        cursor: none;
+        cursor: none !important;
     }
+    
+    .custom-cursor,
+    .custom-pointer {
+        display: none !important;
+        pointer-events: none; /* Prevent interaction */
+    }
+
 
     .vertical-text {
         font-size: 10px; /* Smaller font for mobile */
