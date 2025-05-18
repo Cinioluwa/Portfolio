@@ -16,7 +16,6 @@ html{
     --container-bg: #262626;
     --header-bg: #080808; /* For your header if you want to switch it too */
     --footer-color: #262626;
-    --background-image: url('images/me.png');
     --toggle-color: #cac0c0a4;
     --bg-2:url('images/background.png')
   }
@@ -36,32 +35,48 @@ html{
     font-family: 'Courier New', Courier, monospace;
   }
   
-
   body {
-    background-color: var(--bg-color);
+    background: linear-gradient(-45deg, #080808, #1a1a2e, #16213e, #0f3460);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: var(--text-color);
     cursor: none;
   }
   
   /* Light mode overrides */
 body.light-mode {
-    --bg-color: #e4b9b9;
     --text-color: #000;
-    --accent-color: #ff004f; /* Keeping accent the same or adjust as needed */
+    --accent-color: #ff004f;
     --container-bg: #f0f0f0;
     --header-bg: #fff;
     --footer-color: #a3a1a1;
-    --background-image: url('images/me2.png');
     --toggle-color: #000000a2;
-    --bg-2:url('images/background2.png')
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
   }  
   
-#header{
+#header {
     width: 100%;
     height: 100vh;
-    background-image: var(--background-image);
-    background-size: cover;
-    background-position: center;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header-text {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 20px;
 }
 
 .container{
@@ -73,6 +88,7 @@ nav{
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 15px 0;
 }
 
 .logo{
@@ -115,15 +131,18 @@ nav ul li a:hover::after{
     font-size: 30px;
 }
 
-.header-text p{
+.header-text p {
     font-family: 'Orbitron', sans-serif;
-    padding: 5px;
     position: relative;
     padding: 8px 12px;
-    margin: 0 0 10px; /* Optional: adds some vertical spacing */
+    margin: 0 0 10px;
     z-index: 1;
-    opacity: 0; /* Start invisible for animation */
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 16px;
     background: url('images/brush-effect.png');
+    transform-origin: center;
+    transform: scale(1);
 }
 
 .header-text p::before {
@@ -133,14 +152,16 @@ nav ul li a:hover::after{
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.5; /* Adjust to taste */
+    opacity: 0.5;
     z-index: -1;
-  }
+}
 
-  .header-text p:hover{
+.header-text p:hover {
     color: var(--accent-color);
-    font-size: 1.8em;
-  }
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
 
   /* Keyframe animations */
 @keyframes slideInLeft {
@@ -173,14 +194,16 @@ nav ul li a:hover::after{
     animation-delay: 0.6s;
   }
 
-.header-text h1{
+.header-text h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 50px;
+    font-size: 42px;
     margin-top: 20px;
     line-height: 1.35;
     opacity: 0;
     transform: translateY(-50px);
     animation: slideIn 2.5s ease-out forwards;
+    position: relative;
+    z-index: 1;
 }
 @keyframes slideIn {
     to {
@@ -188,6 +211,11 @@ nav ul li a:hover::after{
       transform: translateY(0);
     }
   }
+
+.header-text h1 span {
+    position: relative;
+    z-index: 1;
+}
 
 .serv-desc{
     font-size: 15px;
@@ -538,7 +566,7 @@ nav ul li a:hover::after{
     text-decoration: none;
     font-size: 30px;
     margin-right: 15px;
-    color: #ababab;
+    color: var(--toggle-color);
     display: inline-block;
     transition: transform 0.5s;
 }
@@ -582,8 +610,8 @@ form .btn2{
     width: 100%;
     text-align: center;
     padding: 25px 0;
-    background: var(--footer-color);
     font-weight: 300;
+    color: var(--text-color);
     margin-top: 20px;
 }
 
@@ -625,7 +653,6 @@ nav .fa-solid{
     display: none;
     background-color: var(--text-color);
     color: var(--text-color);
-    border-color: var(--accent-color);
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -677,10 +704,10 @@ nav .fa-solid{
       }
    
     #header{
-        background-image: var(--bg-2)
+        margin-bottom: -50%;
     }
     .header-text{
-        margin-top: 100%;
+        margin-top: 50%;
         font-size: 16px;
     }
     .header-text h1{
@@ -789,8 +816,8 @@ nav .fa-solid{
 .custom-cursor {
     position: fixed;
     pointer-events: none;
-    width: 30px;
-    height: 30px;
+    width: 20px;  /* Reduced from 30px */
+    height: 20px; /* Reduced from 30px */
     transform: translate(-50%, -50%);
     z-index: 10000;
     perspective: 600px; /* Adds depth to our 3D scene */
@@ -803,25 +830,24 @@ nav .fa-solid{
     position: relative;
     transform-style: preserve-3d;
     animation: rotateCube 3s infinite linear;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5); /* Reduced shadow size */
   }
   
   /* Style for each face of the cube */
   .face {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 20px;  /* Reduced from 30px */
+    height: 20px; /* Reduced from 30px */
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #ff004f;
   }
-  
-  /* Positioning each face */
-  .face.front  { transform: translateZ(15px); }
-  .face.back   { transform: rotateY(180deg) translateZ(15px); }
-  .face.left   { transform: rotateY(-90deg) translateZ(15px); }
-  .face.right  { transform: rotateY(90deg) translateZ(15px); }
-  .face.top    { transform: rotateX(90deg) translateZ(15px); }
-  .face.bottom { transform: rotateX(-90deg) translateZ(15px); }
+    /* Positioning each face */
+  .face.front  { transform: translateZ(10px); }
+  .face.back   { transform: rotateY(180deg) translateZ(10px); }
+  .face.left   { transform: rotateY(-90deg) translateZ(10px); }
+  .face.right  { transform: rotateY(90deg) translateZ(10px); }
+  .face.top    { transform: rotateX(90deg) translateZ(10px); }
+  .face.bottom { transform: rotateX(-90deg) translateZ(10px); }
   
   /* Cube rotation animation */
   @keyframes rotateCube {
@@ -883,3 +909,176 @@ nav .fa-solid{
     transition: 0.8s;
     background-color: var(--toggle-color);
   }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right .social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-right .social-icons a {
+    color: var(--text-color);
+    font-size: 20px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.nav-right .social-icons a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.nav-right .btn2 {
+    margin: 0;
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    gap: 40px;
+}
+
+.social-icons-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    flex: 0 0 60px;
+    padding: 20px 0;
+    align-items: center;
+}
+
+.social-icons-vertical a {
+    color: var(--text-color);
+    font-size: 24px;
+    transition: color 0.3s, transform 0.3s;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons-vertical a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.text-content {
+    flex: 1;
+    text-align: center;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.text-content p {
+    font-size: 40px;
+    font-weight: 300;
+    margin: 10px 0;
+}
+
+.intro-section {
+    flex: 1;
+    text-align: left;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.intro-section h1 {
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+}
+
+.resume-btn {
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    white-space: nowrap;
+    max-width: fit-content;
+}
+
+@media only screen and (max-width: 675px) {
+    .nav-right {
+        display: none;
+    }
+    
+    .nav-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .header-content {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .social-icons-vertical {
+        flex-direction: row;
+        flex: initial;
+        width: 100%;
+        padding: 10px 0;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .social-icons-vertical a {
+        font-size: 20px;
+    }
+
+    .text-content {
+        flex: initial;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        text-align: center;
+    }
+
+    .text-content p {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .intro-section {
+        flex: initial;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .intro-section h1 {
+        font-size: 28px;
+        margin: 0 0 15px 0;
+        text-align: center;
+    }
+
+    .resume-btn {
+        margin: 15px auto 0;
+        padding: 8px 16px;
+        font-size: 14px;
+        text-align: center;
+        display: inline-block;
+    }
+}

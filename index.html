@@ -35,9 +35,8 @@
 <body>
     <button id="mobileThemeToggle" class="theme-toggle-mobile">☀️</button>
     <div id='header'>
-        <div class="container">
-            <nav>
-                <img src="images/logo.png" class="logo">
+        <div class="container">            <nav>
+                <img src="images/logoii.png" class="logo">
                 <ul id="sidemenu">
                     <li><a href="#header">Home</a></li>
                     <li><a href="#about">About</a></li>
@@ -49,17 +48,29 @@
                 </ul>
                 <i class="fa-solid fa-bars" onclick="openmenu()"></i>
             </nav>
-            <div class="header-text"> 
-                <p>`Student`</p>
-                <p>`Software Developer`</p>
-                <p>`CyberSecurity Enthusiast`</p>
-                <h1>
-                  Hi! I'm <span>Covenant</span><br>
-                  Adeogo<span><h3 class="location">📍Nigeria</h3></span>
-                </h1>
-                
-              </div>
-              
+             <div class="header-text">
+                <div class="header-content">
+                    <div class="social-icons-vertical">
+                        <a href="https://www.instagram.com/ct.inioluwa15/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://x.com/c_inioluwa"><i class="fa-brands fa-twitter-square"></i></a>
+                        <a href="https://linkedin.com/in/covenant-a-b87988260/"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com/Cinioluwa"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                    <div class="text-content">
+                        <p>`Student`</p>
+                        <p>`Software Developer`</p>
+                        <p>`CyberSecurity Enthusiast`</p>
+                    </div>
+                    <div class="intro-section">
+                        <h1>
+                        Hi! I'm <span>Covenant</span><br>
+                        Adeogo<span><h3 class="location">📍Nigeria</h3></span>
+                        </h1>
+                        <a href="Resume.pdf" download class="btn btn2 resume-btn">Check out my Resume🚀</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     <!--About-->
@@ -67,7 +78,7 @@
         <div class="container">
             <div class="row">
                 <div class="about-col-1">
-                    <img id="aboutImage" src="images/user.png" data-dark="images/user.png" data-light="images/user2.png" alt="Image of CIA">
+                    <img id="aboutImage" src="images/user.jpg" data-dark="images/user.jpg" data-light="images/user.jpg" alt="Image of CIA">
                 </div>
                 <div class="about-col-2">
                     <h1 class="sub-title">About Me</h1>
@@ -85,29 +96,19 @@
                         <ul>
                           <li>
                             <span>Software Development</span>
-                            <div class="meter">
-                            </div>
                           </li>
                           <li>
                             <span>Front-End Development</span>
-                            <div class="meter">
-                            </div>
                           </li>
                           <li>
                             <span>UI/UX Design</span>
-                            <div class="meter">
-                            </div>
                           </li>
-                          <li>
-                            <span>Git</span>
-                            <div class="meter">
-                            </div>
-                          </li>
-                          <li>
-                            <span>Graphic Design</span>
-                            <div class="meter">
-=                            </div>
-                          </li>
+                            <li>
+                                <span>Networking Fundamentals</span>
+                            </li>
+                            <li>
+                            <span>Git Control</span>
+                            </li>
                         </ul>
                       </div>
                       
@@ -211,32 +212,16 @@
         </div>
     </div>
 
-    <!--contact-->
-    <div id="contact"  class="fade-in">
+    <!--contact-->    <div id="contact" class="fade-in">
         <div class="container">
-            <div class="row">
-                <div class="contact-left">
-                    <h1 class="sub-title">Contact Me</h1>
-                    <p><i class="fa-solid fa-envelope"></i>covkey13@gmail.com</p>
-                    <p><i class="fa-solid fa-phone"></i>09129408866</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/ct.inioluwa15/"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://x.com/c_inioluwa"><i class="fa-brands fa-twitter-square"></i></a>
-                        <a href=" https://linkedin.com/in/covenant-a-b87988260/"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="https://github.com/Cinioluwa"><i class="fa-brands fa-github"></i></a>
-                    </div>
-                    <a href="Resume.pdf" download class="btn btn2">Checkout My Resume🚀</a>
-                </div>
-                <div class="contact-right">
-                    <form name="submit-to-google-sheet">
-                        <input type="text" name="Name" placeholder="Your Name" required>
-                        <input type="email" name="Email" placeholder="Your Email" required>
-                        <textarea name="Message" rows="7" placeholder="Your Message"></textarea>
-                        <button type="submit" class="btn btn2" id="confettiBtn">Send</button>
-                    </form>
-                    <span id="msg"></span>
-                </div>
-            </div>
+            <h1 class="sub-title">Contact Me</h1>
+            <form name="submit-to-google-sheet">
+                <input type="text" name="Name" placeholder="Your Name" required>
+                <input type="email" name="Email" placeholder="Your Email" required>
+                <textarea name="Message" rows="7" placeholder="Your Message"></textarea>
+                <button type="submit" class="btn btn2" id="confettiBtn">Send</button>
+            </form>
+            <span id="msg"></span>
         </div>
         <div class="copyright">
             <p>Copyright © 2025. Made by CIA</p>
