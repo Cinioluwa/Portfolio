@@ -227,4 +227,96 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
       "retina_detect": true
     });
   });
-  
+
+let loadingComplete = false;
+const LOADING_DURATION = 8000; // 8 seconds - increase this for longer display
+
+// Auto-hide loading screen after specified duration
+setTimeout(() => {
+    hideLoadingScreen();
+}, LOADING_DURATION);
+
+// Function to hide loading screen
+function hideLoadingScreen() {
+    if (!loadingComplete) {
+        loadingComplete = true;
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('fade-out');
+            
+            // Remove from DOM after fade completes
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }
+    }
+}
+
+// Skip button functionality
+function skipLoading() {
+    hideLoadingScreen();
+}
+
+// Keyboard shortcut to skip (ESC key)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        hideLoadingScreen();
+    }
+});
+
+// Hide when page is fully loaded (but respect minimum display time)
+window.addEventListener('load', function() {
+    // Only hide early if we've displayed for at least 3 seconds
+    const minDisplayTime = 3000;
+    setTimeout(() => {
+        if (!loadingComplete) {
+            console.log("Page loaded, but respecting minimum display time");
+            // Don't hide early - let the main timer handle it
+        }
+    }, minDisplayTime);
+});
+
+// Optional: Real progress tracking
+function updateLoadingProgress() {
+    const images = document.querySelectorAll('img');
+    const scripts = document.querySelectorAll('script[src]');
+    const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+    
+    let totalAssets = images.length + scripts.length + stylesheets.length;
+    let loadedAssets = 0;
+    
+    function checkComplete() {
+        loadedAssets++;
+        if (loadedAssets >= totalAssets) {
+            // All assets loaded, but enforce minimum display time
+            const elapsedTime = performance.now();
+            const remainingTime = Math.max(0, LOADING_DURATION - elapsedTime);
+            setTimeout(hideLoadingScreen, remainingTime);
+        }
+    }
+    
+    // Track image loading
+    images.forEach(img => {
+        if (img.complete) {
+            checkComplete();
+        } else {
+            img.addEventListener('load', checkComplete);
+            img.addEventListener('error', checkComplete);
+        }
+    });
+    
+    // Track script loading
+    scripts.forEach(script => {
+        script.addEventListener('load', checkComplete);
+        script.addEventListener('error', checkComplete);
+    });
+    
+    // Track stylesheet loading
+    stylesheets.forEach(link => {
+        link.addEventListener('load', checkComplete);
+        link.addEventListener('error', checkComplete);
+    });
+}
+
+// Uncomment the line below if you want real progress tracking
+// updateLoadingProgress();

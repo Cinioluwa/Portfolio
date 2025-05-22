@@ -3,7 +3,7 @@
     padding: 0;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
-    cursor: none !important;
+    cursor: none !important
 }
 html{
     scroll-behavior: smooth;
@@ -283,7 +283,7 @@ nav ul li a:hover::after{
     margin-right: 50px;
     font-size: 18px;
     font-weight: 500;
-    cursor: pointer;
+    cursor: none;
     position: relative;
 }
 
@@ -318,7 +318,7 @@ nav ul li a:hover::after{
 .tab-contents ul li span{
     color: #ff4869;
     font-family: monospace;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .tab-contents{
@@ -326,11 +326,58 @@ nav ul li a:hover::after{
     max-height: 0;
     overflow: hidden;
     transition: opacity 0.3s ease-in-out, max-height 0.3s step-end;
+    position: absolute; /* This prevents the container from expanding */
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .tab-contents.active-tab{
     opacity: 1;
-    max-height: 350px;
+    max-height: 800px;
+    position: static;
+}
+
+.edu-item {
+    margin-bottom: 15px !important;
+    padding: 10px !important;
+    border-left: 3px solid #ff004f;
+    transition: transform 0.3s ease;
+}
+
+.edu-item:hover {
+    transform: translateX(5px) !important;
+}
+
+.involvement {
+    margin-top: 8px;
+}
+
+.involvement p {
+    color: #ff4869;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.org-list, .role-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+}
+
+.org-list li, .role-list li {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 14px;
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+
+.org-icon {
+    width: 16px;
+    margin-right: 8px;
+    color: #ff4869;
 }
 
 /* Remove default list styling */
@@ -372,6 +419,7 @@ nav ul li a:hover::after{
 
 #services{
     padding: 30px 0;
+    margin-bottom: 10rem;
 }
 
 .services-list{
@@ -425,6 +473,7 @@ nav ul li a:hover::after{
 
 #portfolio{
     padding: 50px 0;
+    margin-bottom: 10rem;
 }
 
 .work-list{
@@ -511,7 +560,7 @@ nav ul li a:hover::after{
     color: white;
     position: relative; /* enable ripple positioning */
     overflow: hidden;   /* hide overflow of ripple */
-    cursor: pointer;
+    cursor: none;
 }
 
 .btn:hover {
@@ -603,7 +652,7 @@ form .btn2{
     padding: 14px 60px;
     font-size: 18px;
     margin-top: 20px;
-    cursor: pointer;
+    cursor: none;
 }
 
 .copyright{
@@ -657,7 +706,7 @@ nav .fa-solid{
     width: 30px;
     height: 30px;
     font-size: 20px;
-    cursor: pointer;
+    cursor: none;
     z-index: 1000;
   }
   
@@ -691,7 +740,7 @@ nav .fa-solid{
         font-size: larger;
         z-index: 1000;
         border-radius: 30px;
-        cursor: pointer;
+        cursor: none;
       }
 
     #theme-toggle:hover{
@@ -723,7 +772,7 @@ nav .fa-solid{
         position: absolute;
         top: 25px;
         right: 0;
-        cursor: pointer;
+        cursor: none;
         z-index: 2;
         color: var(--text-color);
     }
@@ -812,7 +861,7 @@ nav .fa-solid{
     transform: translateY(0);
   }
 
-  /* The custom-cursor container */
+    /* The custom-cursor container */
 .custom-cursor {
     position: fixed;
     pointer-events: none;
@@ -1080,5 +1129,256 @@ nav .fa-solid{
         font-size: 14px;
         text-align: center;
         display: inline-block;
+    }
+}
+
+
+.tab-container{
+    min-height: 400px;
+    position: relative;
+}
+
+/* Fix for tab content container to prevent layout shifts */
+.tab-container {
+    min-height: 400px; /* Set a minimum height that accommodates your largest tab */
+    position: relative;
+}
+
+.tab-contents {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in-out, max-height 0.3s step-end;
+    position: absolute; /* This prevents the container from expanding */
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.tab-contents.active-tab {
+    opacity: 1;
+    max-height: 800px;
+    position: static; /* Allow the active tab to take normal flow */
+}
+
+
+/* Loading Screen Styles - Add to your existing CSS */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #080808, #1a1a2e, #16213e, #0f3460);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    color: #ff0059;
+    font-family: 'Courier New', monospace;
+    transition: opacity 0.5s ease-out;
+}
+
+#loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.terminal-container {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ff00d9;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 30px rgba(255, 0, 174, 0.3);
+    position: relative;
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ff009d;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.btn-close { background: #ff5f56; }
+.btn-minimize { background: #ffbd2e; }
+.btn-maximize { background: #27ca3f; }
+
+.terminal-title {
+    color: #ff00cc;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.terminal-content {
+    min-height: 200px;
+}
+
+.terminal-line {
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInType 0.6s ease-out forwards;
+}
+
+@keyframes slideInType {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.terminal-line:nth-child(1) { animation-delay: 0.2s; }
+.terminal-line:nth-child(2) { animation-delay: 0.8s; }
+.terminal-line:nth-child(3) { animation-delay: 1.4s; }
+.terminal-line:nth-child(4) { animation-delay: 2.0s; }
+.terminal-line:nth-child(5) { animation-delay: 2.6s; }
+.terminal-line:nth-child(6) { animation-delay: 3.2s; }
+.terminal-line:nth-child(7) { animation-delay: 3.8s; }
+
+.command-prompt {
+    color: #ff004f;
+    font-weight: bold;
+}
+
+.success {
+    color: #ea00ff;
+}
+
+.warning {
+    color: #ffbd2e;
+}
+
+.info {
+    color: #00bfff;
+}
+
+.loading-dots {
+    display: inline-block;
+    animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}
+
+.loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s infinite;
+}
+
+.cursor {
+    display: inline-block;
+    background-color: #ff00d9;
+    width: 8px;
+    height: 16px;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.progress-bar-container {
+    margin: 15px 0;
+    opacity: 0;
+    animation: slideInType 0.6s ease-out forwards;
+    animation-delay: 2.8s;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 0, 242, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ff00bb;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff00dd53, #ff004f, #ff00b3);
+    width: 0%;
+    animation: progressFill 2s ease-out forwards;
+    animation-delay: 3s;
+}
+
+@keyframes progressFill {
+    to { width: 100%; }
+}
+
+.skip-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: transparent;
+    border: 1px solid #ff00f2;
+    color: #ff00ea;
+    padding: 8px 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    cursor: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 1s;
+}
+
+.skip-button:hover {
+    background: #ff00cc;
+    color: #000;
+    box-shadow: 0 0 10px rgba(255, 0, 234, 0.5);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Mobile Responsiveness for Loading Screen */
+@media only screen and (max-width: 675px) {
+    .terminal-container {
+        padding: 20px;
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .terminal-line {
+        font-size: 12px;
+    }
+
+    .terminal-title {
+        font-size: 12px;
+    }
+
+    .skip-button {
+        bottom: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 10px;
     }
 }

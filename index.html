@@ -32,6 +32,54 @@
 
 </head>
 <body>
+
+<div id="loading-screen">
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button btn-close"></div>
+                <div class="terminal-button btn-minimize"></div>
+                <div class="terminal-button btn-maximize"></div>
+            </div>
+            <div class="terminal-title">cia@portfolio:~$</div>
+        </div>
+        
+        <div class="terminal-content">
+            <div class="terminal-line">
+                <span class="command-prompt">$</span> sudo ./initialize_portfolio.sh
+            </div>
+            <div class="terminal-line info">
+                [INFO] Booting Covenant's Portfolio System<span class="loading-dots"></span>
+            </div>
+            <div class="terminal-line success">
+                [OK] Loading cybersecurity modules... ✓
+            </div>
+            <div class="terminal-line success">
+                [OK] Initializing development environment... ✓
+            </div>
+            <div class="terminal-line warning">
+                [WARN] Decrypting classified projects... 🔐
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="terminal-line info">[INFO] System initialization progress:</div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="terminal-line success">
+                [OK] All systems operational. Welcome to the matrix! 🚀
+            </div>
+            <div class="terminal-line">
+                <span class="command-prompt">$</span> <span class="cursor"></span>
+            </div>
+        </div>
+        
+        <button class="skip-button" onclick="skipLoading()">SKIP [ESC]</button>
+    </div>
+</div>
+
     <button id="mobileThemeToggle" class="theme-toggle-mobile">☀️</button>
     <div id='header'>
         <div class="container">            <nav>
@@ -60,12 +108,11 @@
                         <p>`Software Developer`</p>
                         <p>`CyberSecurity Enthusiast`</p>
                     </div>
-                    <div class="intro-section">
-                        <h1>
+                    <div class="intro-section">                        <h1>
                         Hi! I'm <span>Covenant</span><br>
                         Adeogo<span><h3 class="location">📍Nigeria</h3></span>
                         </h1>
-                        <a href="Resume.pdf" download class="btn btn2 resume-btn">Check out my Resume🚀</a>
+                        <a href="Resume.pdf" target="_blank" class="btn btn2 resume-btn">Check out my Resume🚀</a>
                     </div>
                 </div>
             </div>
@@ -82,15 +129,15 @@
                 <div class="about-col-2">
                     <h1 class="sub-title">About Me</h1>
                     <p id="about-x">I'm a <span class="emph">Computer Engineering</span> student at Covenant University who loves <span class="emph">solving problems</span> with tech. <br>I love <span class="emph">thinking</span>. I work well in teams and focus on coming up with <span  class="emph">solutions</span> that improve systems. </p>
-                <div>
-                    
-                </div>
+                <div>      
+        </div>         
                     <div class="tab-titles">
                         <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                        <p class="tab-links" onclick="opentab('experience')">Work Experience</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
                         <p class="tab-links" onclick="opentab('education')">Education</p>
                         <p class="tab-links" onclick="opentab('certifications')">Certifications</p>
                      </div>
+                <div class="tab-container">
                     <div class="tab-contents active-tab" id="skills">
                         <ul>
                           <li>
@@ -117,11 +164,30 @@
                             <li><span>May 2023 - May 2024</span><br>Designed and optimized a landing page using Hococos website builder, enhancing performance and mobile responsiveness.</li>
                             <li><span>October 2024 - January 2025</span><br>Researched and designed UI concepts for an NFC-based transit payment system in it's early development phase.</li>
                         </ul>
-                    </div>
-                    <div class="tab-contents" id="education">
+                    </div>                    <div class="tab-contents" id="education">
                         <ul>
-                            <li><span>2022-2027</span><br>Computer Engineering Major at Covenant University, Ota.</li>
-                            <li><span>2016-2022</span><br>Redeemer's University Staff School, Ede</li>
+                            <li class="edu-item">
+                                <span>2022-2027</span><br>
+                                Computer Engineering Major at Covenant University, Ota                                <div class="involvement">
+                                    <p>Current Memberships:</p>
+                                    <ul class="org-list">
+                                        <li><i class="fa-brands fa-google org-icon"></i>Google Developer Group (GDG)</li>
+                                        <li><i class="fa-solid fa-microchip org-icon"></i>Hebron Startup Lab (HSL)</li>
+                                        <li><i class="fa-solid fa-paint-brush org-icon"></i>Digital Dreamscapes</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="edu-item">
+                                <span>2016-2022</span><br>
+                                Redeemer's University Staff School, Ede
+                                <div class="involvement">
+                                    <p>Leadership Roles (2021-2022):</p>
+                                    <ul class="role-list">
+                                        <li><i class="fa-solid fa-user-tie org-icon"></i>Senior Prefect</li>
+                                        <li><i class="fa-solid fa-flask org-icon"></i>Vice President, JETS Club</li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div class="tab-contents" id="certifications">
@@ -130,9 +196,10 @@
                             <li><span>February 2024</span><br>OBTranslate: Prompt Engineering<a href="OBT_cert.pdf" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
                             <li><span>July 2024</span><br>CCNAv7: Introduction to Networks<a href="ITN_cert.pdf" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
                             <li><span>September 2024</span><br>Cisco: Networking Basics<a href="NB_cert.pdf" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
-                            <li><span>September 2024</span><br>Cisco: Networking Basics<a href="FOC.pdf" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                            <li><span>September 2024</span><br>Certified Fiber Optics Technician<a href="FOC.pdf" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
                         </ul>
                     </div>
+                </div>    
                 </div>
             </div>
         </div>
@@ -141,7 +208,7 @@
     <!--services-->
     <div id="services"  class="fade-in">
         <div class="container">
-            <h1 class="sub-title">Tools</h1>
+            <h1 class="sub-title">What I Do</h1>
             <div class="services-list">
                 <div>
                     <i class="fa-solid fa-code"></i>
