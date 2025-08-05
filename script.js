@@ -88,6 +88,7 @@ function opentab(tabname) {
         document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
         document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
     });
+    
     // ----- Ripple Effect on Buttons -----
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
@@ -192,21 +193,39 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbwvBtOz_SDWBo2i2qnW8f
       });
     }
   
-    // ----- Typewriter Effect for Elements with Class "typewriter" -----
-    const typewriterElements = document.querySelectorAll('.typewriter');
-    typewriterElements.forEach(element => {
-      const text = element.textContent;
-      element.textContent = "";
-      text.split("").forEach((char, index) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.classList.add('letter');
-        element.appendChild(span);
-        setTimeout(() => {
-          span.style.opacity = "1";
-        }, index * 200);
-      });
-    });
+    // ----- Find and replace the old Typewriter Effect section in your script.js -----
+
+// ----- Typewriter and Glitch Effect for "typewriter" class -----
+const typewriterElements = document.querySelectorAll('.typewriter');
+typewriterElements.forEach(element => {
+    const originalText = element.getAttribute('data-text') || element.textContent;
+    element.textContent = ''; // Clear the element
+
+    let i = 0;
+    const interval = setInterval(() => {
+        if (i < originalText.length) {
+            // Add the next character
+            element.innerHTML += originalText.charAt(i);
+            i++;
+
+            // Temporary glitch effect
+            const glitchChars = '▓▒░█_#?*&';
+            const randomChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            element.innerHTML += `<span class="glitch" style="animation-delay: ${Math.random() * 0.1}s">${randomChar}</span>`;
+
+            // Remove the glitch character shortly after
+            setTimeout(() => {
+                const glitchSpan = element.querySelector('.glitch');
+                if (glitchSpan) {
+                    glitchSpan.remove();
+                }
+            }, 50);
+
+        } else {
+            clearInterval(interval);
+        }
+    }, 75); // Adjust typing speed here (milliseconds)
+});
   
     // ----- Fade-In Effect on Scroll -----
     const faders = document.querySelectorAll('.fade-in');
