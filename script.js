@@ -1,5 +1,60 @@
 // ================= Global Functions =================
 
+// Form submission handling
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(form);
+
+            // Submit form to Formspree
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show thank you message
+                    thankYouMessage.style.display = 'block';
+                    form.style.display = 'none';
+
+                    // Trigger confetti effect
+                    if (typeof confetti === 'function') {
+                        confetti({
+                            particleCount: 100,
+                            spread: 70,
+                            origin: { y: 0.6 }
+                        });
+                    }
+
+                    // Clear form
+                    form.reset();
+
+                    // Hide thank you message after 5 seconds and show form again
+                    setTimeout(() => {
+                        thankYouMessage.style.display = 'none';
+                        form.style.display = 'block';
+                    }, 5000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Oops! There was a problem submitting your form. Please try again.');
+            });
+        });
+    }
+});
+
 // Tab functionality – smooth transition version
 function opentab(tabname) {
     const tablinks = document.getElementsByClassName("tab-links");
@@ -22,32 +77,17 @@ function opentab(tabname) {
     document.getElementById("sidemenu").style.right = "0";
   }
   function closemenu() {
-    document.getElementById("sidemenu").style.right = "-200px";
+    document.getElementById("sidemenu").style.right = "-500px";
   }
   
   // ================= DOMContentLoaded Section =================
   
   document.addEventListener('DOMContentLoaded', () => {
-    // ----- Custom Cursors ------
-    const cubeCursor = document.querySelector('.custom-cursor');
-  const pointerCursor = document.querySelector('.custom-pointer');
-
-  document.addEventListener('mousemove', (e) => {
-    // Update both cursor positions
-    cubeCursor.style.left = `${e.clientX}px`;
-    cubeCursor.style.top  = `${e.clientY}px`;
-    pointerCursor.style.left = `${e.clientX}px`;
-    pointerCursor.style.top  = `${e.clientY}px`;
-
-    // Check if the mouse is over a link (or any interactive element)
-    if (e.target.closest('a')) {
-      cubeCursor.style.display = 'none';
-      pointerCursor.style.display = 'block';
-    } else {
-      cubeCursor.style.display = 'block';
-      pointerCursor.style.display = 'none';
-    }
-  });
+    // ----- Cursor Effect -----
+    document.addEventListener('mousemove', (e) => {
+        document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+        document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+    });
     // ----- Ripple Effect on Buttons -----
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
@@ -104,7 +144,29 @@ function opentab(tabname) {
     });
   
     // ----- Form Submission with Confetti -----
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxQyF7BkPQqawi-47Og3ZMM4SnXURxa9d0j3eGDc9PH_d0w5c3PJmRLVwjCV8n16M3y/exec';
+    // Custom cursor effect
+document.addEventListener('mousemove', (e) => {
+    document.body.style.setProperty('--cursor-x', e.clientX + 'px');
+    document.body.style.setProperty('--cursor-y', e.clientY + 'px');
+    
+    const cursor = document.body;
+    cursor.style.setProperty('--cursor-x', e.clientX + 'px');
+    cursor.style.setProperty('--cursor-y', e.clientY + 'px');
+});
+
+// Add cursor glow on interactive elements
+const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, [onclick], .social-icon, .work');
+interactiveElements.forEach(element => {
+    element.addEventListener('mouseenter', () => {
+        document.body.classList.add('element-hovered');
+    });
+    
+    element.addEventListener('mouseleave', () => {
+        document.body.classList.remove('element-hovered');
+    });
+});
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwvBtOz_SDWBo2i2qnW8f9mMxk3vX_R_w2drOxmDj0SpeVk7wz3bTMlYDf6gkmCQVXU/exec';
     const form = document.forms['submit-to-google-sheet'];
     const msg = document.getElementById("msg");
     if (form) {
