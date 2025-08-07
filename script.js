@@ -55,28 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Tab functionality – smooth transition version
-function opentab(tabname) {
-    const tablinks = document.getElementsByClassName("tab-links");
-    const tabcontents = document.getElementsByClassName("tab-contents");
-    // Remove active classes from all tabs and contents
-    for (let tablink of tablinks) {
-      tablink.classList.remove("active-link");
-    }
-    for (let tabcontent of tabcontents) {
-      // Instead of instantly hiding, let CSS transition the opacity
-      tabcontent.classList.remove("active-tab");
-    }
-    // Add active class to clicked tab and the corresponding content
-    event.currentTarget.classList.add("active-link");
-    document.getElementById(tabname).classList.add("active-tab");
-  }
-  
-  // Mobile menu functions removed - using floating nav instead
-  
-  // ================= DOMContentLoaded Section =================
-  
-  document.addEventListener('DOMContentLoaded', () => {
+// ================= DOMContentLoaded Section =================
+
+document.addEventListener('DOMContentLoaded', () => {
     // ----- Cursor Effect -----
     document.addEventListener('mousemove', (e) => {
         document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');

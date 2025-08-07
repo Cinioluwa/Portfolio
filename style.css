@@ -380,10 +380,6 @@ html{
         padding: 30px;
     }
     
-    .about-details-card {
-        padding: 30px;
-    }
-    
     .sub-title {
         font-size: 45px; /* Smaller title for tablets */
         margin-bottom: 25px;
@@ -394,13 +390,8 @@ html{
         line-height: 1.7; /* Better line spacing */
         margin-bottom: 20px;
     }
-    
-    .tab-titles {
-        justify-content: flex-start; /* Left align tabs */
-        flex-wrap: wrap; /* Allow wrapping if needed */
-        gap: 10px;
-    }
 }
+
 
 /* Large tablets and small laptops */
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
@@ -440,11 +431,6 @@ html{
     }
     
     .about-intro-card {
-        padding: 25px;
-        margin: 0 10px;
-    }
-    
-    .about-details-card {
         padding: 25px;
         margin: 0 10px;
     }
@@ -1010,7 +996,7 @@ nav ul li a:hover::after{
     display: flex;
     gap: 40px;
     margin-bottom: 60px;
-    align-items: center;
+    align-items: stretch; /* Make both columns the same height */
 }
 
 .about-image-col {
@@ -1019,6 +1005,8 @@ nav ul li a:hover::after{
 
 .about-image-col img {
     width: 100%;
+    height: 100%; /* Fill the full height of the container */
+    object-fit: cover; /* Maintain aspect ratio while filling */
     border-radius: 15px;
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
@@ -1026,6 +1014,7 @@ nav ul li a:hover::after{
 
 .about-text-col {
     flex-basis: 60%;
+    display: flex; /* Make this a flex container */
 }
 
 .about-intro-card {
@@ -1040,6 +1029,10 @@ nav ul li a:hover::after{
         0 4px 16px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    flex: 1; /* Take full height of the parent flex container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
 }
 
 .about-intro-card:hover {
@@ -1067,36 +1060,6 @@ nav ul li a:hover::after{
         0 12px 40px rgba(0, 0, 0, 0.25),
         0 6px 20px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-/* About Details Section - Bottom part with tabs */
-.about-details-section {
-    width: 100%;
-}
-
-.about-details-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.08),
-        0 4px 16px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
-}
-
-/* Dark mode glassmorphism for details card */
-[data-theme="dark"] .about-details-card,
-.light-mode .about-details-card {
-    background: rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.15),
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 /* Legacy styles for compatibility */
@@ -1151,147 +1114,6 @@ nav ul li a:hover::after{
     filter: blur(20px);
     z-index: -1;
 }
-
-.tab-titles{
-    display: flex;
-    margin: 20px 0 20px;
-}
-
-.tab-links{
-    margin-right: 50px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: none;
-    position: relative;
-}
-
-.tab-links::after{
-    content: '';
-    width: 0;
-    height: 3px;
-    background-color: #ff004f;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    transition: 0.5s;
-}
-
-.tab-links.active-link::after{
-    width: 50%;
-}
-
-.tab-contents ul li {
-    font-family: 'Montserrat', sans-serif; /* Modern, clean font */
-    margin: 10px 0;
-    list-style: georgian;
-    padding-left: 10px;
-    border-left: 3px solid #ff004f; /* Adds a colored accent */
-    transition: transform 0.3s ease; /* Smooth hover animation */
-}
-
-.tab-contents ul li:hover {
-    transform: translateX(5px); /* Slide effect on hover */
-}
-
-.tab-contents ul li span{
-    color: #ff4869;
-    font-family: monospace;
-    font-size: 20px;
-}
-
-.tab-contents{
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease-in-out, max-height 0.3s step-end;
-    position: absolute; /* This prevents the container from expanding */
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.tab-contents.active-tab{
-    opacity: 1;
-    max-height: 800px;
-    position: static;
-}
-
-.edu-item {
-    margin-bottom: 15px !important;
-    padding: 10px !important;
-    border-left: 3px solid #ff004f;
-    transition: transform 0.3s ease;
-}
-
-.edu-item:hover {
-    transform: translateX(5px) !important;
-}
-
-.involvement {
-    margin-top: 8px;
-}
-
-.involvement p {
-    color: #ff4869;
-    font-size: 14px;
-    margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.org-list, .role-list {
-    list-style: none !important;
-    padding-left: 0 !important;
-}
-
-.org-list li, .role-list li {
-    display: flex;
-    align-items: center;
-    margin: 5px 0;
-    font-size: 14px;
-    border-left: none !important;
-    padding-left: 0 !important;
-}
-
-.org-icon {
-    width: 16px;
-    margin-right: 8px;
-    color: #ff4869;
-}
-
-/* Remove default list styling */
-#skills ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  /* Spacing for each skill */
-  #skills li {
-    margin-bottom: 15px;
-  }
-  
-  /* Style the skill name */
-  #skills li span:first-child {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  /* Meter container styling */
-  .meter {
-    height: 10px;
-    background-color: var(--bg-color);
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  /* The filled part of the meter */
-  .meter-fill {
-    display: block;
-    height: 100%;
-    background-color: var(--text-color);
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out;
-  }
-  
 
 /*services*/
 
@@ -2031,10 +1853,6 @@ nav .fa-solid{
         overflow-wrap: break-word;
     }
 
-    .tab-links{
-        font-size: 15px;
-        margin-right: 12px;
-    }
     .contact-left, .contact-right{
         flex-basis: 100%;
     }
@@ -2343,43 +2161,8 @@ nav .fa-solid{
 
 
 /* =================================================================== */
-/* === FINAL, GUARANTEED NON-RESIZING TABS (Z-INDEX STACKING) === */
+/* === RESPONSIVE TAB CONTAINER LAYOUTS === */
 /* =================================================================== */
-
-/* 1. Set up the container as a grid. This is the foundation for our stack. */
-.tab-container {
-    display: grid;
-    /* A min-height is still good practice to prevent collapse before content loads. */
-    min-height: 480px; /* Adjusted slightly to better fit Education tab */
-}
-
-/* 2. Style ALL tab content panels. This is where the magic happens. */
-.tab-contents {
-    /* 3. Place ALL panels in the exact same grid cell to stack them. */
-    grid-area: 1 / 1 / 2 / 2;
-
-    /* 4. Control visibility with opacity and layering with z-index.
-       By default, all tabs are invisible and on a lower layer.
-       CRUCIALLY, they are never set to 'display: none' or 'visibility: hidden',
-       so they ALWAYS contribute to the parent's height calculation. */
-    opacity: 0;
-    z-index: 1; /* Default layer */
-    transition: opacity 0.3s ease-in-out;
-
-    /* Prevent clicks on the invisible, underlying tabs. */
-    pointer-events: none;
-}
-
-/* 5. Style ONLY the active tab. */
-.tab-contents.active-tab {
-    /* Make the active tab visible */
-    opacity: 1;
-    /* Bring it to the top layer, above all other tabs */
-    z-index: 2; /* Higher layer */
-    /* Allow clicks and interactions only on the active tab. */
-    pointer-events: auto;
-}
-
 
 /* Loading Screen Styles - Add to your existing CSS */
 #loading-screen {
@@ -2634,7 +2417,7 @@ body.light-mode .about-card {
 
 /* The polished intro paragraph */
 .about-intro-text {
-    font-size: 1.1rem; /* Slightly smaller for better balance */
+    font-size: 1.3rem; /* Increased from 1.1rem for better readability */
     line-height: 1.7;
     margin-bottom: 30px;
     font-family: 'Montserrat', sans-serif; /* A more readable, professional font */
@@ -2649,92 +2432,7 @@ body.light-mode .about-intro-text {
 /* Overriding the old #about-x style just in case */
 #about-x {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 1.1rem !important;
-}
-
-
-/* Styling for the new Skills tab grid */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
-.skill-category h4 {
-    color: #ff004f;
-    margin-bottom: 15px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 0, 79, 0.3);
-    padding-bottom: 8px;
-}
-
-.skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.skill-tag {
-    background: rgba(255, 0, 79, 0.1);
-    color: #f1f1f1;
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid rgba(255, 0, 79, 0.2);
-    transition: all 0.3s ease;
-}
-
-body.light-mode .skill-tag {
-    background: rgba(255, 0, 79, 0.08);
-    color: #333;
-    border: 1px solid rgba(255, 0, 79, 0.3);
-}
-
-.skill-tag:hover {
-    background: #ff004f;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(255, 0, 79, 0.3);
-}
-
-/* Minor adjustments for existing tab content for consistency */
-.tab-contents ul li {
-    padding: 10px 10px 10px 15px;
-}
-
-/* Responsive adjustments for the new layout */
-@media only screen and (max-width: 768px) {
-    .about-card {
-        padding: 20px;
-    }
-
-    .about-intro-text {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr; /* Stack categories on mobile */
-    }
-    .tab-container {
-        /* Switch to a grid layout */
-        display: grid;
-        min-height: 580px;
-        position: static; /* No longer need relative positioning */
-    }
-    .tab-contents {
-        /* All tabs are now part of the layout flow, stacked in the same grid cell */
-        position: static; /* Override the absolute positioning from mobile */
-        grid-area: 1 / 1 / 2 / 2;
-        z-index: 1; /* Default layer */
-    }
-    .tab-contents.active-tab {
-        z-index: 2; /* The active tab is brought to the front */
-    }
+    font-size: 1.3rem !important; /* Updated to match the new size */
 }
 
 
