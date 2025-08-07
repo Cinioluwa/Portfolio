@@ -363,29 +363,36 @@ html{
         padding: 60px 0; /* Reduced padding */
     }
     
-    .row {
-        gap: 30px; /* Add gap between columns */
-        align-items: center; /* Center align items */
+    .about-intro-section {
+        gap: 30px;
+        margin-bottom: 40px;
     }
     
-    .about-col-1 {
-        flex-basis: 40%; /* Slightly larger for better balance */
+    .about-image-col {
+        flex-basis: 40%;
     }
     
-    .about-col-2 {
-        flex-basis: 55%; /* Better proportion */
-        padding-left: 20px; /* Add some left padding */
+    .about-text-col {
+        flex-basis: 55%;
+    }
+    
+    .about-intro-card {
+        padding: 30px;
+    }
+    
+    .about-details-card {
+        padding: 30px;
     }
     
     .sub-title {
         font-size: 45px; /* Smaller title for tablets */
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
     
     .about-intro-text {
         font-size: 16px; /* Slightly larger text */
         line-height: 1.7; /* Better line spacing */
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
     
     .tab-titles {
@@ -405,17 +412,53 @@ html{
         top: 35%;
     }
     
-    .about-col-1 {
+    .about-image-col {
         flex-basis: 38%;
     }
     
-    .about-col-2 {
+    .about-text-col {
         flex-basis: 58%;
     }
     
     .sub-title {
         font-size: 50px;
     }
+}
+
+/* Mobile responsive for new about layout */
+@media only screen and (max-width: 768px) {
+    .about-intro-section {
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    
+    .about-image-col,
+    .about-text-col {
+        flex-basis: 100%;
+    }
+    
+    .about-intro-card {
+        padding: 25px;
+        margin: 0 10px;
+    }
+    
+    .about-details-card {
+        padding: 25px;
+        margin: 0 10px;
+    }
+    
+    .sub-title {
+        font-size: 35px;
+        margin-bottom: 20px;
+    }
+    
+    .about-intro-text {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+   
 }
 .contact-grid {
     display: grid;
@@ -962,6 +1005,101 @@ nav ul li a:hover::after{
     font-size: 15px;
 }
 
+/* About Introduction Section - Top part with image and intro text */
+.about-intro-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: center;
+}
+
+.about-image-col {
+    flex-basis: 35%;
+}
+
+.about-image-col img {
+    width: 100%;
+    border-radius: 15px;
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+
+.about-text-col {
+    flex-basis: 60%;
+}
+
+.about-intro-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.about-intro-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Dark mode glassmorphism for intro card */
+[data-theme="dark"] .about-intro-card,
+.light-mode .about-intro-card {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .about-intro-card:hover,
+.light-mode .about-intro-card:hover {
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.25),
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* About Details Section - Bottom part with tabs */
+.about-details-section {
+    width: 100%;
+}
+
+.about-details-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 4px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* Dark mode glassmorphism for details card */
+[data-theme="dark"] .about-details-card,
+.light-mode .about-details-card {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Legacy styles for compatibility */
 .row{
     display: flex;
     justify-content: space-between;
@@ -976,12 +1114,11 @@ nav ul li a:hover::after{
     width: 100%;
     border-radius: 15px;
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .about-col-2{
     flex-basis: 60%;
-    
 }
 
 #about-x{
@@ -2650,6 +2787,3 @@ nav ul li a:hover,
     animation: glitch-anim 0.2s infinite;
 }
 
-/* ======================================================= */
-/* === CUSTOM SCROLLBAR REMOVED FOR CLEANER UI       === */
-/* ======================================================= */
