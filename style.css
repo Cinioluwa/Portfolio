@@ -79,7 +79,43 @@ html, body {
     }
 }
 html{
-    scroll-behavior:auto;
+    scroll-behavior: smooth;
+}
+
+/* Full-screen sections for desktop with scroll snap */
+@media (min-width: 769px) {
+    html {
+        scroll-snap-type: y mandatory;
+    }
+    
+     
+    #cta-section
+     {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        scroll-snap-align: start;
+    }
+
+    .container{
+        margin-top: 5%;
+        scroll-snap-align: center;
+        min-height: 60vh;
+    }
+    
+    /* Special positioning for header */
+    #header {
+        align-items: flex-start;
+        padding-top: 0;
+    }
+    
+    /* Ensure containers are properly centered */
+        #cta-section .container
+     {
+        width: 100%;
+        margin: 0 auto;
+    }
 }
 
 /* ================= FLOATING NAVIGATION BAR ================= */
@@ -1063,6 +1099,17 @@ nav ul li a:hover::after{
     padding: 80px 0;
     color: var(--text-color);
     font-size: 15px;
+}
+
+/* Adjust padding for full-screen sections on desktop */
+@media (min-width: 769px) {
+    #about,
+    #services,
+    #portfolio,
+    #cta-section,
+    #contact {
+        padding: 40px 0;
+    }
 }
 
 /* About Introduction Section - Top part with image and intro text */
