@@ -58,11 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // ================= DOMContentLoaded Section =================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ----- Cursor Effect -----
-    document.addEventListener('mousemove', (e) => {
-        document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
-        document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
-    });
+    // ----- Cursor Effect - Desktop Only -----
+    if (window.innerWidth > 768) {
+        document.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+        });
+    }
     
     // ----- Ripple Effect on Buttons -----
     document.querySelectorAll('.btn').forEach(btn => {
@@ -325,32 +327,34 @@ function highlightActiveSection() {
 window.addEventListener('scroll', highlightActiveSection);
 
 
-    // ----- Particles.js Initialization -----
+    // ----- Particles.js Initialization - Mobile Optimized -----
+    const isMobile = window.innerWidth <= 768;
+    
     particlesJS("header", {
       "particles": {
-        "number": { "value": 80 },
+        "number": { "value": isMobile ? 30 : 80 }, // Fewer particles on mobile
         "color": { "value": "#ffffff" },
         "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 3 },
+        "opacity": { "value": isMobile ? 0.3 : 0.5 }, // Less opacity on mobile
+        "size": { "value": isMobile ? 2 : 3 }, // Smaller particles on mobile
         "line_linked": {
           "enable": true,
-          "distance": 150,
+          "distance": isMobile ? 100 : 150, // Shorter connections on mobile
           "color": "#ffffff",
-          "opacity": 0.4,
+          "opacity": isMobile ? 0.2 : 0.4, // Less visible on mobile
           "width": 1
         },
-        "move": { "enable": true, "speed": 6 }
+        "move": { "enable": true, "speed": isMobile ? 3 : 6 } // Slower movement on mobile
       },
       "interactivity": {
         "detect_on": "canvas",
         "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
+          "onhover": { "enable": !isMobile, "mode": "repulse" }, // Disable hover on mobile
           "onclick": { "enable": true, "mode": "push" }
         },
         "modes": {
           "repulse": { "distance": 100 },
-          "push": { "particles_nb": 4 }
+          "push": { "particles_nb": isMobile ? 2 : 4 } // Fewer new particles on mobile
         }
       },
       "retina_detect": true

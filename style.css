@@ -10,7 +10,7 @@ html, body {
     overflow-x: hidden;
 }
 
-/* Cursor and Hover Effects */
+/* Cursor and Hover Effects - Desktop Only */
 :root {
     --cursor-size: 50px;
     --cursor-hover-size: 70px;
@@ -24,58 +24,59 @@ html, body {
     100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Default cursor with inversion effect */
-html {
-    cursor: none;
-}
+/* Only apply custom cursor on desktop */
+@media (min-width: 769px) {
+    html {
+        cursor: none;
+    }
 
-body::before {
-    content: '';
-    position: fixed;
-    width: var(--cursor-size);
-    height: var(--cursor-size);
-    left: var(--cursor-x);
-    top: var(--cursor-y);
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 50%;
-    pointer-events: none;
-    mix-blend-mode: difference;
-    z-index: 9999;
-    transition: transform var(--cursor-transition), width var(--cursor-transition), height var(--cursor-transition);
-}
+    body::before {
+        content: '';
+        position: fixed;
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        left: var(--cursor-x);
+        top: var(--cursor-y);
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        mix-blend-mode: difference;
+        z-index: 9999;
+        transition: transform var(--cursor-transition), width var(--cursor-transition), height var(--cursor-transition);
+    }
 
-/* Move the cursor */
-body {
-    cursor: none;
-}
+    body {
+        cursor: none;
+    }
 
-body:active::before {
-    transform: scale(0.8);
-}
+    body:active::before {
+        transform: scale(0.8);
+    }
 
-/* Hover effect on interactive elements */
-a:hover,
-button:hover,
-.btn:hover,
-input:hover,
-textarea:hover,
-[onclick]:hover,
-.social-icon:hover,
-.work:hover {
-    cursor: pointer;
-}
+    /* Hover effect on interactive elements - Desktop only */
+    a:hover,
+    button:hover,
+    .btn:hover,
+    input:hover,
+    textarea:hover,
+    [onclick]:hover,
+    .social-icon:hover,
+    .work:hover {
+        cursor: pointer;
+    }
 
-a:hover ~ ::before,
-button:hover ~ ::before,
-.btn:hover ~ ::before,
-input:hover ~ ::before,
-textarea:hover ~ ::before,
-[onclick]:hover ~ ::before,
-.social-icon:hover ~ ::before,
-.work:hover ~ ::before {
-    transform: scale(1.5);
-    mix-blend-mode: difference;
+    a:hover ~ ::before,
+    button:hover ~ ::before,
+    .btn:hover ~ ::before,
+    input:hover ~ ::before,
+    textarea:hover ~ ::before,
+    [onclick]:hover ~ ::before,
+    .social-icon:hover ~ ::before,
+    .work:hover ~ ::before {
+        transform: scale(1.5);
+        mix-blend-mode: difference;
+    }
 }
 html{
     scroll-behavior:auto;
@@ -341,6 +342,131 @@ html{
         width: 24px;
         height: 24px;
         font-size: 11px;
+    }
+}
+
+/* Professional CTA Section */
+#cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, rgba(255, 0, 79, 0.1), rgba(0, 0, 0, 0.2));
+    margin: 50px 0;
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.cta-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 50px 0;
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff004f;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #ff004f, #ff6b6b);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 0, 79, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 0, 79, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-color);
+    padding: 15px 30px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ff004f;
+    color: #ff004f;
+    transform: translateY(-3px);
+}
+
+/* Mobile responsive for CTA */
+@media only screen and (max-width: 768px) {
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 200px;
+        text-align: center;
+        justify-content: center;
     }
 }
 
@@ -1256,6 +1382,27 @@ body.light-mode .services-list div:hover i {
     margin-top: 50px;
 }
 
+/* Stagger animation for project cards */
+.work {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpStagger 0.8s ease forwards;
+}
+
+.work:nth-child(1) { animation-delay: 0.1s; }
+.work:nth-child(2) { animation-delay: 0.2s; }
+.work:nth-child(3) { animation-delay: 0.3s; }
+.work:nth-child(4) { animation-delay: 0.4s; }
+.work:nth-child(5) { animation-delay: 0.5s; }
+.work:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideUpStagger {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* The project card itself, now an <a> tag */
 .work {
     display: block; /* Makes the <a> tag behave like a div */
@@ -1281,12 +1428,20 @@ body.light-mode .work {
 
 /* A subtle lift effect on hover/tap */
 .work:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 0, 79, 0.3),
+        0 0 30px rgba(255, 0, 79, 0.2);
+    border-color: rgba(255, 0, 79, 0.4);
 }
 
 body.light-mode .work:hover {
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 0, 79, 0.3),
+        0 0 30px rgba(255, 0, 79, 0.1);
+    border-color: rgba(255, 0, 79, 0.4);
 }
 
 .work img {
@@ -1327,6 +1482,24 @@ body.light-mode .work:hover {
     opacity: 0.85;
 }
 
+/* Project metrics styling */
+.project-metrics {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.metric {
+    background: rgba(255, 0, 79, 0.2);
+    color: #ff004f;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 0, 79, 0.3);
+}
+
 .work .tech-stack {
     font-size: 0.85rem;
     color: var(--text-color);
@@ -1336,6 +1509,7 @@ body.light-mode .work:hover {
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
     align-self: flex-start; /* Aligns to the left */
+    margin-top: 10px; /* Added spacing after metrics */
 }
 
 body.light-mode .work .tech-stack {
@@ -1552,6 +1726,45 @@ body.light-mode .work .tech-stack {
     display: inline-block;
     background-color: #ff004f;
     color: #fff;
+}
+
+/* Enhanced resume button */
+.resume-btn {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg, #ff004f, #ff6b6b);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(255, 0, 79, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.resume-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 0, 79, 0.4);
+    background: linear-gradient(45deg, #ff6b6b, #ff004f);
+}
+
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.resume-btn:hover .btn-shine {
+    left: 100%;
 }
 
 .light-mode .btn.btn2:hover {
@@ -1842,7 +2055,7 @@ nav .fa-solid{
     }
     
     .emph{
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         text-decoration-thickness: -6px;
     }
     .about-col-2{
@@ -2427,6 +2640,71 @@ body.light-mode .about-card {
 
 body.light-mode .about-intro-text {
     opacity: 1;
+}
+
+/* Skills Preview Section */
+.skills-preview {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.skill-category, .achievement-highlight {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-category h4, .achievement-highlight h4 {
+    color: #ff004f;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: linear-gradient(45deg, #ff004f, #ff6b6b);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.achievement-highlight p {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+/* Mobile responsive for skills */
+@media only screen and (max-width: 768px) {
+    .skills-preview {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .skill-category, .achievement-highlight {
+        padding: 15px;
+    }
+    
+    .skill-tags {
+        gap: 6px;
+    }
+    
+    .skill-tag {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
 }
 
 /* Overriding the old #about-x style just in case */
