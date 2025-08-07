@@ -345,6 +345,78 @@ html{
 }
 
 /* Contact Section Styles */
+
+/* ================= TABLET OPTIMIZATION ================= */
+/* Tablet-specific fixes for awkward intermediate screen sizes */
+@media only screen and (min-width: 481px) and (max-width: 1024px) {
+    /* 1. Reduce header height to minimize gap between sections */
+    #header {
+        height: 80vh; /* Reduced from 100vh */
+    }
+    
+    .header-text {
+        top: 30%; /* Adjust positioning for smaller header */
+    }
+    
+    /* 2. Improve About section layout for tablets */
+    #about {
+        padding: 60px 0; /* Reduced padding */
+    }
+    
+    .row {
+        gap: 30px; /* Add gap between columns */
+        align-items: center; /* Center align items */
+    }
+    
+    .about-col-1 {
+        flex-basis: 40%; /* Slightly larger for better balance */
+    }
+    
+    .about-col-2 {
+        flex-basis: 55%; /* Better proportion */
+        padding-left: 20px; /* Add some left padding */
+    }
+    
+    .sub-title {
+        font-size: 45px; /* Smaller title for tablets */
+        margin-bottom: 30px;
+    }
+    
+    .about-intro-text {
+        font-size: 16px; /* Slightly larger text */
+        line-height: 1.7; /* Better line spacing */
+        margin-bottom: 25px;
+    }
+    
+    .tab-titles {
+        justify-content: flex-start; /* Left align tabs */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        gap: 10px;
+    }
+}
+
+/* Large tablets and small laptops */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    #header {
+        height: 75vh; /* Even more compact for larger tablets */
+    }
+    
+    .header-text {
+        top: 35%;
+    }
+    
+    .about-col-1 {
+        flex-basis: 38%;
+    }
+    
+    .about-col-2 {
+        flex-basis: 58%;
+    }
+    
+    .sub-title {
+        font-size: 50px;
+    }
+}
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
