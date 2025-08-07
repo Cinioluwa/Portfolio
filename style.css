@@ -256,6 +256,12 @@ html{
         letter-spacing: 0.3px;
     }
     
+    /* Reduce active state styling for mobile */
+    .floating-nav-links li a.active {
+        background: rgba(255, 0, 79, 0.1);
+        padding: 5px 6px; /* Slightly smaller padding */
+    }
+    
     .floating-nav-logo img {
         width: 22px;
         height: 22px;
@@ -280,6 +286,12 @@ html{
     .floating-nav-links li a {
         font-size: 10px;
         padding: 4px 6px;
+    }
+    
+    /* Even more compact active state for small screens */
+    .floating-nav-links li a.active {
+        background: rgba(255, 0, 79, 0.08);
+        padding: 4px 5px; /* Very tight padding */
     }
     
     .floating-nav-links {
@@ -308,6 +320,12 @@ html{
     .floating-nav-links li a {
         font-size: 9px;
         padding: 3px 5px;
+    }
+    
+    /* Minimal active state for very small screens */
+    .floating-nav-links li a.active {
+        background: rgba(255, 0, 79, 0.06);
+        padding: 3px 4px; /* Minimal padding */
     }
     
     .floating-nav-links {
