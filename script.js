@@ -72,13 +72,7 @@ function opentab(tabname) {
     document.getElementById(tabname).classList.add("active-tab");
   }
   
-  // Sidebar menu functions
-  function openmenu() {
-    document.getElementById("sidemenu").style.right = "0";
-  }
-  function closemenu() {
-    document.getElementById("sidemenu").style.right = "-500px";
-  }
+  // Mobile menu functions removed - using floating nav instead
   
   // ================= DOMContentLoaded Section =================
   
@@ -113,33 +107,46 @@ function opentab(tabname) {
       });
       const themeToggle = document.getElementById('themeToggle');
       const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+      const floatingThemeToggle = document.getElementById('floatingThemeToggle');
       const aboutImage = document.getElementById('aboutImage');
 
       // Ensure dark mode is active by default
       document.body.classList.remove('light-mode');
       themeToggle.textContent = '☀️';
       mobileThemeToggle.textContent = '☀️';
+      if (floatingThemeToggle) {
+        floatingThemeToggle.textContent = '☀️';
+      }
 
       // Function to toggle theme and update image
-      function toggleTheme() {
+      window.toggleTheme = function() {
         if (document.body.classList.contains('light-mode')) {
           // Switch to dark mode
           document.body.classList.remove('light-mode');
           themeToggle.textContent = '☀️';
           mobileThemeToggle.textContent = '☀️';
+          if (floatingThemeToggle) {
+            floatingThemeToggle.textContent = '☀️';
+          }
           aboutImage.src = aboutImage.getAttribute('data-dark');
         } else {
           // Switch to light mode
           document.body.classList.add('light-mode');
           themeToggle.textContent = '🌙';
           mobileThemeToggle.textContent = '🌙';
+          if (floatingThemeToggle) {
+            floatingThemeToggle.textContent = '🌙';
+          }
           aboutImage.src = aboutImage.getAttribute('data-light');
         }
       }
 
-      // Add event listeners for both buttons
-      themeToggle.addEventListener('click', toggleTheme);
-      mobileThemeToggle.addEventListener('click', toggleTheme);
+      // Add event listeners for all buttons
+      themeToggle.addEventListener('click', window.toggleTheme);
+      mobileThemeToggle.addEventListener('click', window.toggleTheme);
+      if (floatingThemeToggle) {
+        floatingThemeToggle.addEventListener('click', window.toggleTheme);
+      }
 
       
     });
@@ -258,23 +265,83 @@ typewriterElements.forEach(element => {
       });
     }
 
+// ================= FLOATING NAVIGATION ================= 
+// Floating Navigation Functionality
+let lastScrollTop = 0;
+let ticking = false;
 
-    // Scroll to Top Btn
+function updateFloatingNav() {
+    const floatingNav = document.getElementById('floatingNav');
+    const header = document.getElementById('header');
+    const headerHeight = header ? header.offsetHeight : window.innerHeight;
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Show floating nav when user scrolls past 80% of header height
+    if (scrollPosition > headerHeight * 0.8) {
+        floatingNav.classList.add('show');
+    } else {
+        floatingNav.classList.remove('show');
+    }
+    
+    lastScrollTop = scrollPosition;
+    ticking = false;
+}
 
-    // Show the button when user scrolls down 200px
 window.addEventListener('scroll', () => {
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-    scrollTopBtn.style.display = "block";
-  } else {
-    scrollTopBtn.style.display = "none";
-  }
+    if (!ticking) {
+        requestAnimationFrame(updateFloatingNav);
+        ticking = true;
+    }
 });
 
-// Scroll to top smoothly when button is clicked
-document.getElementById('scrollTopBtn').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// Smooth scroll for floating nav links with active state highlighting
+document.querySelectorAll('.floating-nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            const offsetTop = targetSection.offsetTop;
+            const headerOffset = 80; // Adjust as needed
+            
+            // Remove active class from all links
+            document.querySelectorAll('.floating-nav-links a').forEach(l => {
+                l.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            window.scrollTo({
+                top: offsetTop - headerOffset,
+                behavior: 'smooth'
+            });
+        }
+    });
 });
+
+// Highlight active section in floating nav
+function highlightActiveSection() {
+    const sections = document.querySelectorAll('#header, #about, #services, #portfolio, #contact');
+    const navLinks = document.querySelectorAll('.floating-nav-links a');
+    const scrollPosition = window.pageYOffset + 100;
+    
+    sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (navLinks[index]) {
+                navLinks[index].classList.add('active');
+            }
+        }
+    });
+}
+
+window.addEventListener('scroll', highlightActiveSection);
 
 
     // ----- Particles.js Initialization -----
