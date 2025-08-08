@@ -2389,6 +2389,7 @@ nav .fa-solid{
     color: #ff0059;
     font-family: 'Courier New', monospace;
     transition: opacity 0.5s ease-out;
+    backdrop-filter: blur(20px);
 }
 
 #loading-screen.fade-out {
@@ -2397,22 +2398,56 @@ nav .fa-solid{
 }
 
 .terminal-container {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid #ff00d9;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 0, 217, 0.3);
+    border-radius: 20px;
     padding: 30px;
     width: 90%;
     max-width: 600px;
-    box-shadow: 0 0 30px rgba(255, 0, 174, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(255, 0, 174, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
+    overflow: hidden;
+}
+
+/* Add a subtle animated glow effect */
+.terminal-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        rgba(255, 0, 217, 0.1), 
+        rgba(255, 0, 79, 0.1), 
+        rgba(255, 0, 179, 0.1),
+        rgba(255, 0, 217, 0.1)
+    );
+    border-radius: 22px;
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
 }
 
 .terminal-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ff009d;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 0, 157, 0.2);
+    background: rgba(255, 255, 255, 0.02);
+    margin: -30px -30px 20px -30px;
+    padding: 15px 30px;
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(10px);
 }
 
 .terminal-buttons {
@@ -2425,20 +2460,39 @@ nav .fa-solid{
     width: 12px;
     height: 12px;
     border-radius: 50%;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: transform 0.2s ease;
 }
 
-.btn-close { background: #ff5f56; }
-.btn-minimize { background: #ffbd2e; }
-.btn-maximize { background: #27ca3f; }
+.terminal-button:hover {
+    transform: scale(1.1);
+}
+
+.btn-close { 
+    background: linear-gradient(135deg, #ff5f56, #ff8a80);
+    box-shadow: 0 2px 8px rgba(255, 95, 86, 0.3);
+}
+.btn-minimize { 
+    background: linear-gradient(135deg, #ffbd2e, #ffd54f);
+    box-shadow: 0 2px 8px rgba(255, 189, 46, 0.3);
+}
+.btn-maximize { 
+    background: linear-gradient(135deg, #27ca3f, #4caf50);
+    box-shadow: 0 2px 8px rgba(39, 202, 63, 0.3);
+}
 
 .terminal-title {
-    color: #ff00cc;
+    color: rgba(255, 0, 204, 0.9);
     font-size: 14px;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
 }
 
 .terminal-content {
     min-height: 200px;
+    position: relative;
 }
 
 .terminal-line {
@@ -2523,18 +2577,26 @@ nav .fa-solid{
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: rgba(255, 0, 242, 0.2);
-    border-radius: 4px;
+    background: rgba(255, 0, 242, 0.1);
+    border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #ff00bb;
+    border: 1px solid rgba(255, 0, 187, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ff00dd53, #ff004f, #ff00b3);
+    background: linear-gradient(90deg, 
+        rgba(255, 0, 221, 0.8), 
+        rgba(255, 0, 79, 0.9), 
+        rgba(255, 0, 179, 0.8)
+    );
     width: 0%;
     animation: progressFill 2s ease-out forwards;
     animation-delay: 3s;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 79, 0.4);
 }
 
 @keyframes progressFill {
@@ -2545,24 +2607,31 @@ nav .fa-solid{
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background: transparent;
-    border: 1px solid #ff00f2;
-    color: #ff00ea;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 0, 242, 0.3);
+    color: rgba(255, 0, 234, 0.9);
     padding: 8px 15px;
     font-family: 'Courier New', monospace;
     font-size: 12px;
     cursor: none;
-    border-radius: 4px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;
     animation-delay: 1s;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .skip-button:hover {
-    background: #ff00cc;
-    color: #000;
-    box-shadow: 0 0 10px rgba(255, 0, 234, 0.5);
+    background: rgba(255, 0, 204, 0.2);
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 6px 20px rgba(255, 0, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
