@@ -38,7 +38,7 @@ html, body {
         left: var(--cursor-x);
         top: var(--cursor-y);
         transform: translate(-50%, -50%);
-        background: #fff;
+        background: var(--text-primary);
         border-radius: 50%;
         pointer-events: none;
         mix-blend-mode: difference;
@@ -143,8 +143,8 @@ html{
     align-items: center;
     padding: 12px 24px;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50px;
     box-shadow: 
@@ -216,8 +216,8 @@ html{
 }
 
 .floating-nav-links li a:hover {
-    background: rgba(255, 0, 79, 0.1);
-    color: #ff004f;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-primary);
     transform: translateY(-2px);
 }
 
@@ -228,7 +228,7 @@ html{
     left: 50%;
     width: 0;
     height: 2px;
-    background: #ff004f;
+    background: var(--accent-primary);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -238,8 +238,8 @@ html{
 }
 
 .floating-nav-links li a.active {
-    background: rgba(255, 0, 79, 0.15);
-    color: #ff004f;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--accent-primary);
 }
 
 .floating-nav-links li a.active::after {
@@ -274,41 +274,139 @@ html{
     background: rgba(0, 0, 0, 0.3);
 }
 
+/* Desktop navigation dark mode improvements */
+[data-theme="dark"] .floating-nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent-primary);
+}
+
+[data-theme="dark"] .floating-nav-links li a.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--accent-primary);
+}
+
 /* Mobile floating nav */
 @media only screen and (max-width: 768px) {
     .floating-nav-content {
         min-width: auto;
-        padding: 8px 14px;
-        gap: 10px;
-        max-width: 90vw;
+        padding: 8px 12px;
+        gap: 8px;
+        max-width: 95vw;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        overflow: hidden; /* Prevent overflow */
     }
     
     .floating-nav-links {
-        gap: 6px;
+        gap: 4px;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        overflow: hidden; /* Prevent overflow */
+        flex-shrink: 1; /* Allow shrinking */
     }
     
     .floating-nav-links li a {
-        font-size: 11px;
-        padding: 5px 7px;
-        letter-spacing: 0.3px;
+        font-size: 10px;
+        padding: 4px 6px;
+        letter-spacing: 0.2px;
+        white-space: nowrap; /* Prevent text wrapping */
+        flex-shrink: 1; /* Allow shrinking */
+        min-width: 0; /* Allow shrinking below content size */
+        border-radius: 12px; /* Smaller border radius */
     }
     
-    /* Reduce active state styling for mobile */
+    /* Fix active state to prevent layout shift */
     .floating-nav-links li a.active {
-        background: rgba(255, 0, 79, 0.1);
-        padding: 5px 6px; /* Slightly smaller padding */
+        background: var(--accent-primary);
+        color: var(--text-primary);
+        padding: 4px 6px; /* Keep same padding as normal state */
+        transform: none; /* Prevent transform that might cause overflow */
+    }
+    
+    /* Hover state adjustments for mobile */
+    .floating-nav-links li a:hover {
+        background: var(--accent-primary);
+        color: var(--text-primary);
+        transform: none; /* Remove hover transform on mobile */
+        padding: 4px 6px; /* Keep consistent padding */
+    }
+    
+    /* Remove underline effect on mobile to prevent overflow */
+    .floating-nav-links li a::after,
+    .floating-nav-links li a:hover::after,
+    .floating-nav-links li a.active::after {
+        display: none; /* Disable underline completely on mobile */
+    }
+    
+    /* Ensure the theme toggle doesn't cause issues */
+    .floating-theme-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        flex-shrink: 0; /* Don't let it shrink */
+    }
+    
+    /* Ensure logo doesn't cause issues */
+    .floating-nav-logo {
+        flex-shrink: 0; /* Don't let it shrink */
     }
     
     .floating-nav-logo img {
-        width: 22px;
-        height: 22px;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Extra small screens - further optimization */
+@media only screen and (max-width: 480px) {
+    .floating-nav-content {
+        padding: 6px 10px;
+        gap: 6px;
+        max-width: 98vw;
+    }
+    
+    .floating-nav-links {
+        gap: 2px;
+    }
+    
+    .floating-nav-links li a {
+        font-size: 9px;
+        padding: 3px 5px;
+        letter-spacing: 0.1px;
+        border-radius: 10px;
+    }
+    
+    .floating-nav-links li a.active,
+    .floating-nav-links li a:hover {
+        padding: 3px 5px; /* Keep consistent padding */
+    }
+    
+    /* Remove underline effect on extra small screens too */
+    .floating-nav-links li a::after,
+    .floating-nav-links li a:hover::after,
+    .floating-nav-links li a.active::after {
+        display: none; /* Disable underline completely */
     }
     
     .floating-theme-toggle {
-        width: 28px;
-        height: 28px;
-        font-size: 13px;
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
     }
+    
+    .floating-nav-logo img {
+        width: 20px;
+        height: 20px;
+    }
+}
+    
+.floating-nav-logo img {
+    width: 22px;
+    height: 22px;
+}
+
+.floating-theme-toggle {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
 }
 
 /* Extra small screens */
@@ -429,7 +527,7 @@ html{
     display: block;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ff004f;
+    color: var(--accent-primary);
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -591,7 +689,7 @@ html{
 }
 
 .light-mode .contact-card {
-    background: #f0f0f0;
+    background: var(--bg-surface);
     border: 1px solid rgba(255, 0, 79, 0.2);
     box-shadow: 0 4px 15px rgba(255, 0, 79, 0.15);
 }
@@ -620,17 +718,17 @@ html{
 
 .contact-icon-large {
     font-size: 3rem;
-    color: #ff004f;
+    color: var(--accent-primary);
     margin-bottom: 20px;
 }
 
 .contact-tagline {
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.8;
 }
 
 .light-mode .contact-tagline {
-    color: #333;
+    color: var(--text-secondary);
     opacity: 0.9;
 }
 
@@ -652,24 +750,24 @@ html{
 }
 
 .contact-icon {
-    color: #ff004f;
+    color: var(--accent-primary);
     font-size: 1.5rem;
     margin-right: 15px;
     min-width: 30px;
 }
 
 .contact-text h4 {
-    color: #ff004f;
+    color: var(--accent-primary);
     margin-bottom: 5px;
 }
 
 .contact-text p {
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.9;
 }
 
 .light-mode .contact-text p {
-    color: #000;
+    color: var(--text-primary);
     opacity: 0.8;
 }
 
@@ -681,17 +779,17 @@ html{
 }
 
 .contact-socials .social-icon {
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1.5rem;
     transition: all 0.3s ease;
 }
 
 .light-mode .contact-socials .social-icon {
-    color: #333;
+    color: var(--text-secondary);
 }
 
 .contact-socials .social-icon:hover {
-    color: #ff004f;
+    color: var(--accent-primary);
     transform: translateY(-3px);
 }
 
@@ -710,19 +808,19 @@ html{
 }
 
 .light-mode .form-card {
-    background: #f0f0f0;
+    background: var(--bg-surface);
     border: 1px solid rgba(255, 0, 79, 0.2);
     box-shadow: 0 4px 15px rgba(255, 0, 79, 0.15);
 }
 
 .form-subtitle {
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.8;
     margin-bottom: 30px;
 }
 
 .light-mode .form-subtitle {
-    color: #000;
+    color: var(--text-primary);
     opacity: 0.9;
 }
 
@@ -746,7 +844,7 @@ html{
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #ff004f;
+    color: var(--accent-primary);
 }
 
 .input-with-icon input,
@@ -756,7 +854,7 @@ html{
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
     backdrop-filter: blur(4px);
@@ -768,7 +866,7 @@ html{
 .light-mode .input-with-icon textarea {
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000;
+    color: var(--text-primary);
 }
 
 .input-with-icon textarea {
@@ -779,7 +877,7 @@ html{
 .input-with-icon input:focus,
 .input-with-icon textarea:focus {
     outline: none;
-    border-color: #ff004f;
+    border-color: var(--accent-primary);
     background: rgba(255, 0, 79, 0.1);
 }
 
@@ -792,19 +890,19 @@ html{
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.7;
     margin: 20px 0;
     font-size: 0.9rem;
 }
 
 .light-mode .form-note {
-    color: #333;
+    color: var(--text-secondary);
     opacity: 0.8;
 }
 
 .form-note i {
-    color: #ff004f;
+    color: var(--accent-primary);
 }
 
 /* Thank you message */
@@ -815,12 +913,12 @@ html{
     background: rgba(255, 0, 79, 0.1);
     border-radius: 10px;
     margin-bottom: 30px;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .light-mode .thank-you-message {
     background: rgba(255, 0, 79, 0.05);
-    color: #333;
+    color: var(--text-secondary);
 }
 
 .thank-you-message.visible {
@@ -829,7 +927,7 @@ html{
 }
 
 .thank-you-icon {
-    color: #ff004f;
+    color: var(--accent-primary);
     font-size: 3rem;
     margin-bottom: 15px;
 }
@@ -861,20 +959,80 @@ html{
 }
 
 :root {
-    --bg-color: #080808;
-    --text-color: #fff;
-    --accent-color: #ff004f;
-    --container-bg: #262626;
-    --header-bg: #080808; /* For your header if you want to switch it too */
-    --footer-color: #262626;
-    --toggle-color: #cac0c0a4;
-    --bg-2:url('images/background.png')
+    /* 
+    =======================================
+    HARMONIOUS COLOR SYSTEM
+    =======================================
+    Based on HSL color format for intuitive color relationships
+    Following modern UI color design principles:
+    - Neutral colors: Backgrounds, text, borders
+    - Primary/Brand color: Main actions and character
+    - Semantic colors: States and feedback
+    =======================================
+    */
+    
+    /* Neutral Color Palette - Dark Mode */
+    --bg-base: hsl(220, 15%, 4%);           /* Very dark blue-tinted background */
+    --bg-surface: hsl(220, 12%, 8%);       /* Cards and elevated elements */
+    --bg-elevated: hsl(220, 10%, 12%);     /* Important/raised elements */
+    
+    /* Text Colors */
+    --text-primary: hsl(220, 15%, 95%);    /* High contrast headings */
+    --text-secondary: hsl(220, 10%, 75%);  /* Body text, slightly muted */
+    --text-tertiary: hsl(220, 8%, 55%);    /* Subtle text, captions */
+    
+    /* Primary/Brand Color - More sophisticated */
+    --accent-primary: hsl(340, 75%, 55%);  /* Softer pink-red, less aggressive */
+    --accent-hover: hsl(340, 80%, 60%);    /* Slightly brighter on hover */
+    --accent-muted: hsl(340, 45%, 45%);    /* Muted version for subtle elements */
+    
+    /* Semantic Colors */
+    --success: hsl(140, 60%, 45%);
+    --warning: hsl(45, 90%, 55%);
+    --error: hsl(0, 70%, 55%);
+    
+    /* Border and Shadow Colors */
+    --border-subtle: hsl(220, 15%, 15%);
+    --border-default: hsl(220, 15%, 20%);
+    --shadow-color: hsl(220, 20%, 2%);
+    
+    /* Legacy compatibility */
+    --bg-color: var(--bg-base);
+    --text-color: var(--text-primary);
+    --accent-color: var(--accent-primary);
+    --container-bg: var(--bg-surface);
+    --header-bg: var(--bg-base);
+    --footer-color: var(--bg-surface);
+    --toggle-color: hsl(220, 10%, 75%, 0.6);
+    --bg-2: url('images/background.png')
   }
   
+  /* Color Utility Classes */
+  .text-primary { color: var(--text-primary) !important; }
+  .text-secondary { color: var(--text-secondary) !important; }
+  .text-tertiary { color: var(--text-tertiary) !important; }
+  .text-accent { color: var(--accent-primary) !important; }
+  .text-accent-muted { color: var(--accent-muted) !important; }
+  
+  .bg-base { background-color: var(--bg-base) !important; }
+  .bg-surface { background-color: var(--bg-surface) !important; }
+  .bg-elevated { background-color: var(--bg-elevated) !important; }
+  
+  /* Enhanced borders with proper depth */
+  .border-subtle { border-color: var(--border-subtle) !important; }
+  .border-default { border-color: var(--border-default) !important; }
+  
+  /* Improved hover states */
+  .hover-accent:hover { color: var(--accent-hover) !important; }
+  .hover-lift:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
 
   .emph {
     font-weight: 600;
-    color: #d82b62;
+    color: var(--accent-primary);
     position: relative;
     font-size: larger;
     text-decoration-style: wavy;
@@ -887,24 +1045,56 @@ html{
   }
   
   body {
-    background: linear-gradient(-45deg, #080808, #1a1a2e, #16213e, #0f3460);
+    background: linear-gradient(-45deg, 
+      var(--bg-base), 
+      hsl(220, 20%, 6%), 
+      hsl(230, 25%, 8%), 
+      hsl(240, 20%, 10%)
+    );
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+    animation: gradientShift 20s ease infinite;
     color: var(--text-color);
     cursor: none;
   }
   
   /* Light mode overrides */
 body.light-mode {
-    --text-color: #000;
-    --accent-color: #ff004f;
-    --container-bg: #f0f0f0;
-    --header-bg: #fff;
-    --footer-color: #a3a1a1;
-    --toggle-color: #000000a2;
-    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+    /* Neutral Color Palette - Light Mode */
+    --bg-base: hsl(220, 15%, 98%);         /* Very light background */
+    --bg-surface: hsl(220, 20%, 94%);     /* Cards and elevated elements */
+    --bg-elevated: hsl(220, 25%, 90%);    /* Important/raised elements */
+    
+    /* Text Colors - Inverted hierarchy */
+    --text-primary: hsl(220, 15%, 15%);   /* Dark text for headings */
+    --text-secondary: hsl(220, 10%, 35%); /* Body text */
+    --text-tertiary: hsl(220, 8%, 55%);   /* Subtle text, captions */
+    
+    /* Keep accent consistent but adjust for light background */
+    --accent-primary: hsl(340, 70%, 50%);
+    --accent-hover: hsl(340, 75%, 45%);
+    --accent-muted: hsl(340, 50%, 60%);
+    
+    /* Borders for light mode */
+    --border-subtle: hsl(220, 15%, 85%);
+    --border-default: hsl(220, 15%, 75%);
+    --shadow-color: hsl(220, 20%, 80%);
+    
+    /* Legacy compatibility updates */
+    --text-color: var(--text-primary);
+    --accent-color: var(--accent-primary);
+    --container-bg: var(--bg-surface);
+    --header-bg: var(--bg-base);
+    --footer-color: var(--bg-surface);
+    --toggle-color: hsl(220, 15%, 20%, 0.6);
+    
+    background: linear-gradient(-45deg, 
+      var(--bg-base), 
+      hsl(220, 30%, 96%), 
+      hsl(230, 35%, 94%), 
+      hsl(240, 30%, 92%)
+    );
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+    animation: gradientShift 20s ease infinite;
   }  
   
 #header {
@@ -981,7 +1171,7 @@ nav ul li a::after{
     content: '';
     width: 0;
     height: 3px;
-    background: #ff004f;
+    background: var(--accent-primary);
     position: absolute;
     left: 0;
     bottom: -6px;
@@ -1089,7 +1279,7 @@ nav ul li a:hover::after{
 }
 
 .header-text h1 span{
-    color: #ff004f;
+    color: var(--accent-primary);
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -1140,8 +1330,8 @@ nav ul li a:hover::after{
 
 .about-intro-card {
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 40px;
@@ -1284,8 +1474,8 @@ body.light-mode .services-list div {
     bottom: 0;
     border-radius: 15px;
     border: 2px solid transparent;
-    background: linear-gradient(to bottom, #ff004f, #3a1c71) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    background: linear-gradient(to bottom, var(--accent-primary), hsl(260, 50%, 30%)) border-box;
+    -webkit-mask: linear-gradient(var(--text-primary) 0 0) padding-box, linear-gradient(var(--text-primary) 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     z-index: -1;
@@ -1304,7 +1494,7 @@ body.light-mode .services-list div {
     background: conic-gradient(
         from 180deg at 50% 50%,
         rgba(255, 255, 255, 0) 0%,
-        #ff004f 22%, /* The color of the arc */
+        var(--accent-primary) 22%, /* The color of the arc */
         rgba(255, 255, 255, 0) 25%,
         rgba(255, 255, 255, 0) 100%
     );
@@ -1335,7 +1525,7 @@ body.light-mode .services-list div {
 .services-list div i {
     font-size: 40px;
     margin-bottom: 25px;
-    color: #ff004f; /* Make the icon pop */
+    color: var(--accent-primary); /* Make the icon pop */
     transition: color 0.3s ease;
 }
 
@@ -1356,11 +1546,11 @@ body.light-mode .services-list div p {
 
 /* A final touch: make the icon white when the card is active */
 .services-list div:hover i {
-    color: #fff;
+    color: var(--text-primary);
 }
 
 body.light-mode .services-list div:hover i {
-    color: #333;
+    color: var(--text-secondary);
 }
 
 /*portfolio*/
@@ -1418,7 +1608,7 @@ body.light-mode .work {
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
-    color: #333;
+    color: var(--text-secondary);
 }
 
 /* A subtle lift effect on hover/tap */
@@ -1487,7 +1677,7 @@ body.light-mode .work:hover {
 
 .metric {
     background: rgba(255, 0, 79, 0.2);
-    color: #ff004f;
+    color: var(--accent-primary);
     padding: 4px 10px;
     border-radius: 15px;
     font-size: 0.8rem;
@@ -1509,7 +1699,7 @@ body.light-mode .work:hover {
 
 body.light-mode .work .tech-stack {
     background: rgba(255, 0, 79, 0.1);
-    color: #333;
+    color: var(--text-secondary);
 }
 
 /* The small external link icon as a visual cue */
@@ -1525,14 +1715,14 @@ body.light-mode .work .tech-stack {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 14px;
     transition: transform 0.3s ease;
 }
 
 .layer a {
     margin-top: 20px;
-    color: #ff004f;
+    color: var(--accent-primary);
     font-size: 18px;
     display: inline-block;
     transition: transform 0.3s ease;
@@ -1540,7 +1730,7 @@ body.light-mode .work .tech-stack {
 
 .layer a:hover {
     transform: translateY(-5px);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .work{
@@ -1599,11 +1789,11 @@ body.light-mode .work .tech-stack {
 
 .layer a{
     margin-top: 20px;
-    color: #ff004f;
+    color: var(--accent-primary);
     text-decoration: none;
     font-size: 18px;
     line-height: 60px;
-    background: #fff;
+    background: var(--text-primary);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -1611,7 +1801,7 @@ body.light-mode .work .tech-stack {
 }
 
 #certifications a{
-    color: #ff004f;
+    color: var(--accent-primary);
     text-decoration: none;
     padding-left: 5px;
 }
@@ -1631,7 +1821,7 @@ body.light-mode .work .tech-stack {
     display: block;
     margin: 50px auto;
     width: fit-content;
-    border: 1px solid #ff004f;
+    border: 1px solid var(--accent-primary);
     padding: 14px 50px;
     border-radius: 6px;
     text-decoration: none;
@@ -1649,8 +1839,8 @@ body.light-mode .work .tech-stack {
 }
 
 .btn:hover {
-    background: #ff004f;
-    color: #fff;
+    background: var(--accent-primary);
+    color: var(--text-primary);
     transition: all 0.3s;
 }
 
@@ -1690,13 +1880,13 @@ body.light-mode .work .tech-stack {
 }
 
 .contact-left p i{
-    color: #ff004f;
+    color: var(--accent-primary);
     margin-right: 15px;
     font-size: 25px;
 }
 
 .light-mode .contact-left p {
-    color: #333;
+    color: var(--text-secondary);
 }
 
 .social-icons{
@@ -1713,21 +1903,21 @@ body.light-mode .work .tech-stack {
 }
 
 .social-icons a:hover{
-    color: #ff004f;
+    color: var(--accent-primary);
     transform: translateY(-5px);
 }
 
 .btn.btn2{
     display: inline-block;
-    background-color: #ff004f;
-    color: #fff;
+    background-color: var(--accent-primary);
+    color: var(--text-primary);
 }
 
 /* Enhanced resume button */
 .resume-btn {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(45deg, #ff004f, #ff6b6b);
+    background: linear-gradient(45deg, var(--accent-primary), #ff6b6b);
     color: white;
     padding: 15px 30px;
     border-radius: 30px;
@@ -1745,7 +1935,7 @@ body.light-mode .work .tech-stack {
 .resume-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(255, 0, 79, 0.4);
-    background: linear-gradient(45deg, #ff6b6b, #ff004f);
+    background: linear-gradient(45deg, #ff6b6b, var(--accent-primary));
 }
 
 .btn-shine {
@@ -1840,7 +2030,7 @@ nav .fa-solid{
   }
 
   .vertical-text span{
-    color: #ff004f;
+    color: var(--accent-primary);
   }
 
 @media only screen and (max-width: 768px) {
@@ -2050,7 +2240,7 @@ nav .fa-solid{
     }
     
     .emph{
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         text-decoration-thickness: -6px;
     }
     .about-col-2{
@@ -2074,7 +2264,7 @@ nav .fa-solid{
 } 
 
 #msg{
-    color: #fff;
+    color: var(--text-primary);
     margin-top: -40px;
     display: block;
 }
@@ -2122,7 +2312,7 @@ nav .fa-solid{
     width: 20px;  /* Reduced from 30px */
     height: 20px; /* Reduced from 30px */
     background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ff004f;
+    border: 1px solid var(--accent-primary);
   }
     /* Positioning each face */
   .face.front  { transform: translateZ(10px); }
@@ -2249,17 +2439,31 @@ nav .fa-solid{
 }
 
 .social-icons-vertical a {
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 24px;
-    transition: color 0.3s, transform 0.3s;
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
+    align-items: center;
     text-decoration: none;
+    opacity: 0.8;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+}
+
+.social-icons-vertical a i {
+    line-height: 1;
 }
 
 .social-icons-vertical a:hover {
-    color: var(--accent-color);
+    color: var(--accent-primary);
     transform: translateY(-3px);
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-primary);
 }
 
 .text-content {
@@ -2329,6 +2533,8 @@ nav .fa-solid{
 
     .social-icons-vertical a {
         font-size: 20px;
+        width: 40px;
+        height: 40px;
     }
 
     .text-content {
@@ -2520,7 +2726,7 @@ nav .fa-solid{
 .terminal-line:nth-child(7) { animation-delay: 3.8s; }
 
 .command-prompt {
-    color: #ff004f;
+    color: var(--accent-primary);
     font-weight: bold;
 }
 
@@ -2722,7 +2928,7 @@ body.light-mode .about-intro-text {
 }
 
 .skill-category h4, .achievement-highlight h4 {
-    color: #ff004f;
+    color: var(--accent-primary);
     margin-bottom: 15px;
     font-size: 1.1rem;
     font-family: 'Orbitron', sans-serif;
@@ -2735,7 +2941,7 @@ body.light-mode .about-intro-text {
 }
 
 .skill-tag {
-    background: linear-gradient(45deg, #ff004f, #ff6b6b);
+    background: linear-gradient(45deg, var(--accent-primary), #ff6b6b);
     color: white;
     padding: 5px 12px;
     border-radius: 20px;
@@ -2792,9 +2998,9 @@ nav ul li a,
 nav ul li a:hover,
 .social-icons-vertical a:hover,
 .contact-socials .social-icon:hover {
-    color: #fff; /* Make the icon/text brighter */
+    color: var(--text-primary); /* Make the icon/text brighter */
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.7),
-                 0 0 15px #ff004f; /* Main brand color glow */
+                 0 0 15px var(--accent-primary); /* Main brand color glow */
 }
 
 /* --- Glow effect for all buttons --- */
@@ -2811,8 +3017,8 @@ nav ul li a:hover,
 
 /* --- Special glow for the "Send Message" button --- */
 #contactForm button[type="submit"]:hover {
-    background: #ff004f; /* Ensure background is solid on hover */
-    color: #fff;
+    background: var(--accent-primary); /* Ensure background is solid on hover */
+    color: var(--text-primary);
 }
 
 /* CSS for the new typewriter glitch effect */
@@ -2823,7 +3029,7 @@ nav ul li a:hover,
 }
 .glitch {
     display: inline-block;
-    color: #ff004f;
+    color: var(--accent-primary);
     animation: glitch-anim 0.2s infinite;
 }
 
