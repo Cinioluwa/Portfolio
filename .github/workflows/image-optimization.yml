@@ -1,0 +1,19 @@
+name: Optimize Images
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  optimize-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Optimize images
+        uses: calibreapp/image-actions@v1
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnlyChanged: false  # Re-optimize ALL images each run (not just those changed in the PR)
