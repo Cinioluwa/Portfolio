@@ -1,9 +1,13 @@
 name: Optimize Images
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday 03:00 UTC weekly optimization sweep
+  workflow_dispatch:      # Allow manual runs from the Actions tab
 
 jobs:
   optimize-images:
