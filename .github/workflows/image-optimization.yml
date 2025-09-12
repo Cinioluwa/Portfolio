@@ -9,15 +9,66 @@ on:
     - cron: '0 3 * * 1'  # Every Monday 03:00 UTC weekly optimization sweep
   workflow_dispatch:      # Allow manual runs from the Actions tab
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  optimize-images:
+  pr-optimize:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Optimize images
+      - name: Optimize images (PR)
         uses: calibreapp/image-actions@main
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          compressOnlyChanged: false # Re-optimize ALL images each run (not just those changed in the PR)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: false  # Re-optimize ALL images each run (not just those changed in the PR)
+
+  push-or-schedule-optimize:
+    if: github.event_name != 'pull_request' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install optimizers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jpegoptim optipng pngquant webp
+
+      - name: Optimize JPEGs
+        shell: bash
+        run: |
+          shopt -s globstar nullglob
+          for f in images/**/*.{jpg,jpeg,JPG,JPEG}; do
+            [ -e "$f" ] || continue
+            jpegoptim --strip-all --all-progressive -m85 "$f" || true
+          done
+
+      - name: Optimize PNGs
+        shell: bash
+        run: |
+          shopt -s globstar nullglob
+          for f in images/**/*.png; do
+            [ -e "$f" ] || continue
+            pngquant --force --ext .png --quality=65-85 "$f" || true
+            optipng -o7 -strip all "$f" || true
+          done
+
+      - name: Optimize WEBP
+        shell: bash
+        run: |
+          shopt -s globstar nullglob
+          for f in images/**/*.webp; do
+            [ -e "$f" ] || continue
+            cwebp -q 80 "$f" -o "$f".tmp && mv "$f".tmp "$f" || true
+          done
+
+      - name: Commit optimized images
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(images): optimize images [skip ci]"
+          file_pattern: "images/**/*.{png,jpg,jpeg,webp}"
