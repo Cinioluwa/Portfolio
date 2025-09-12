@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Optimize images
-        uses: calibreapp/image-actions@v1
+        uses: calibreapp/image-actions@main
         with:
-          GITHUB: ${{ secrets.GITHUB_TOKEN }}
-          compressOnlyChanged: false  # Re-optimize ALL images each run (not just those changed in the PR)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: false  # Re-optimize ALL images each run (not just those changed in the PR)
