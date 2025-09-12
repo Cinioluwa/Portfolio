@@ -22,6 +22,9 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CDN performance hints for jsDelivr (used for images) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 
     <!-- Enhanced Meta Tags for Covenant's Portfolio -->
     <!-- Primary Meta Tags -->
@@ -589,4 +592,42 @@
 </script>
 
 </body>
+<script>
+    // Rewrite image URLs to jsDelivr CDN when on GitHub Pages
+    (function() {
+        const onGitHubPages = /\.github\.io$/.test(location.hostname);
+        if (!onGitHubPages) return; // Keep local paths for dev
+
+        const owner = 'Cinioluwa';
+        const repo = 'Portfolio';
+        const branch = 'main';
+        const cdnBase = `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${branch}/`;
+
+            // Rewrite <img src="images/...">
+        document.querySelectorAll('img[src^="images/"]').forEach(img => {
+            img.src = cdnBase + img.getAttribute('src');
+        });
+
+        // Rewrite favicon and icons if they are local paths
+        document.querySelectorAll('link[rel~="icon"][href], link[rel="apple-touch-icon"][href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !/^https?:\/\//.test(href)) {
+                link.href = cdnBase + href.replace(/^\/?/, '');
+            }
+        });
+            // Rewrite CSS background images embedded in style attributes referencing images/
+            document.querySelectorAll('[style*="images/"]').forEach(el => {
+                const style = el.getAttribute('style');
+                el.setAttribute('style', style.replace(/url\(['\"]?images\//g, `url('${cdnBase}images/`));
+            });
+
+            // Best-effort: swap any meta/og image pointing to local path
+            document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach(meta => {
+                const content = meta.getAttribute('content');
+                if (content && !/^https?:\/\//.test(content) && /images\//.test(content)) {
+                    meta.setAttribute('content', cdnBase + content.replace(/^\/?/, ''));
+                }
+            });
+    })();
+</script>
 </html>
