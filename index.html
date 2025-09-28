@@ -335,13 +335,25 @@
 <div id="portfolio" class="fade-in">
     <div class="container">
         <h1 class="sub-title">Projects</h1>
+        <!-- Project Category Filters -->
+        <div class="project-filters" aria-label="Project category filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ai">AI</button>
+            <button class="filter-btn" data-filter="desktop">Desktop</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="leadership">Leadership</button>
+            <button class="filter-btn" data-filter="e-commerce">E‑commerce</button>
+            <button class="filter-btn" data-filter="recommendation">Recommendation</button>
+            <button class="filter-btn" data-filter="gamification">Gamification</button>
+            <button class="filter-btn" data-filter="creative">Creative</button>
+        </div>
         <div class="work-list">
 
             <!-- Ascension 2025 Judging System Project Card (Newest) -->
             <a href="https://github.com/Cinioluwa/GemJudge-v2" target="_blank" class="work" data-tags="ai desktop">
                 <img src="images/work-gem2.jpeg" alt="Ascension 2025 Judging System Dashboard" loading="lazy">
                 <div class="layer">
-                    <h3>Ascension 2025 Judging System (AI + Deterministic)</h3>
+                    <h3>Ascension 2025 Judging System</h3>
                     <p>Judging system for a university coding cup: AI-assisted prototype (v1) evolved into a deterministic Pytest + subprocess scorer (v2) with modular feedback layer.</p>
                     <div class="project-metrics">
                         <span class="metric">🧪 Deterministic v2 core</span>
@@ -359,7 +371,7 @@
             <a href="https://github.com/Cinioluwa/orange-cart" target="_blank" class="work" data-tags="desktop e-commerce">
                 <img src="images/work-orange_cart.png" alt="Orange Cart JavaFX E-commerce App" loading="lazy">
                 <div class="layer">
-                    <h3>Orange Cart: Full-Stack E‑commerce (Java)</h3>
+                    <h3>Orange Cart: Full-Stack E‑commerce</h3>
                     <p>JavaFX e‑commerce demo with real MySQL catalog, MVC structure, and concurrency fix during simulated checkout.</p>
                     <div class="project-metrics">
                         <span class="metric">🛒 Live DB products</span>
@@ -378,7 +390,7 @@
             <a href="https://tripledots-website.vercel.app" class="work" aria-label="Tripledots redesign summary (private live site)" data-tags="web leadership creative">
                 <img src="images/work-tripledots.png" alt="Tripledots Website Redesign" loading="lazy">
                 <div class="layer">
-                    <h3>Tripledots Website Redesign (Leadership)</h3>
+                    <h3>Tripledots Website Redesign</h3>
                     <p>Led redesign of company site: Figma → responsive production build, mentoring peers and enforcing a reusable component/style system.</p>
                     <div class="project-metrics">
                         <span class="metric">🧭 Project lead</span>
@@ -396,7 +408,7 @@
             </a>
 
             <!-- GemJudge Project Card -->
-            <a href="https://github.com/Cinioluwa/GemJudge/releases" target="_blank" class="work">
+            <a href="https://github.com/Cinioluwa/GemJudge/releases" target="_blank" class="work" data-tags="ai desktop">
                 <img src="images/work-gemini.jpg" alt="GemJudge AI Evaluator" loading="lazy">
                 <div class="layer">
                     <h3>GemJudge – AI Hackathon Evaluator</h3>
@@ -413,7 +425,7 @@
             </a>
 
             <!-- Learning Progress Tracker Project Card -->
-            <a href="https://github.com/Cinioluwa/tracker/" target="_blank" class="work">
+            <a href="https://github.com/Cinioluwa/tracker/" target="_blank" class="work" data-tags="desktop gamification">
                 <img src="images/work-tracker.jpg" alt="Learning Progress Tracker" loading="lazy">
                 <div class="layer">
                     <h3>Learning Progress Tracker</h3>
@@ -430,7 +442,7 @@
             </a>
 
             <!-- Semantic Book Recommender Project Card -->
-            <a href="https://github.com/Cinioluwa/semantic-book-recommender" target="_blank" class="work">
+            <a href="https://github.com/Cinioluwa/semantic-book-recommender" target="_blank" class="work" data-tags="ai recommendation">
                 <img src="images/work-semantica.jpg" alt="Semantic Book Recommender" loading="lazy">
                 <div class="layer">
                     <h3>Semantic Book Recommender</h3>
@@ -447,7 +459,7 @@
             </a>
 
             <!-- Eldaneth Website Project Card -->
-            <a href="https://eldaneth.vercel.app" target="_blank" class="work">
+            <a href="https://eldaneth.vercel.app" target="_blank" class="work" data-tags="web creative">
                 <img src="images/work-eldaneth.jpg" alt="Eldaneth Website" loading="lazy">
                 <div class="layer">
                     <h3>Eldaneth – Corporate Website</h3>
@@ -464,7 +476,7 @@
             </a>
 
             <!-- Synthwave Piano Project Card -->
-            <a href="https://github.com/Cinioluwa/synthwave-piano" target="_blank" class="work">
+            <a href="https://github.com/Cinioluwa/synthwave-piano" target="_blank" class="work" data-tags="web creative">
                 <img src="images/work-piano.jpg" alt="Synthwave Piano" loading="lazy">
                 <div class="layer">
                     <h3>Synthwave Piano</h3>

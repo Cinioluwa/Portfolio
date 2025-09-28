@@ -453,3 +453,30 @@ function updateLoadingProgress() {
 
 // Uncomment the line below if you want real progress tracking
 // updateLoadingProgress();
+
+// === Project Filtering (re-added) ===
+document.addEventListener('DOMContentLoaded',()=>{
+  const filterBar = document.querySelector('.project-filters');
+  if(!filterBar) return;
+  const buttons = filterBar.querySelectorAll('.filter-btn');
+  const cards = Array.from(document.querySelectorAll('.work-list .work'));
+
+  function applyFilter(key){
+    const k = (key||'all').toLowerCase();
+    cards.forEach(card=>{
+      const tags = (card.getAttribute('data-tags')||'').toLowerCase().split(/\s+/).filter(Boolean);
+      const match = k==='all' || tags.includes(k);
+      card.classList.toggle('filter-hidden', !match);
+    });
+  }
+
+  buttons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  applyFilter('all');
+});

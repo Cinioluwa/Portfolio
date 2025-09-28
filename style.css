@@ -2579,6 +2579,12 @@ nav .fa-solid{
 /* =================================================================== */
 
 /* Loading Screen Styles - Add to your existing CSS */
+#portfolio .project-filters {display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 30px;}
+.filter-btn {background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary,#fff);padding:8px 14px;font-size:13px;border-radius:24px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .25s,color .25s,transform .25s,box-shadow .25s;position:relative;font-family:'Poppins',sans-serif;letter-spacing:.3px;}
+.filter-btn:hover:not(.active){background:rgba(255,255,255,0.18);transform:translateY(-2px);} 
+.filter-btn.active{background:var(--accent-primary,#ff4d4d);color:#fff;box-shadow:0 4px 18px -4px rgba(255,77,77,0.55);} 
+.work-list .work{transition:opacity .35s ease,transform .35s ease;} 
+.work-list .work.filter-hidden{opacity:0;pointer-events:none;transform:scale(.92);display:none;} 
 #loading-screen {
     position: fixed;
     top: 0;
