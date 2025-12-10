@@ -194,27 +194,30 @@ typewriterElements.forEach(element => {
     let i = 0;
     const interval = setInterval(() => {
         if (i < originalText.length) {
-            // Add the next character
-            element.innerHTML += originalText.charAt(i);
+            // Add the next character safely
+            const char = originalText.charAt(i);
+            element.textContent = originalText.substring(0, i + 1);
             i++;
 
-            // Temporary glitch effect
+            // Temporary glitch effect (optional, can be removed if distracting)
+            /*
             const glitchChars = '▓▒░█_#?*&';
             const randomChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
-            element.innerHTML += `<span class="glitch" style="animation-delay: ${Math.random() * 0.1}s">${randomChar}</span>`;
+            const glitchSpan = document.createElement('span');
+            glitchSpan.className = 'glitch';
+            glitchSpan.textContent = randomChar;
+            element.appendChild(glitchSpan);
 
             // Remove the glitch character shortly after
             setTimeout(() => {
-                const glitchSpan = element.querySelector('.glitch');
-                if (glitchSpan) {
-                    glitchSpan.remove();
-                }
+                glitchSpan.remove();
             }, 50);
+            */
 
         } else {
             clearInterval(interval);
         }
-    }, 75); // Adjust typing speed here (milliseconds)
+    }, 50); // Faster typing speed
 });
   
     // ----- Fade-In Effect on Scroll -----
@@ -361,18 +364,18 @@ window.addEventListener('scroll', highlightActiveSection);
     });
   });
 
+// Check if user has visited before in this session
+const hasVisited = sessionStorage.getItem('portfolio_visited');
+const LOADING_DURATION = hasVisited ? 0 : 2500; // 2.5s for new visitors, instant for returning
 let loadingComplete = false;
-const LOADING_DURATION = 8000; // 8 seconds - increase this for longer display
-
-// Auto-hide loading screen after specified duration
-setTimeout(() => {
-    hideLoadingScreen();
-}, LOADING_DURATION);
 
 // Function to hide loading screen
 function hideLoadingScreen() {
     if (!loadingComplete) {
         loadingComplete = true;
+        // Mark as visited
+        sessionStorage.setItem('portfolio_visited', 'true');
+        
         const loadingScreen = document.getElementById('loading-screen');
         if (loadingScreen) {
             loadingScreen.classList.add('fade-out');
@@ -384,6 +387,13 @@ function hideLoadingScreen() {
         }
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Auto-hide loading screen after specified duration
+    setTimeout(() => {
+        hideLoadingScreen();
+    }, LOADING_DURATION);
+});
 
 // Skip button functionality
 function skipLoading() {

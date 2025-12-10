@@ -2296,38 +2296,6 @@ nav .fa-solid{
     perspective: 600px; /* Adds depth to our 3D scene */
   }
   
-  /* The cube that will rotate */
-  .cube {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    animation: rotateCube 3s infinite linear;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5); /* Reduced shadow size */
-  }
-  
-  /* Style for each face of the cube */
-  .face {
-    position: absolute;
-    width: 20px;  /* Reduced from 30px */
-    height: 20px; /* Reduced from 30px */
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid var(--accent-primary);
-  }
-    /* Positioning each face */
-  .face.front  { transform: translateZ(10px); }
-  .face.back   { transform: rotateY(180deg) translateZ(10px); }
-  .face.left   { transform: rotateY(-90deg) translateZ(10px); }
-  .face.right  { transform: rotateY(90deg) translateZ(10px); }
-  .face.top    { transform: rotateX(90deg) translateZ(10px); }
-  .face.bottom { transform: rotateX(-90deg) translateZ(10px); }
-  
-  /* Cube rotation animation */
-  @keyframes rotateCube {
-    from { transform: rotateX(0deg) rotateY(0deg); }
-    to   { transform: rotateX(360deg) rotateY(360deg); }
-  }
-
   /* === Custom Pointer (For clickable elements) === */
 .custom-pointer {
     position: fixed;
@@ -2610,8 +2578,10 @@ nav .fa-solid{
 }
 
 .terminal-container {
+    background: rgba(20, 20, 20, 0.9); /* Fallback for browsers without backdrop-filter */
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 0, 217, 0.3);
     border-radius: 20px;
     padding: 30px;
@@ -2888,6 +2858,7 @@ nav .fa-solid{
 
 /* The new card container for the right column */
 .about-card {
+    background: rgba(30, 30, 30, 0.8); /* Fallback */
     background: rgba(38, 38, 38, 0.25);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -2906,8 +2877,8 @@ body.light-mode .about-card {
 
 /* The polished intro paragraph */
 .about-intro-text {
-    font-size: 1.3rem; /* Increased from 1.1rem for better readability */
-    line-height: 1.7;
+    font-size: 1.1rem; /* Reverted to safe size */
+    line-height: 1.6;
     margin-bottom: 30px;
     font-family: 'Montserrat', sans-serif; /* A more readable, professional font */
     color: var(--text-color);
@@ -3038,4 +3009,3 @@ nav ul li a:hover,
     color: var(--accent-primary);
     animation: glitch-anim 0.2s infinite;
 }
-
