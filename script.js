@@ -58,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // ================= DOMContentLoaded Section =================
 
 document.addEventListener('DOMContentLoaded', () => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // ----- Cursor Effect - Desktop Only -----
-    if (window.innerWidth > 768) {
+  if (window.innerWidth > 768 && !prefersReducedMotion) {
         document.addEventListener('mousemove', (e) => {
             document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
             document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
@@ -135,27 +136,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   
     // ----- Form Submission with Confetti -----
-    // Custom cursor effect
-document.addEventListener('mousemove', (e) => {
-    document.body.style.setProperty('--cursor-x', e.clientX + 'px');
-    document.body.style.setProperty('--cursor-y', e.clientY + 'px');
-    
-    const cursor = document.body;
-    cursor.style.setProperty('--cursor-x', e.clientX + 'px');
-    cursor.style.setProperty('--cursor-y', e.clientY + 'px');
-});
+    // Custom cursor effect & hover aura when motion is acceptable
+    if (!prefersReducedMotion) {
+        document.addEventListener('mousemove', (e) => {
+            document.body.style.setProperty('--cursor-x', e.clientX + 'px');
+            document.body.style.setProperty('--cursor-y', e.clientY + 'px');
 
-// Add cursor glow on interactive elements
-const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, [onclick], .social-icon, .work');
-interactiveElements.forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        document.body.classList.add('element-hovered');
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        document.body.classList.remove('element-hovered');
-    });
-});
+            const cursor = document.body;
+            cursor.style.setProperty('--cursor-x', e.clientX + 'px');
+            cursor.style.setProperty('--cursor-y', e.clientY + 'px');
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, [onclick], .social-icon, .work');
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                document.body.classList.add('element-hovered');
+            });
+
+            element.addEventListener('mouseleave', () => {
+                document.body.classList.remove('element-hovered');
+            });
+        });
+    }
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwvBtOz_SDWBo2i2qnW8f9mMxk3vX_R_w2drOxmDj0SpeVk7wz3bTMlYDf6gkmCQVXU/exec';
     const form = document.forms['submit-to-google-sheet'];
@@ -330,43 +332,11 @@ function highlightActiveSection() {
 window.addEventListener('scroll', highlightActiveSection);
 
 
-    // ----- Particles.js Initialization - Mobile Optimized -----
-    const isMobile = window.innerWidth <= 768;
-    
-    particlesJS("header", {
-      "particles": {
-        "number": { "value": isMobile ? 30 : 80 }, // Fewer particles on mobile
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": isMobile ? 0.3 : 0.5 }, // Less opacity on mobile
-        "size": { "value": isMobile ? 2 : 3 }, // Smaller particles on mobile
-        "line_linked": {
-          "enable": true,
-          "distance": isMobile ? 100 : 150, // Shorter connections on mobile
-          "color": "#ffffff",
-          "opacity": isMobile ? 0.2 : 0.4, // Less visible on mobile
-          "width": 1
-        },
-        "move": { "enable": true, "speed": isMobile ? 3 : 6 } // Slower movement on mobile
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": !isMobile, "mode": "repulse" }, // Disable hover on mobile
-          "onclick": { "enable": true, "mode": "push" }
-        },
-        "modes": {
-          "repulse": { "distance": 100 },
-          "push": { "particles_nb": isMobile ? 2 : 4 } // Fewer new particles on mobile
-        }
-      },
-      "retina_detect": true
-    });
   });
 
 // Check if user has visited before in this session
 const hasVisited = sessionStorage.getItem('portfolio_visited');
-const LOADING_DURATION = hasVisited ? 0 : 2500; // 2.5s for new visitors, instant for returning
+const LOADING_DURATION = hasVisited ? 0 : 1200; // 1.2s for new visitors, instant for returning
 let loadingComplete = false;
 
 // Function to hide loading screen
