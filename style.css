@@ -1585,26 +1585,8 @@ body.light-mode .tldr-card p {
     margin-top: 50px;
 }
 
-/* Stagger animation for project cards */
-.work {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: slideUpStagger 0.8s ease forwards;
-}
 
-.work:nth-child(1) { animation-delay: 0.1s; }
-.work:nth-child(2) { animation-delay: 0.2s; }
-.work:nth-child(3) { animation-delay: 0.3s; }
-.work:nth-child(4) { animation-delay: 0.4s; }
-.work:nth-child(5) { animation-delay: 0.5s; }
-.work:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes slideUpStagger {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* Project cards now use fade-in effect only, handled by IntersectionObserver */
 
 /* The project card itself, now an <a> tag */
 .work {
@@ -2315,11 +2297,18 @@ nav .fa-solid{
     transition: opacity 0.3s ease-in-out;
   }
   
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-  }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    /* Fallback: If fade-in is used on .work and .appear is never added, show the card anyway */
+    .work.fade-in:not(.appear) {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
   
   .fade-in.appear {
     opacity: 1;
@@ -3163,13 +3152,5 @@ nav ul li a:hover,
         scroll-behavior: auto !important;
     }
 
-    .work,
-    .fade-in,
-    .terminal-line,
-    .loading-dots,
-    .progress-fill,
-    .header-text h1 {
-        animation: none !important;
-        transition: none !important;
-    }
+    /* Removed global disabling of animation/transition for .work and .fade-in to allow fade-in effect */
 }

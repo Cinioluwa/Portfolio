@@ -159,31 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwvBtOz_SDWBo2i2qnW8f9mMxk3vX_R_w2drOxmDj0SpeVk7wz3bTMlYDf6gkmCQVXU/exec';
-    const form = document.forms['submit-to-google-sheet'];
-    const msg = document.getElementById("msg");
-    if (form) {
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-          .then(response => {
-            msg.innerHTML = "Thanks for reaching out!";
-            // Delay the confetti slightly so the message renders first
-            setTimeout(() => {
-              confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-              });
-            }, 200);
-            setTimeout(() => {
-              msg.innerHTML = "";
-            }, 5000);
-            form.reset();
-          })
-          .catch(error => console.error('Error!', error.message));
-      });
-    }
   
     // ----- Find and replace the old Typewriter Effect section in your script.js -----
 
@@ -224,17 +199,23 @@ typewriterElements.forEach(element => {
   
     // ----- Fade-In Effect on Scroll -----
     const faders = document.querySelectorAll('.fade-in');
-    const options = { threshold: 0.2 };
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('appear');
-        observer.unobserve(entry.target);
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      // On mobile, always show fade-in elements immediately
+      faders.forEach(fader => fader.classList.add('appear'));
+    } else {
+      const options = { threshold: 0.2 };
+      const appearOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('appear');
+          observer.unobserve(entry.target);
+        });
+      }, options);
+      faders.forEach(fader => {
+        appearOnScroll.observe(fader);
       });
-    }, options);
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
-    });
+    }
   
     // ----- Custom Cursor Movement and Scaling -----
     const cursor = document.getElementById('customCursor');
