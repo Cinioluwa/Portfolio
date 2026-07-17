@@ -1,738 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Covenant Adeogo, a FullStack Engineer and Student at Covenant University specializing in Node.js, Python, Java and an interest in Cybersecurity. Explore projects, skills, and contact information.">
-    <meta name="author" content="Covenant Adeogo">
-    <meta name="google-site-verification" content="tPu7OsZ9uLd_rca7DSRA3d-6K5P_8pJOybTLz_2lXBg" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Welcome to my Portfolio!</title>
-    <link rel="stylesheet" href="style.css">
-        <!-- Removed unnecessary contact-style.css import -->
-    <link rel="icon" type="image/x-icon" href="logo.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
-    <!-- Multiple FontAwesome sources for reliability -->
-    <script src="https://kit.fontawesome.com/23ad9f7721.js" crossorigin="anonymous"></script>
-    <!-- Fallback FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Additional fallback -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-    <!-- CDN performance hints for jsDelivr (used for images) -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <title>Covenant Adeogo — Backend Engineer</title>
+  <meta name="description" content="Covenant Adeogo builds backend systems, AI integrations, and full-lifecycle products. Backend Engineer. 400L. Abuja, Nigeria.">
+  <meta name="author" content="Covenant Adeogo">
+  <meta name="google-site-verification" content="tPu7OsZ9uLd_rca7DSRA3d-6K5P_8pJOybTLz_2lXBg">
 
-    <!-- Enhanced Meta Tags for Covenant's Portfolio -->
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Covenant Adeogo - Computer Engineer & Cybersecurity Enthusiast | Portfolio">
-    <meta name="keywords" content="Covenant Adeogo, Computer Engineer, Cybersecurity, Computer Engineering, Portfolio, Web Development, UI/UX Design, Python, JavaScript, Nigeria, Covenant University">
-    
-    <!-- Robots and Indexing -->
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow">
-    
-    <!-- Language and Location -->
-    <meta name="language" content="English">
-    <meta name="geo.region" content="NG">
-    <meta name="geo.placename" content="Nigeria">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Covenant Adeogo Portfolio">
-    <meta property="og:title" content="Covenant Adeogo - Computer Engineer & Cybersecurity Enthusiast">
-    <meta property="og:description" content="Discover innovative projects and the technical journey of Covenant Adeogo, a Computer Engineering student specializing in software development and cybersecurity.">
-    <meta property="og:image" content="https://cinioluwa.github.io/Portfolio/images/portfolio-preview.jpg">
-    <meta property="og:image:alt" content="Covenant Adeogo Portfolio Preview">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://cinioluwa.github.io/Portfolio/">
-    <meta property="og:locale" content="en_US">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@c_inioluwa">
-    <meta name="twitter:creator" content="@c_inioluwa">
-    <meta name="twitter:title" content="Covenant Adeogo - Computer Engineer & Cybersecurity Enthusiast">
-    <meta name="twitter:description" content="Explore innovative projects and the technical journey of Covenant Adeogo, a Computer Engineering student from Nigeria.">
-    <meta name="twitter:image" content="https://cinioluwa.github.io/Portfolio/images/portfolio-preview.jpg">
-    <meta name="twitter:image:alt" content="Covenant Adeogo Portfolio Preview">
-    
-    <!-- LinkedIn Specific -->
-    <meta property="og:type" content="profile">
-    <meta property="profile:first_name" content="Covenant">
-    <meta property="profile:last_name" content="Adeogo">
-    <meta property="profile:username" content="covenant-a-b87988260">
-    
-    <!-- Additional SEO Meta Tags -->
-    <meta name="theme-color" content="#ff004f">
-    <meta name="msapplication-TileColor" content="#ff004f">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Covenant Adeogo">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://cinioluwa.github.io/Portfolio/">
-    
-    <!-- Preconnect for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://kit.fontawesome.com">
-    
-    <!-- DNS Prefetch -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//kit.fontawesome.com">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
-    
-    <!-- Enhanced Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Covenant Adeogo",
-      "givenName": "Covenant",
-      "familyName": "Adeogo",
-      "url": "https://cinioluwa.github.io/Portfolio/",
-      "image": "https://cinioluwa.github.io/Portfolio/images/user.jpg",
-      "sameAs": [
-        "https://www.instagram.com/ct.inioluwa15/",
-        "https://x.com/c_inioluwa",
-        "https://linkedin.com/in/covenant-a-b87988260/",
-        "https://github.com/Cinioluwa"
-      ],
-      "jobTitle": "Computer Engineer",
-      "description": "Computer Engineering student specializing in software development, cybersecurity, and UI/UX design",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Covenant University"
-      },
-      "alumniOf": {
-        "@type": "Organization",
-        "name": "Covenant University",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Ota",
-          "addressRegion": "Ogun State",
-          "addressCountry": "Nigeria"
-        }
-      },
-      "nationality": {
-        "@type": "Country",
-        "name": "Nigeria"
-      },
-      "knowsAbout": [
-        "Software Development",
-        "Cybersecurity",
-        "Web Development",
-        "UI/UX Design",
-        "Python Programming",
-        "JavaScript",
-        "Computer Engineering"
-      ],
-      "hasCredential": [
-        {
-          "@type": "EducationalOccupationalCredential",
-          "name": "Cisco IT Essentials",
-          "credentialCategory": "certificate"
-        },
-        {
-          "@type": "EducationalOccupationalCredential", 
-          "name": "CCNAv7: Introduction to Networks",
-          "credentialCategory": "certificate"
-        }
-      ]
-    }
-    </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Covenant Adeogo — Backend Engineer">
+  <meta property="og:description" content="Backend systems, AI integrations, full-lifecycle engineering.">
+  <meta property="og:image" content="https://cinioluwa.github.io/Portfolio/images/user.jpg">
+  <meta property="og:url" content="https://cinioluwa.github.io/Portfolio/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@c_inioluwa">
+  <meta name="twitter:title" content="Covenant Adeogo — Backend Engineer">
+  <meta name="twitter:image" content="https://cinioluwa.github.io/Portfolio/images/user.jpg">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cinioluwa.github.io/Portfolio/">
+  <meta name="theme-color" content="#050505">
+  <link rel="icon" type="image/x-icon" href="logo.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Fraunces:ital,opsz,wght@1,9..144,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Three.js UMD — loaded before script.js so window.THREE is available -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Covenant Adeogo",
+    "url": "https://cinioluwa.github.io/Portfolio/",
+    "sameAs": [
+      "https://github.com/Cinioluwa",
+      "https://linkedin.com/in/covenant-a-b87988260/",
+      "https://x.com/c_inioluwa"
+    ],
+    "jobTitle": "Backend Engineer"
+  }
+  </script>
 </head>
 
-</head>
 <body>
 
-<div id="loading-screen">
-    <div class="terminal-container">
-        <div class="terminal-header">
-            <div class="terminal-buttons">
-                <div class="terminal-button btn-close"></div>
-                <div class="terminal-button btn-minimize"></div>
-                <div class="terminal-button btn-maximize"></div>
-            </div>
-            <div class="terminal-title">cia@portfolio:~$</div>
-        </div>
-        
-        <div class="terminal-content">
-            <div class="terminal-line">
-                <span class="command-prompt">$</span> sudo ./initialize_portfolio.sh
-            </div>
-            <div class="terminal-line info">
-                [INFO] Booting Covenant's Portfolio System<span class="loading-dots"></span>
-            </div>
-            <div class="terminal-line success">
-                [OK] Loading cybersecurity modules... ✓
-            </div>
-            <div class="terminal-line success">
-                [OK] Initializing development environment... ✓
-            </div>
-            <div class="terminal-line warning">
-                [WARN] Decrypting classified projects... 🔐
-            </div>
-            
-            <div class="progress-bar-container">
-                <div class="terminal-line info">[INFO] System initialization progress:</div>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-            
-            <div class="terminal-line success">
-                [OK] All systems operational. Welcome to the matrix! 🚀
-            </div>
-            <div class="terminal-line">
-                <span class="command-prompt">$</span> <span class="cursor"></span>
-            </div>
-        </div>
-        
-        <button class="skip-button" onclick="skipLoading()">SKIP [ESC]</button>
+  <!-- Custom cursor -->
+  <div id="cursor" aria-hidden="true"></div>
+
+  <!-- Ball canvas (fixed, full-viewport, pointer-events:none) -->
+  <canvas id="ball-canvas" aria-hidden="true"></canvas>
+
+  <!-- CTA pill -->
+  <nav id="cta" aria-label="Quick links">
+    Backend Engineer
+    <span aria-hidden="true">·</span>
+    400L
+    <span aria-hidden="true">·</span>
+    Abuja
+    <span aria-hidden="true">·</span>
+    <a class="resume-link" href="Resume.pdf" download>↓ Resume</a>
+    <span aria-hidden="true">·</span>
+    <a href="mailto:adeogocovenant@gmail.com">mail</a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero" aria-label="Covenant Adeogo">
+    <canvas id="three-canvas" aria-hidden="true"></canvas>
+
+    <!-- Accessible name for screen readers -->
+    <h1 class="visually-hidden">Covenant Adeogo — Backend Engineer</h1>
+
+    <p id="tagline">I build from the ground up. Backend first, full lifecycle always.</p>
+    <div id="scroll-cue" aria-hidden="true">
+      <span>scroll</span>
+      <div id="scroll-line"></div>
     </div>
-</div>
+  </section>
 
-    <button id="mobileThemeToggle" class="theme-toggle-mobile">☀️</button>
-    
-    <!-- Floating Navigation Bar -->
-    <div id="floatingNav" class="floating-nav">
-        <div class="floating-nav-content">
-            <div class="floating-nav-logo">
-                <img src="images/logoii.png" alt="Logo">
-            </div>
-            <ul class="floating-nav-links">
-                <li><a href="#header">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button id="floatingThemeToggle" class="floating-theme-toggle">🌙</button>
+  <!-- ═══ MAIN ═══ -->
+  <main>
+
+    <!-- ── I. THE WORK ── -->
+    <section id="work" aria-labelledby="work-heading">
+      <span class="section-label" aria-hidden="true">I. The Work</span>
+      <h2 id="work-heading">THE<br>WORK</h2>
+
+      <div class="projects">
+
+        <article class="project" data-href="" tabindex="0" id="project-forge">
+          <div class="project-num">01 / INTERNAL</div>
+          <h3 class="project-name">FORGE</h3>
+          <div class="project-org">NNPC</div>
+          <p class="project-blurb">Internal monitoring tool. Automation and AI tracking deployed apps and assessing code for risk. Core Applications Dev &amp; Maintenance.</p>
+          <span class="project-badge">Not public</span>
+        </article>
+
+        <article class="project" data-href="" tabindex="0" id="project-echo">
+          <div class="project-num">02 / CO-FOUNDER</div>
+          <h3 class="project-name">ECHO</h3>
+          <div class="project-org">Civic Tech</div>
+          <p class="project-blurb">Platform giving citizens a voice, giving leaders insight. Closing the feedback loop between people and governance at scale.</p>
+          <span class="project-badge">Co-founded</span>
+        </article>
+
+        <article class="project" data-href="https://github.com/Cinioluwa/GemJudge-v2" tabindex="0" id="project-gemjudge">
+          <div class="project-num">03</div>
+          <h3 class="project-name">GEM&shy;JUDGE V2</h3>
+          <div class="project-org">Ascension Cup 2025</div>
+          <p class="project-blurb">Deterministic scoring engine. 2-day judging cycle compressed into 2 focused hours. Three waves, no drift, no subjectivity.</p>
+          <span class="project-stack">Python · Pytest · subprocess · Pandas</span>
+          <i class="project-arrow" aria-hidden="true">↗</i>
+        </article>
+
+        <article class="project" data-href="https://tripledots-website.vercel.app" tabindex="0" id="project-tripledots">
+          <div class="project-num">04</div>
+          <h3 class="project-name">TRIPLE&shy;DOTS</h3>
+          <div class="project-org">Website Lead</div>
+          <p class="project-blurb">Led full company site redesign. Figma to production. Mentored juniors, enforced component discipline, shipped on time.</p>
+          <span class="project-stack">HTML · CSS · JavaScript · Figma</span>
+          <i class="project-arrow" aria-hidden="true">↗</i>
+        </article>
+
+        <article class="project" data-href="https://github.com/Cinioluwa/orange-cart" tabindex="0" id="project-orange-cart">
+          <div class="project-num">05</div>
+          <h3 class="project-name">ORANGE CART</h3>
+          <div class="project-org">E-Commerce</div>
+          <p class="project-blurb">JavaFX desktop app with live MySQL catalog, MVC architecture, and a concurrency fix found under real checkout load.</p>
+          <span class="project-stack">Java · JavaFX · MySQL · Maven</span>
+          <i class="project-arrow" aria-hidden="true">↗</i>
+        </article>
+
+        <article class="project" data-href="https://github.com/Cinioluwa/semantic-book-recommender" tabindex="0" id="project-book-rec">
+          <div class="project-num">06</div>
+          <h3 class="project-name">SEMANTIC BOOK REC</h3>
+          <div class="project-org">AI / ML</div>
+          <p class="project-blurb">Vector embedding recommendations. 40% more accurate than keyword search. Built to understand what a reader means, not just what they type.</p>
+          <span class="project-stack">Python · Flask · Sentence-Transformers</span>
+          <i class="project-arrow" aria-hidden="true">↗</i>
+        </article>
+
+        <article class="project" data-href="https://github.com/Cinioluwa/synthwave-piano" tabindex="0" id="project-piano">
+          <div class="project-num">07</div>
+          <h3 class="project-name">SYNTH&shy;WAVE PIANO</h3>
+          <div class="project-org">Creative</div>
+          <p class="project-blurb">Browser synthesizer. Pure vanilla JS, WebAudio API. No frameworks, no dependencies. Built in a weekend for the joy of it.</p>
+          <span class="project-stack">HTML · CSS · JS · WebAudio</span>
+          <i class="project-arrow" aria-hidden="true">↗</i>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ── II. WHAT I DO ── -->
+    <section id="domain" aria-labelledby="domain-heading">
+      <span class="section-label" aria-hidden="true">II. The Domain</span>
+      <h2 id="domain-heading">WHAT<br>I DO</h2>
+
+      <div class="capabilities">
+        <div class="capability">
+          <span class="cap-index">01</span>
+          <span class="cap-name">BACKEND</span>
+          <span class="cap-tools">Node.js · Python · Java · REST · GraphQL</span>
         </div>
-    </div>
-    
-    <div id='header'>
-        <div class="container">            <nav>
-                <img src="images/logoii.png" class="logo">
-                <ul id="sidemenu">
-                    <li><a href="#header">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <button id="themeToggle" class="theme-toggle">🌙</button>
-                </ul>
-            </nav>
-             <div class="header-text">
-                <div class="header-content">
-                    <div class="social-icons-vertical">
-                        <a href="https://www.instagram.com/ct.inioluwa15/" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/c_inioluwa" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                        <a href="https://linkedin.com/in/covenant-a-b87988260/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/Cinioluwa" title="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                    <div class="intro-section">
-                        <span class="role-pill">Full-Stack Engineer · AI Evaluation Systems</span>
-                        <h1>
-                            Hi! I'm <span>Covenant</span><br>
-                            Adeogo<span><h3 class="location">📍Nigeria</h3></span>
-                        </h1>
-                        <p class="header-lede">I design reliable judging pipelines, IoT utilities, and web products that stay fast under pressure. My work blends deterministic automation with thoughtful UX so teams can move from prototype to production without drama.</p>
-                        <a href="Resume.pdf" target="_blank" class="btn btn2 resume-btn">
-                            <i class="fas fa-download"></i>
-                            Download Resume
-                            <span class="btn-shine"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="capability">
+          <span class="cap-index">02</span>
+          <span class="cap-name">INFRA</span>
+          <span class="cap-tools">Docker · CI/CD · Linux · Deployment · Provisioning</span>
         </div>
+        <div class="capability">
+          <span class="cap-index">03</span>
+          <span class="cap-name">AI</span>
+          <span class="cap-tools">Gemini · Embeddings · Automation pipelines · LLM integration</span>
         </div>
-    </div>
-    <!--About-->
-    <!--About-->
-<div id="about" class="fade-in">
-    <div class="container">
-        <!-- About Me Introduction Section -->  
-        <div class="about-intro-section">
-            <div class="about-image-col">
-                <img id="aboutImage" src="images/user.jpg" data-dark="images/user.jpg" data-light="images/user.jpg" alt="A professional image of Covenant Adeogo">
-            </div>
-            <div class="about-text-col">
-                <div class="about-intro-card">
-                    <h1 class="sub-title">About Me</h1>
-                    <p class="about-intro-text">
-                        I'm a <span class="emph">Computer Engineer</span> who bridges cloud software with embedded hardware. The sweet spot for me is turning ambiguous briefs into measurable shipped outcomes—whether that is an AI judge that handles 40+ submissions in a night or an ESP32 network that fixes a lab bottleneck.
-                    </p>
-                    
-                    <!-- Add Skills & Achievements Section -->
-                    <div class="skills-preview">
-                        <div class="skill-category">
-                            <h4>⚡ Fun Fact</h4>
-                            <p style="color: var(--text-color); opacity: 0.9; font-size: 0.95rem; line-height: 1.5;">
-                                I once built a weather station from scratch just to prove the local forecast wrong. (Spoiler: It was.)
-                            </p>
-                        </div>
-                        <div class="achievement-highlight">
-                            <h4>🏆 Flagship Win</h4>
-                            <p>GemJudge v2 processed three judging waves deterministically, compressing a 2-day scoring cycle into 2 focused hours during Ascension Cup 2025.</p>
-                        </div>
-                    </div>
-                    <div class="stack-summary" aria-label="My current toolkit">
-                        <h4>Toolkit Highlights</h4>
-                        <div class="stack-groups">
-                            <section>
-                                <h5>Frontend & UI</h5>
-                                <div class="stack-pill-row">
-                                    <span class="stack-pill">HTML5</span>
-                                    <span class="stack-pill">CSS3</span>
-                                    <span class="stack-pill">JavaScript</span>
-                                    <span class="stack-pill">React</span>
-                                </div>
-                            </section>
-                            <section>
-                                <h5>Backend & Services</h5>
-                                <div class="stack-pill-row">
-                                    <span class="stack-pill">Node.js</span>
-                                    <span class="stack-pill">Express</span>
-                                    <span class="stack-pill">Python</span>
-                                    <span class="stack-pill">Java</span>
-                                </div>
-                            </section>
-                            <section>
-                                <h5>Datastores & Orchestration</h5>
-                                <div class="stack-pill-row">
-                                    <span class="stack-pill">PostgreSQL</span>
-                                    <span class="stack-pill">Prisma ORM</span>
-                                    <span class="stack-pill">Docker</span>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="capability">
+          <span class="cap-index">04</span>
+          <span class="cap-name">HARDWARE</span>
+          <span class="cap-tools">ESP32 · IoT · Sensor networks · Proteus · Embedded</span>
         </div>
-    </div>
-</div>
-
-    <!--services-->
-    <div id="services"  class="fade-in">
-        <div class="container">
-            <h1 class="sub-title">Technical Expertise</h1>
-            <div class="services-list">
-                <div>
-                    <i class="fa-solid fa-layer-group"></i>
-                    <h2 class="typewriter">Full-Stack Engineering</h2>
-                    <p class="serv-desc">Building scalable backend systems and responsive frontends using Python, Java, and modern web frameworks.</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-robot"></i>
-                    <h2 class="typewriter">AI & Automation</h2>
-                    <p class="serv-desc">Integrating LLMs (Gemini/OpenAI) into applications and building intelligent automation workflows.</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-microchip"></i>
-                    <h2 class="typewriter">Hardware & IoT Prototyping</h2>
-                    <p class="serv-desc">Exploring the intersection of hardware and software. Experience with ESP32, circuit simulation (Proteus), and building connected sensor systems.</p>
-                </div>
-            </div>
+        <div class="capability">
+          <span class="cap-index">05</span>
+          <span class="cap-name">FRONTEND</span>
+          <span class="cap-tools">When nobody else will</span>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <!--portfolio-->
-<div id="portfolio" class="fade-in">
-    <div class="container">
-        <h1 class="sub-title">Projects</h1>
-        <!-- Project Category Filters -->
-        <div class="project-filters" aria-label="Project category filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="ai">AI</button>
-            <button class="filter-btn" data-filter="desktop">Desktop</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="leadership">Leadership</button>
-            <button class="filter-btn" data-filter="e-commerce">E‑commerce</button>
-            <button class="filter-btn" data-filter="recommendation">Recommendation</button>
-            <button class="filter-btn" data-filter="gamification">Gamification</button>
-            <button class="filter-btn" data-filter="creative">Creative</button>
+    <!-- ── III. TIMELINE ── -->
+    <section id="timeline" aria-labelledby="timeline-heading">
+      <span class="section-label" aria-hidden="true">III. Timeline</span>
+      <h2 id="timeline-heading">TIME<br>LINE</h2>
+
+      <div class="timeline-entries">
+        <div class="t-entry">
+          <span class="t-year">2025</span>
+          <span class="t-what">Core Apps Dev &amp; Maintenance — Forge</span>
+          <span class="t-org">NNPC</span>
         </div>
-        <div class="work-list">
-
-            <!-- Ascension 2025 Judging System Project Card (Newest) -->
-            <a href="https://github.com/Cinioluwa/GemJudge-v2" target="_blank" class="work fade-in" data-tags="ai desktop">
-                <img src="images/work-gem2.jpeg" alt="Ascension 2025 Judging System Dashboard" loading="lazy">
-                <div class="layer">
-                    <h3>Ascension 2025 Judging System</h3>
-                    <p>Judging system for a university coding cup: AI-assisted prototype (v1) evolved into a deterministic Pytest + subprocess scorer (v2) with modular feedback layer.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🧪 Deterministic v2 core</span>
-                        <span class="metric">🤖 AI feedback (v1)</span>
-                        <span class="metric">🧱 Modular architecture</span>
-                    </div>
-                    <div class="tech-stack">Python • Gemini API • Pytest • subprocess • CustomTkinter • Pandas • Matplotlib</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Orange Cart (Jumia Clone) Project Card -->
-            <a href="https://github.com/Cinioluwa/orange-cart" target="_blank" class="work fade-in" data-tags="desktop e-commerce">
-                <img src="images/work-orange_cart.png" alt="Orange Cart JavaFX E-commerce App" loading="lazy">
-                <div class="layer">
-                    <h3>Orange Cart: Full-Stack E‑commerce</h3>
-                    <p>JavaFX e‑commerce demo with real MySQL catalog, MVC structure, and concurrency fix during simulated checkout.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🛒 Live DB products</span>
-                        <span class="metric">🧠 MVC architecture</span>
-                        <span class="metric">🐞 Concurrency bug solved</span>
-                    </div>
-                    <div class="tech-stack">Java • JavaFX • MySQL • Maven • Git</div>
-                    
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Tripledots Website Redesign Project Card -->
-            <a href="https://tripledots-website.vercel.app" class="work fade-in" aria-label="Tripledots redesign summary (private live site)" data-tags="web leadership creative">
-                <img src="images/work-tripledots.png" alt="Tripledots Website Redesign" loading="lazy">
-                <div class="layer">
-                    <h3>Tripledots Website Redesign</h3>
-                    <p>Led redesign of company site: Figma → responsive production build, mentoring peers and enforcing a reusable component/style system.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🧭 Project lead</span>
-                        <span class="metric">🧩 Design → Dev bridge</span>
-                        <span class="metric">👥 PR reviews & mentoring</span>
-                    </div>
-                    <div class="tech-stack">HTML5 • CSS3 • JavaScript • Figma • Git</div>
-                    
-                    
-                    
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- GemJudge Project Card -->
-            <a href="https://github.com/Cinioluwa/GemJudge/releases" target="_blank" class="work fade-in" data-tags="ai desktop">
-                <img src="images/work-gemini.jpg" alt="GemJudge AI Evaluator" loading="lazy">
-                <div class="layer">
-                    <h3>GemJudge – AI Hackathon Evaluator</h3>
-                    <p>A desktop app leveraging Google's Gemini AI to automate coding competition evaluations. <strong>Reduced judging time by 80%</strong> with real-time streaming and intelligent ranking.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🚀 80% time saved</span>
-                        <span class="metric">⚡ Real-time processing</span>
-                    </div>
-                    <div class="tech-stack">Python • customtkinter • Gemini API</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Learning Progress Tracker Project Card -->
-            <a href="https://github.com/Cinioluwa/tracker/" target="_blank" class="work fade-in" data-tags="desktop gamification">
-                <img src="images/work-tracker.jpg" alt="Learning Progress Tracker" loading="lazy">
-                <div class="layer">
-                    <h3>Learning Progress Tracker</h3>
-                    <p>A gamified desktop application for tracking skill development, featuring point systems and progress visualization. <strong>Improved learning consistency by 300%</strong> through gamification.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🎯 300% better consistency</span>
-                        <span class="metric">📊 Data visualization</span>
-                    </div>
-                    <div class="tech-stack">Python • Tkinter • Pandas</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Semantic Book Recommender Project Card -->
-            <a href="https://github.com/Cinioluwa/semantic-book-recommender" target="_blank" class="work fade-in" data-tags="ai recommendation">
-                <img src="images/work-semantica.jpg" alt="Semantic Book Recommender" loading="lazy">
-                <div class="layer">
-                    <h3>Semantic Book Recommender</h3>
-                    <p>An intelligent book recommendation engine using vector embeddings and semantic similarity. <strong>40% more accurate</strong> than keyword-based systems.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🎯 40% more accurate</span>
-                        <span class="metric">🧠 AI-powered</span>
-                    </div>
-                    <div class="tech-stack">Python • Flask • Sentence-Transformers</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Eldaneth Website Project Card -->
-            <a href="https://eldaneth.vercel.app" target="_blank" class="work fade-in" data-tags="web creative">
-                <img src="images/work-eldaneth.jpg" alt="Eldaneth Website" loading="lazy">
-                <div class="layer">
-                    <h3>Eldaneth – Corporate Website</h3>
-                    <p>A modern, responsive corporate website showcasing services across multiple sectors. <strong>Delivered 2 weeks ahead</strong> of deadline with perfect responsiveness.</p>
-                    <div class="project-metrics">
-                        <span class="metric">⚡ 2 weeks early</span>
-                        <span class="metric">📱 100% responsive</span>
-                    </div>
-                    <div class="tech-stack">HTML • CSS • Vercel</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
-            <!-- Synthwave Piano Project Card -->
-            <a href="https://github.com/Cinioluwa/synthwave-piano" target="_blank" class="work fade-in" data-tags="web creative">
-                <img src="images/work-piano.jpg" alt="Synthwave Piano" loading="lazy">
-                <div class="layer">
-                    <h3>Synthwave Piano</h3>
-                    <p>A retro-futuristic browser-based synthesizer piano demonstrating creative frontend development. <strong>Pure vanilla JS</strong> - no frameworks needed.</p>
-                    <div class="project-metrics">
-                        <span class="metric">🎵 Real-time audio</span>
-                        <span class="metric">⚡ Vanilla JS</span>
-                    </div>
-                    <div class="tech-stack">HTML • CSS • JavaScript</div>
-                </div>
-                <div class="project-link-icon">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </div>
-            </a>
-
+        <div class="t-entry">
+          <span class="t-year">2025</span>
+          <span class="t-what">Co-founder — Echo</span>
+          <span class="t-org">Civic Tech</span>
         </div>
-        <div>
-            <a href="https://github.com/Cinioluwa" class="btn" target="_blank">See more on GitHub</a>
+        <div class="t-entry">
+          <span class="t-year">2024</span>
+          <span class="t-what">Website Redesign Lead</span>
+          <span class="t-org">Tripledots</span>
         </div>
-    </div>
-</div>
+        <div class="t-entry">
+          <span class="t-year">2024</span>
+          <span class="t-what">Regional Finalist</span>
+          <span class="t-org">Hult Prize</span>
+        </div>
+        <div class="t-entry">
+          <span class="t-year">2024</span>
+          <span class="t-what">GemJudge — Ascension Cup</span>
+          <span class="t-org">Hackathon</span>
+        </div>
+        <div class="t-entry">
+          <span class="t-year">2024</span>
+          <span class="t-what">Resident</span>
+          <span class="t-org">Hebron Startup Lab</span>
+        </div>
+      </div>
+    </section>
 
-    <!-- Professional CTA Section -->
-    <div id="cta-section" class="fade-in">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Build Something Amazing Together?</h2>
-                <p>I'm currently open to internship opportunities, freelance projects, and collaborative ventures. Let's turn your ideas into reality.</p>
-                <div class="cta-stats">
-                    <div class="stat">
-                        <span class="stat-number">15+</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">90%</span>
-                        <span class="stat-label">Client Satisfaction</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">48hrs</span>
-                        <span class="stat-label">Average Response Time</span>
-                    </div>
-                </div>
-                <div class="affiliation-wrapper">
-                    <span class="affiliation-label">I've worked with:</span>
-                    <div class="affiliation-carousel" aria-label="Featured affiliations">
-                        <div class="affiliation-track">
-                            <span class="affiliation-pill" data-label="Ascension Cup 2025" aria-label="Ascension Cup 2025" tabindex="0">
-                                <img src="images/logo.jpg" alt="" loading="lazy">
-                            </span>
-                            <span class="affiliation-pill" data-label="Tripledots Technologies" aria-label="Tripledots Technologies" tabindex="0">
-                                <img src="images/tripledots_logo.png" alt="" loading="lazy">
-                            </span>
-                            <span class="affiliation-pill" data-label="Echo" aria-label="Echo" tabindex="0">
-                                <img src="images/Echo%20Logo%20(Coloured).svg" alt="" loading="lazy">
-                            </span>
-                            <span class="affiliation-pill" data-label="Hebron Startup Lab" aria-label="Hebron Startup Lab" tabindex="0">
-                                <img src="images/HSL%20Logo%20Black.png" alt="" loading="lazy">
-                            </span>
-                            <span class="affiliation-pill" data-label="Ascension Cup 2025" aria-hidden="true">
-                                <img src="images/logo.jpg" alt="">
-                            </span>
-                            <span class="affiliation-pill" data-label="Tripledots Technologies" aria-hidden="true">
-                                <img src="images/tripledots_logo.png" alt="">
-                            </span>
-                            <span class="affiliation-pill" data-label="Echo" aria-hidden="true">
-                                <img src="images/Echo%20Logo%20(Coloured).svg" alt="">
-                            </span>
-                            <span class="affiliation-pill" data-label="Hebron Startup Lab" aria-hidden="true">
-                                <img src="images/HSL%20Logo%20Black.png" alt="">
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- ── IV. THE REVEAL ── -->
+    <section id="reveal" aria-labelledby="reveal-heading">
+      <span class="section-label" aria-hidden="true">IV. The Reveal</span>
 
-    <!--contact-->
-    <div id="contact" class="fade-in">
-        <div class="container">
-            <h1 class="sub-title">Let's Connect</h1>
-            <div class="contact-grid">
-                <div class="contact-details">
-                    <div class="contact-card">
-                        <div class="contact-card-header">
-                            <div class="contact-icon-large">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <h3>Get in Touch</h3>
-                            <p class="contact-tagline">I'm always interested in new opportunities and collaborations.</p>
-                        </div>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Location</h4>
-                                <p>Nigeria</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Email</h4>
-                                <p>adeogocovenant@gmail.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="social-links contact-socials">
-                            <a href="https://www.instagram.com/ct.inioluwa15/" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="https://x.com/c_inioluwa" class="social-icon"><i class="fab fa-twitter"></i></a>
-                            <a href="https://linkedin.com/in/covenant-a-b87988260/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="https://github.com/Cinioluwa" class="social-icon"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <div class="form-card">
-                        <h3>Send Me a Message</h3>
-                        <p class="form-subtitle">Have a project in mind? Let's discuss how we can work together.</p>
-                        
-                        <!-- Thank you message (hidden by default) -->
-                        <div class="thank-you-message" id="thankYouMessage">
-                            <div class="thank-you-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h4>Thank You!</h4>
-                            <p>Your message has been sent successfully. I'll get back to you shortly!</p>
-                        </div>
-                        
-                        <form action="https://formspree.io/f/mrblylpg" method="POST" id="contactForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <div class="input-with-icon">
-                                        <i class="fas fa-user"></i>
-                                        <input type="text" name="name" placeholder="Your Name" required>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="input-with-icon">
-                                        <i class="fas fa-envelope"></i>
-                                        <input type="email" name="email" placeholder="Your Email" required>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="input-with-icon textarea-icon">
-                                    <i class="fas fa-comment-alt"></i>
-                                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="form-note">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Your information is protected and will never be shared.</span>
-                            </div>
-                            
-                            <button type="submit" class="btn btn2" id="confettiBtn">
-                                <i class="fas fa-paper-plane"></i> Send Message
-                            </button>
-                        </form>
-                        <span id="msg"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>Copyright © 2025. Made by CIA</p>
-        </div>
-    </div>
+      <div class="reveal-grid">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Covenant Adeogo",
-  "url": "https://github.com/Cinioluwa",
-  "sameAs": [
-    "https://www.instagram.com/ct.inioluwa15/",
-    "https://x.com/c_inioluwa",
-    "https://linkedin.com/in/covenant-a-b87988260/",
-    "https://github.com/Cinioluwa"
-  ],
-  "jobTitle": "Computer Engineer",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Covenant University"
-  },
-  "description": "A forward-thinking computer engineer and Computer Engineer passionate about innovative solutions."
-}
-</script>
+        <!-- Text -->
+        <div class="reveal-inner">
+          <p class="reveal-label" id="reveal-heading">IV. — The person</p>
+
+          <p class="reveal-text">
+            I'm a Computer Engineering student who'd rather ship something rough on Thursday
+            than present something polished on Monday. I built a weather station because
+            the local forecast was wrong and I wanted proof. I compressed a 2-day judging
+            cycle into 2 hours because the old way was broken and I had a weekend.
+            The tools I care about are the ones you stop noticing when they work.
+          </p>
+
+          <div class="reveal-cta">
+            <a class="cta-primary" href="Resume.pdf" download>↓ Resume</a>
+            <span class="cta-sep" aria-hidden="true">·</span>
+            <a href="mailto:adeogocovenant@gmail.com">adeogocovenant@gmail.com</a>
+            <span class="cta-sep" aria-hidden="true">·</span>
+            <a href="https://github.com/Cinioluwa" target="_blank" rel="noopener">GitHub</a>
+            <span class="cta-sep" aria-hidden="true">·</span>
+            <a href="https://linkedin.com/in/covenant-a-b87988260/" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="cta-sep" aria-hidden="true">·</span>
+            <a href="https://x.com/c_inioluwa" target="_blank" rel="noopener">X</a>
+          </div>
+        </div>
+
+        <!-- Photo — develops from B&W as it enters the viewport -->
+        <div class="profile-photo-wrap" id="profile-photo-wrap">
+          <img
+            src="images/user.jpg"
+            alt="Covenant Adeogo"
+            class="profile-photo"
+            width="340"
+            height="453"
+            loading="lazy"
+          >
+          <p class="profile-photo-caption">Covenant Adeogo, 2025</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Covenant Adeogo — 2025</p>
+    <p>Built from the ground up.</p>
+  </footer>
+
+  <!-- Controls -->
+  <div id="controls" aria-label="Page controls">
+    <button class="ctrl-btn" id="sound-btn" aria-label="Toggle sound">🔊 sound</button>
+    <button class="ctrl-btn" data-tier="slow">slow</button>
+    <button class="ctrl-btn" data-tier="mid">mid</button>
+    <button class="ctrl-btn" data-tier="high">high</button>
+  </div>
+
+  <span class="visually-hidden" style="display:none">
+    Built by Covenant Adeogo, Backend Engineer, Abuja Nigeria, 400L Computer Engineering.
+  </span>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="script.js"></script>
 
 </body>
-<script>
-    // Rewrite image URLs to jsDelivr CDN when on GitHub Pages
-    (function() {
-        const onGitHubPages = /\.github\.io$/.test(location.hostname);
-        if (!onGitHubPages) return; // Keep local paths for dev
-
-        const owner = 'Cinioluwa';
-        const repo = 'Portfolio';
-        const branch = 'main';
-        const cdnBase = `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${branch}/`;
-
-            // Rewrite <img src="images/...">
-        document.querySelectorAll('img[src^="images/"]').forEach(img => {
-            img.src = cdnBase + img.getAttribute('src');
-        });
-
-        // Rewrite favicon and icons if they are local paths
-        document.querySelectorAll('link[rel~="icon"][href], link[rel="apple-touch-icon"][href]').forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && !/^https?:\/\//.test(href)) {
-                link.href = cdnBase + href.replace(/^\/?/, '');
-            }
-        });
-            // Rewrite CSS background images embedded in style attributes referencing images/
-            document.querySelectorAll('[style*="images/"]').forEach(el => {
-                const style = el.getAttribute('style');
-                el.setAttribute('style', style.replace(/url\(['\"]?images\//g, `url('${cdnBase}images/`));
-            });
-
-            // Best-effort: swap any meta/og image pointing to local path
-            document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach(meta => {
-                const content = meta.getAttribute('content');
-                if (content && !/^https?:\/\//.test(content) && /images\//.test(content)) {
-                    meta.setAttribute('content', cdnBase + content.replace(/^\/?/, ''));
-                }
-            });
-    })();
-</script>
 </html>
