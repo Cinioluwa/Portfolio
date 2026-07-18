@@ -33,8 +33,8 @@
     var cx = -100, cy = -100, tx = -100, ty = -100;
     document.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; });
     (function moveCursor() {
-      cx += (tx - cx) * 0.18;
-      cy += (ty - cy) * 0.18;
+      cx += (tx - cx) * 0.45;
+      cy += (ty - cy) * 0.45;
       cursorEl.style.left = cx + 'px';
       cursorEl.style.top = cy + 'px';
       requestAnimationFrame(moveCursor);
@@ -109,34 +109,9 @@
   });
 
   /* ─────────────────────────────────────────────
-     SOUND & TIER CONTROLS
-  ───────────────────────────────────────────── */
-  var soundBtn = document.getElementById('sound-btn');
-  if (soundBtn) {
-    soundBtn.addEventListener('click', function () {
-      if (typeof Audio === 'undefined') return;
-      var nowMuted = !Audio.isMuted();
-      Audio.setMuted(nowMuted);
-      soundBtn.textContent = nowMuted ? '🔇 sound' : '🔊 sound';
-    });
-  }
-
-  document.querySelectorAll('[data-tier]').forEach(function (btn) {
-    if (btn.dataset.tier === tier) btn.classList.add('active');
-    btn.addEventListener('click', function () {
-      try { localStorage.setItem('ca:tier', btn.dataset.tier); } catch (e) {}
-      location.reload();
-    });
-  });
-
-  /* ─────────────────────────────────────────────
-     SHOW CONTROLS
+     SHOW UI
   ───────────────────────────────────────────── */
   document.getElementById('cta')?.classList.add('visible');
-  setTimeout(function () {
-    var ctrl = document.getElementById('controls');
-    if (ctrl) ctrl.classList.add('visible');
-  }, 800);
 
   /* ─────────────────────────────────────────────
      SLOW TIER — done
@@ -291,7 +266,7 @@
       mesh.position.set(row0X + i * LETTER_SEP, 16 + Math.random() * 3, 0);
       mesh.rotation.z = (Math.random() - 0.5) * 0.2;
       scene.add(mesh);
-      letters0.push({ mesh: mesh, vy: 0, settled: false, startDelay: i * 0.1, elapsed: 0 });
+      letters0.push({ mesh: mesh, vy: 0, settled: false, startDelay: i * 0.03, elapsed: 0 });
     });
 
     /* Build Row 1 (hidden until triggered) */
@@ -304,19 +279,23 @@
       letters1.push({
         mesh: mesh, settled: false,
         targetX: row1X + i * LETTER_SEP,
-        startDelay: i * 0.06, elapsed: 0
+        startDelay: i * 0.015, elapsed: 0
       });
     });
 
     /* Animation */
     var clock = new THREE.Clock();
-    var GRAVITY = -10;
-    var RESTITUTION = 0.38;
+    var GRAVITY = -35;
+    var RESTITUTION = 0.22;
     var introDone = false;
+
+    var lastScrollY = window.scrollY;
+    var scrollVySmoothed = 0;
 
     (function animate() {
       requestAnimationFrame(animate);
       var dt = Math.min(clock.getDelta(), 0.05);
+      if (dt <= 0.0001) dt = 0.001; // Prevent division by zero NaNs
 
       /* Row 0 — gravity drop */
       letters0.forEach(function (lt) {
@@ -359,7 +338,7 @@
         if (lt.elapsed < lt.startDelay) return;
 
         if (!lt.settled) {
-          var t = Math.min(1, (lt.elapsed - lt.startDelay) / 0.5);
+          var t = Math.min(1, (lt.elapsed - lt.startDelay) / 0.4);
           var ease = 1 - Math.pow(1 - t, 3);
           lt.mesh.position.x = -30 + (lt.targetX + 30) * ease;
           lt.mesh.position.y = FLOOR1;
@@ -370,6 +349,24 @@
             settledCount++;
             if (typeof Audio !== 'undefined') Audio.paperThud();
           }
+        }
+      });
+
+      var currentScroll = window.scrollY;
+      var rawVy = (currentScroll - lastScrollY) / dt;
+      lastScrollY = currentScroll;
+      scrollVySmoothed += (rawVy - scrollVySmoothed) * 15 * dt;
+
+      var baseTip = Math.min(currentScroll / 300, Math.PI / 2);
+      var tipExaggeration = Math.min(Math.max(scrollVySmoothed * 0.0006, -0.4), 0.6);
+      var targetRotX = -(baseTip + tipExaggeration);
+      
+      if (targetRotX < -Math.PI / 2) targetRotX = -Math.PI / 2;
+      if (targetRotX > 0) targetRotX = 0;
+
+      letters0.concat(letters1).forEach(function(lt) {
+        if (lt.settled) {
+          lt.mesh.rotation.x += (targetRotX - lt.mesh.rotation.x) * 12 * dt;
         }
       });
 
@@ -665,6 +662,34 @@
     setTimeout(function () { canvas.classList.add('live'); }, 400);
 
     window.addEventListener('pagehide', function () { clearInterval(targetInterval); });
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE DOT NAV HAMBURGER
+  ───────────────────────────────────────────── */
+  var siteNav = document.getElementById('site-nav');
+  if (siteNav) {
+    siteNav.addEventListener('click', function (e) {
+      if (window.innerWidth <= 900) {
+        if (!siteNav.classList.contains('open')) {
+          e.preventDefault();
+          siteNav.classList.add('open');
+          document.body.classList.add('nav-open');
+        } else {
+          if (e.target.tagName.toLowerCase() === 'a') {
+            siteNav.classList.remove('open');
+            document.body.classList.remove('nav-open');
+          }
+        }
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth <= 900 && siteNav.classList.contains('open') && !siteNav.contains(e.target)) {
+        siteNav.classList.remove('open');
+        document.body.classList.remove('nav-open');
+      }
+    });
   }
 
 })();
