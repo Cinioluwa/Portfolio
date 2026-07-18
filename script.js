@@ -40,7 +40,7 @@
       requestAnimationFrame(moveCursor);
     })();
 
-    document.querySelectorAll('a, button, .project, .capability').forEach(function (el) {
+    document.querySelectorAll('a, button, .project, .capability, .github-more-btn').forEach(function (el) {
       el.addEventListener('mouseenter', function () { cursorEl.classList.add('expanded'); });
       el.addEventListener('mouseleave', function () { cursorEl.classList.remove('expanded'); });
     });
@@ -50,7 +50,7 @@
      SCROLL REVEALS
   ───────────────────────────────────────────── */
   var revealItems = document.querySelectorAll(
-    '#work h2, #domain h2, #timeline h2, .project, .capability, .t-entry, .reveal-inner'
+    '#work h2, #domain h2, #timeline h2, .project, .capability, .t-entry, .reveal-inner, .github-more-wrap'
   );
   var photoWrap = document.getElementById('profile-photo-wrap');
 
@@ -400,6 +400,9 @@
      TRACER LOADER
   ───────────────────────────────────────────── */
   function initTracer() {
+    /* Skip tracer physics entirely on mobile to save battery and remove distraction */
+    if (window.innerWidth <= 600) return;
+    
     /* mid tier gets the tracer but no field ring — lighter render */
     setupTracer(tier !== 'mid');
   }

@@ -270,6 +270,28 @@ main {
   transform: translateY(0);
 }
 
+.jack-of-trades {
+  position: absolute;
+  top: 60px;
+  right: 15%;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(242, 236, 224, 0.4);
+  transform: rotate(-6deg);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 900px) {
+  .jack-of-trades {
+    top: 30px;
+    right: 20px;
+    font-size: 12px;
+  }
+}
+
 /* Project cards — horizontal scroll or grid */
 .projects {
   display: grid;
@@ -386,6 +408,56 @@ main {
 .project:hover .project-arrow {
   color: var(--ink-dark);
   transform: translate(4px, -4px);
+}
+
+/* ============================
+   6.5 GitHub Link
+   ============================ */
+.github-more-wrap {
+  text-align: center;
+  margin-top: 60px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.github-more-wrap.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.github-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid rgba(242, 236, 224, 0.2);
+  padding: 16px 32px;
+  border-radius: 4px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.github-more-btn:hover {
+  background: var(--paper);
+  color: var(--bg);
+  border-color: var(--paper);
+}
+
+.github-more-btn i {
+  font-style: normal;
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+.github-more-btn:hover i {
+  transform: translate(3px, -3px);
 }
 
 /* ============================
@@ -562,9 +634,32 @@ main {
 }
 
 .reveal-inner {
+  position: relative;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 1s ease, transform 1s ease;
+}
+
+.tldr-text {
+  position: absolute;
+  top: -10px;
+  right: 5%;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(242, 236, 224, 0.4);
+  transform: rotate(5deg);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 900px) {
+  .tldr-text {
+    top: -20px;
+    right: 0;
+    font-size: 12px;
+  }
 }
 
 .reveal-inner.visible { opacity: 1; transform: translateY(0); }
@@ -647,14 +742,8 @@ main {
   object-fit: cover;
   object-position: top center;
   display: block;
-  /* Developing filter: high contrast, slightly warm B&W */
+  /* High contrast, slightly warm B&W */
   filter: grayscale(100%) contrast(1.15) brightness(0.82);
-  transition: filter 1.4s ease 0.6s;
-}
-
-.profile-photo-wrap.visible .profile-photo {
-  /* Developed: full color */
-  filter: grayscale(0%) contrast(1.02) brightness(0.96);
 }
 
 /* Noise overlay — simulates darkroom grain clearing as photo develops */
@@ -797,7 +886,9 @@ footer p {
   }
 
   #cta {
-    bottom: 84px;
+    position: absolute;
+    top: 24px;
+    bottom: auto;
     right: 0;
     left: 0;
     width: 100%;
@@ -812,10 +903,7 @@ footer p {
   #cta span { margin: 0 6px; }
 
   #controls {
-    bottom: 24px;
-    right: 50%;
-    transform: translateX(50%);
-    width: max-content;
+    display: none;
   }
 
   #work h2, #domain h2, #timeline h2 {
@@ -824,6 +912,8 @@ footer p {
 
   .cap-name { font-size: clamp(1.2rem, 6vw, 2rem); }
   .project { padding: 28px; }
+
+  #ball-canvas { display: none; }
 }
 
 /* ============================
