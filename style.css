@@ -884,12 +884,14 @@ footer p {
   .profile-photo-wrap {
     position: static;
     max-width: 280px;
+    margin: 0 auto;
   }
 
   .projects { grid-template-columns: 1fr; gap: 2px; }
 
-  .capability { gap: 20px; flex-wrap: wrap; }
-  .cap-tools { text-align: left; max-width: 100%; }
+  .capability { gap: 8px 20px; flex-wrap: wrap; }
+  .cap-name { flex-basis: 100%; max-width: calc(100% - 48px); }
+  .cap-tools { text-align: left; max-width: 100%; flex-basis: 100%; margin-left: 48px; }
 
   .t-entry { grid-template-columns: 60px 1fr; }
   .t-org { display: none; }
@@ -908,7 +910,7 @@ footer p {
 
   #site-nav {
     display: flex;
-    top: 24px;
+    top: 80px;
     right: 24px;
     transform: none;
     gap: 6px;
@@ -964,6 +966,14 @@ footer p {
     padding: 0 16px;
     line-height: 2;
   }
+
+  .reveal-cta {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .cta-sep { display: none; }
 
   #cta span { margin: 0 6px; }
 
