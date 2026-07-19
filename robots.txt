@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cinioluwa.github.io/Portfolio/sitemap.xml
+Sitemap: https://covenantadeogo.vercel.app/sitemap.xml
