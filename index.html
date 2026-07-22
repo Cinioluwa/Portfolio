@@ -61,8 +61,16 @@
   <!-- Custom cursor -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- Ball canvas (fixed, full-viewport, pointer-events:none) -->
-  <canvas id="ball-canvas" aria-hidden="true"></canvas>
+  <!-- Spotlight Overlay for jokes -->
+  <div id="spotlight-overlay" aria-hidden="true"></div>
+
+  <!-- Section Guide (Fixed, bottom-right) -->
+  <div id="section-guide" aria-hidden="true">
+    <div class="guide-tooltip" id="guide-tooltip">Welcome.</div>
+    <div class="guide-icon-container" id="guide-icon-container">
+      <canvas id="guide-canvas"></canvas>
+    </div>
+  </div>
 
   <!-- Sound toggle — bottom-left, faded -->
   <button id="sound-toggle" aria-label="Toggle ambient sound" title="Toggle sound">

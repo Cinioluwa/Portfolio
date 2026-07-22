@@ -310,8 +310,6 @@
           if (lt.mesh.position.y <= FLOOR0) {
             lt.mesh.position.y = FLOOR0;
             lt.vy = -lt.vy * RESTITUTION;
-            if (typeof Audio !== 'undefined') Audio.paperThud();
-
             if (Math.abs(lt.vy) < 0.8) {
               lt.settled = true;
               lt.mesh.rotation.z = 0;
@@ -347,7 +345,6 @@
             lt.settled = true;
             lt.mesh.position.x = lt.targetX;
             settledCount++;
-            if (typeof Audio !== 'undefined') Audio.paperThud();
           }
         }
       });
@@ -389,7 +386,7 @@
     if (scrollCue) scrollCue.classList.add('visible');
 
     if (tier !== 'slow') {
-      setTimeout(function () { initTracer(); }, 900);
+      setTimeout(function () { initGuide(); }, 900);
     }
 
     /* Start ambient music — fires after intro, on first user interaction */
@@ -402,304 +399,154 @@
   }
 
   /* ─────────────────────────────────────────────
-     TRACER LOADER
+     SECTION GUIDE LOADER
   ───────────────────────────────────────────── */
-  function initTracer() {
-    /* Skip tracer physics entirely on mobile to save battery and remove distraction */
+  function initGuide() {
     if (window.innerWidth <= 600) return;
-    
-    /* mid tier gets the tracer but no field ring — lighter render */
-    setupTracer(tier !== 'mid');
+    setupGuide();
   }
 
   /* ─────────────────────────────────────────────
-     TRACER ENGINE
+     SECTION GUIDE ENGINE
   ───────────────────────────────────────────── */
-  function setupTracer(fancy) {
-    var canvas = document.getElementById('ball-canvas');
-    if (!canvas) return;
+  var guideScene, guideCamera, guideRenderer, guideMesh;
+  var targetGuideRotX = 0, targetGuideRotY = 0;
+  var guideGeometries = null;
 
-    var W  = window.innerWidth;
-    var VH = window.innerHeight;
-    canvas.width  = W;
-    canvas.height = VH;
-    var ctx = canvas.getContext('2d');
+  function init3DGuide() {
+    var canvas = document.getElementById('guide-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
 
-    /* ── Physics constants ── */
-    var ORB_R       = 11;    // orb visual radius
-    var ATTRACT_K   = 0.006; // spring constant toward target
-    var DAMPING     = 0.87;  // underdamped — natural oscillation without settling
-    var REPEL_R     = 120;   // cursor repulsion radius
-    var REPEL_STR   = 0.9;   // repulsion strength
-    var FIELD_R     = 76;    // electromagnetic field ring radius
-    var BOUNCE_DAMP = 0.55;  // velocity retained on element bounce
-    var HEARTBEAT   = 0.045; // keeps it alive when near the target
+    guideScene = new THREE.Scene();
+    guideCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    guideCamera.position.z = 4.5;
 
-    /* ── State ── */
-    var px   = W / 2;
-    var py   = VH * 0.58;  // starts at hero letter floor level
-    var vx   = 0.4;        // tiny nudge so it's not dead on spawn
-    var vy   = 0;
-    var time = 0;
-    var currentHue = 42;   // cream-ivory default
-    var targetHue  = 42;
+    guideRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    guideRenderer.setSize(60, 60);
+    guideRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    /* ── Cursor tracking (viewport coords) ── */
-    var mouseX = -9999, mouseY = -9999;
-    window.addEventListener('mousemove', function (e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-    window.addEventListener('mouseleave', function () {
-      mouseX = -9999;
-      mouseY = -9999;
+    var light = new THREE.PointLight(0xffffff, 1.5);
+    light.position.set(5, 5, 5);
+    guideScene.add(light);
+    var ambLight = new THREE.AmbientLight(0xffffff, 0.4);
+    guideScene.add(ambLight);
+
+    var material = new THREE.MeshStandardMaterial({
+      color: 0xf2ece0,
+      roughness: 0.2,
+      metalness: 0.8
     });
 
-    /* ── Target tracking ──
-       Every 180ms find the DOM element whose center is
-       closest to the viewport center. Cheap, never per-frame. */
-    var SELECTORS = [
-      '.project', '.capability', '.t-entry',
-      '#work h2', '#domain h2', '#timeline h2',
-      '.reveal-text', '#tagline'
-    ].join(', ');
+    guideGeometries = {
+      'hero': new THREE.SphereGeometry(1.2, 32, 32),
+      'work': new THREE.BoxGeometry(1.5, 1.5, 1.5),
+      'domain': new THREE.TorusGeometry(0.8, 0.4, 32, 32),
+      'timeline': new THREE.ConeGeometry(1.2, 1.8, 4),
+      'reveal': new THREE.IcosahedronGeometry(1.2, 0)
+    };
 
-    var targetEl = null;
-    var targetX  = W / 2;
-    var targetY  = VH * 0.58;
+    guideMesh = new THREE.Mesh(guideGeometries['hero'], material);
+    guideScene.add(guideMesh);
 
-    /* Adaptive findTarget interval — faster during scroll */
-    var isScrolling = false;
-    var scrollEndTimer = null;
-    window.addEventListener('scroll', function() {
-      isScrolling = true;
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(function() { isScrolling = false; }, 150);
-    }, { passive: true });
+    window.addEventListener('mousemove', function(e) {
+      var x = (e.clientX / window.innerWidth) * 2 - 1;
+      var y = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetGuideRotX = y * 0.8;
+      targetGuideRotY = x * 0.8;
+    });
 
-    function findTarget() {
-      var vcx = W / 2, vcy = VH / 2;
-      var bestDist = Infinity;
-      var bestEl   = null;
-
-      document.querySelectorAll(SELECTORS).forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        /* Only elements at least partially on screen */
-        if (r.bottom < 0 || r.top > VH || r.right < 0 || r.left > W) return;
-        var dist = Math.hypot(
-          (r.left + r.width  / 2) - vcx,
-          (r.top  + r.height / 2) - vcy
-        );
-        if (dist < bestDist) { bestDist = dist; bestEl = el; }
-      });
-
-      if (bestEl) targetEl = bestEl;
-
-      /* Schedule next call — 60ms during scroll, 180ms at idle */
-      clearTimeout(findTargetTimer);
-      findTargetTimer = setTimeout(findTarget, isScrolling ? 60 : 180);
+    var clock = new THREE.Clock();
+    function animateGuide() {
+      requestAnimationFrame(animateGuide);
+      var dt = clock.getDelta();
+      var t = clock.getElapsedTime();
+      
+      if (guideMesh) {
+        guideMesh.rotation.x += (targetGuideRotX + Math.sin(t) * 0.2 - guideMesh.rotation.x) * 5 * dt;
+        guideMesh.rotation.y += (targetGuideRotY + t * 0.5 - guideMesh.rotation.y) * 5 * dt;
+        guideMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 8 * dt);
+      }
+      guideRenderer.render(guideScene, guideCamera);
     }
+    animateGuide();
+  }
 
-    var findTargetTimer = null;
-    findTarget();
+  function setupGuide() {
+    init3DGuide();
+    
+    var guideEl = document.getElementById('section-guide');
+    var tooltipEl = document.getElementById('guide-tooltip');
+    var iconContainerEl = document.getElementById('guide-icon-container');
+    var spotlightEl = document.getElementById('spotlight-overlay');
+    if (!guideEl || !tooltipEl || !iconContainerEl) return;
 
-    /* ── Hit throttle ── */
-    var lastHitTime = 0;
+    var sections = [
+      { id: 'hero', text: 'Welcome. I am the floating geometric shape of judgment.' },
+      { id: 'work', text: 'Ah, Work. Also known as: "Things that definitely worked on the first try."' },
+      { id: 'domain', text: 'Skills. Basically a list of things I Googled at 3 AM.' },
+      { id: 'timeline', text: 'The Timeline. "My History of Panic Attacks" was too long.' },
+      { id: 'reveal', text: 'The Reveal. Spoiler: I am actually three raccoons in a trench coat.' }
+    ];
 
-    /* ─────────────────────────────────────────────
-       MAIN LOOP
-    ───────────────────────────────────────────── */
-    (function loop() {
-      requestAnimationFrame(loop);
-      time += 0.016;
-      W  = canvas.width;
-      VH = canvas.height;
+    var currentSection = '';
+    var spotlightTimer = null;
 
-      /* Refresh target position each frame (moves with scroll) */
-      var atDx = 0, atDy = 0;
-      if (targetEl) {
-        var tr = targetEl.getBoundingClientRect();
-        targetX = tr.left + tr.width  / 2;
-        targetY = tr.top  + tr.height / 2;
-        atDx = targetX - px;
-        atDy = targetY - py;
-      }
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          if (id !== currentSection) {
+            currentSection = id;
+            var secData = sections.find(function(s) { return s.id === id; });
+            if (secData) {
+              /* Animate tooltip out */
+              tooltipEl.classList.remove('show');
+              
+              /* Spotlight Effect */
+              if (spotlightEl && id !== 'hero') {
+                var r = entry.target.getBoundingClientRect();
+                var cx = r.left + r.width / 2;
+                var cy = r.top + r.height / 2;
+                var px = (cx / window.innerWidth) * 100;
+                var py = (cy / window.innerHeight) * 100;
+                spotlightEl.style.background = 'radial-gradient(circle at ' + px + '% ' + py + '%, transparent 5%, rgba(6, 6, 6, 0.95) 60%)';
+                spotlightEl.classList.add('active');
+                
+                clearTimeout(spotlightTimer);
+                spotlightTimer = setTimeout(function() {
+                  spotlightEl.classList.remove('active');
+                }, 2700); // Spotlight duration
+              }
 
-      /* 1 — Spring pull toward target */
-      vx += atDx * ATTRACT_K;
-      vy += atDy * ATTRACT_K;
+              setTimeout(function() {
+                /* Update content */
+                tooltipEl.textContent = secData.text;
+                
+                /* Update 3D Geometry */
+                if (guideMesh && guideGeometries[id]) {
+                  guideMesh.geometry = guideGeometries[id];
+                  guideMesh.scale.set(1.4, 1.4, 1.4); // Pop effect
+                }
+                
+                /* Animate container pop */
+                iconContainerEl.classList.add('pop');
+                setTimeout(function() { iconContainerEl.classList.remove('pop'); }, 400);
 
-      /* 2 — Cursor repulsion */
-      var mDx   = px - mouseX;
-      var mDy   = py - mouseY;
-      var mDist = Math.hypot(mDx, mDy);
-      if (mDist < REPEL_R && mDist > 5) {
-        var repF = REPEL_STR * (1 - mDist / REPEL_R) / mDist;
-        vx += mDx * repF;
-        vy += mDy * repF;
-      }
-
-      /* 3 — Heartbeat: sinusoidal nudge — never fully settles */
-      vx += Math.sin(time * 2.1 + 0.7) * HEARTBEAT;
-      vy += Math.cos(time * 1.6 + 1.3) * HEARTBEAT;
-
-      /* 4 — Damping */
-      vx *= DAMPING;
-      vy *= DAMPING;
-
-      /* 5 — Integrate */
-      px += vx;
-      py += vy;
-
-      /* 6 — Element AABB collisions */
-      var now = Date.now();
-      document.querySelectorAll(SELECTORS).forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.width < 2 || r.height < 2) return;
-
-        var L = r.left   - ORB_R;
-        var R = r.right  + ORB_R;
-        var T = r.top    - ORB_R;
-        var B = r.bottom + ORB_R;
-
-        if (px < L || px > R || py < T || py > B) return;
-
-        /* Push out via smallest overlap */
-        var oL = px - L, oR = R - px, oT = py - T, oB = B - py;
-        var min = Math.min(oL, oR, oT, oB);
-        if      (min === oL) { vx =  Math.abs(vx) * BOUNCE_DAMP; px = L + 1; }
-        else if (min === oR) { vx = -Math.abs(vx) * BOUNCE_DAMP; px = R - 1; }
-        else if (min === oT) { 
-          vy =  Math.abs(vy) * BOUNCE_DAMP; 
-          py = T + 1; 
-          /* Slide off the sides instead of resting perfectly on top.
-             More aggressive slip if squished near the top of the viewport. */
-          var slip = (py < VH * 0.25) ? 1.5 : 0.4;
-          if (px < (L + R) / 2) vx -= slip;
-          else                  vx += slip;
-        }
-        else                 { vy = -Math.abs(vy) * BOUNCE_DAMP; py = B - 1; }
-
-        /* Hit flash + sound — throttled to 100ms */
-        if (now - lastHitTime > 100) {
-          lastHitTime = now;
-          targetHue = Math.floor(Math.random() * 360); // Random color on hit
-          
-          el.classList.add('ball-hit');
-          clearTimeout(el._bhTimer);
-          el._bhTimer = setTimeout(function () { el.classList.remove('ball-hit'); }, 360);
-          if (typeof Audio !== 'undefined') {
-            if (el.classList.contains('project')) Audio.glassTap  && Audio.glassTap();
-            else                                  Audio.paperThud && Audio.paperThud();
+                /* Animate tooltip in */
+                tooltipEl.classList.add('show');
+              }, 400);
+            }
           }
         }
       });
+    }, { threshold: 0.4 });
 
-      /* 7 — Soft viewport boundary — gentle early push, not a hard clamp */
-      var M = ORB_R + 60;  // 60px inset: ball drifts back before reaching edge
-      if (px < M)      vx += (M - px) * 0.18;
-      if (px > W - M)  vx -= (px - (W - M)) * 0.18;
-      if (py < M)      vy += (M - py) * 0.18;
-      if (py > VH - M) vy -= (py - (VH - M)) * 0.18;
+    sections.forEach(function(sec) {
+      var el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
 
-      /* 8 — Ambient music proximity: full volume near elements, dim when floating */
-      if (typeof Audio !== 'undefined' && Audio.setAmbientLevel) {
-        try {
-          var PROX_R = 180;
-          var ballNearEl = false;
-          document.querySelectorAll(SELECTORS).forEach(function (el) {
-            if (ballNearEl) return;
-            var r = el.getBoundingClientRect();
-            if (r.bottom < 0 || r.top > VH) return;
-            var elCx = r.left + r.width  / 2;
-            var elCy = r.top  + r.height / 2;
-            if (Math.hypot(px - elCx, py - elCy) < PROX_R) ballNearEl = true;
-          });
-          Audio.setAmbientLevel(ballNearEl ? 'full' : 'dim');
-        } catch(e) {}
-      }
-
-      /* ─── DRAW ─── */
-      ctx.clearRect(0, 0, W, VH);
-
-      /* Update Hue */
-      currentHue += (targetHue - currentHue) * 0.08;
-      var h = Math.round(currentHue);
-      var baseColor = 'hsl(' + h + ', 36%, 91%)';
-      var edgeColor = 'hsla(' + (h - 12) + ', 22%, 49%, 0.85)';
-      var glowColor = 'hsla(' + h + ', 36%, 91%, '; // Needs alpha appended
-
-      var speed    = Math.hypot(vx, vy);
-      var toTarget = Math.hypot(atDx, atDy);
-
-      /* A — Electromagnetic field ring */
-      if (fancy) {
-        var pulse  = 1 + Math.sin(time * 2.8) * 0.06;
-        var fR     = FIELD_R * pulse;
-        var fieldG = ctx.createRadialGradient(px, py, ORB_R + 2, px, py, fR);
-        fieldG.addColorStop(0,   glowColor + '0.08)');
-        fieldG.addColorStop(0.5, glowColor + '0.03)');
-        fieldG.addColorStop(1,   glowColor + '0)');
-        ctx.beginPath();
-        ctx.arc(px, py, fR, 0, Math.PI * 2);
-        ctx.fillStyle = fieldG;
-        ctx.fill();
-
-        /* B — Faint dashed tether toward target (only when far) */
-        if (toTarget > 70) {
-          var tAlpha = Math.min(0.09, (toTarget - 70) / 280);
-          ctx.beginPath();
-          ctx.moveTo(px, py);
-          ctx.lineTo(px + atDx * 0.22, py + atDy * 0.22);
-          ctx.strokeStyle = glowColor + tAlpha + ')';
-          ctx.lineWidth   = 0.8;
-          ctx.setLineDash([3, 7]);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-      }
-
-      /* C — Motion streak */
-      if (speed > 1.2) {
-        var sAlpha = Math.min(0.12, speed * 0.009);
-        var streak = ctx.createLinearGradient(
-          px - vx * 6, py - vy * 6, px, py
-        );
-        streak.addColorStop(0, glowColor + '0)');
-        streak.addColorStop(1, glowColor + sAlpha + ')');
-        ctx.beginPath();
-        ctx.moveTo(px - vx * 6, py - vy * 6);
-        ctx.lineTo(px, py);
-        ctx.strokeStyle = streak;
-        ctx.lineWidth   = ORB_R * 1.6;
-        ctx.lineCap     = 'round';
-        ctx.stroke();
-      }
-
-      /* D — Orb body */
-      var orbG = ctx.createRadialGradient(
-        px - ORB_R * 0.3, py - ORB_R * 0.3, ORB_R * 0.05,
-        px, py, ORB_R
-      );
-      orbG.addColorStop(0,   '#ffffff');
-      orbG.addColorStop(0.4, baseColor);
-      orbG.addColorStop(1,   edgeColor);
-      ctx.beginPath();
-      ctx.arc(px, py, ORB_R, 0, Math.PI * 2);
-      ctx.fillStyle = orbG;
-      ctx.fill();
-
-      /* E — Inner specular highlight */
-      ctx.beginPath();
-      ctx.arc(px - ORB_R * 0.28, py - ORB_R * 0.28, ORB_R * 0.28, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.65)';
-      ctx.fill();
-
-    })();
-
-    setTimeout(function () { canvas.classList.add('live'); }, 400);
-
-    window.addEventListener('pagehide', function () { clearTimeout(findTargetTimer); });
+    guideEl.classList.add('visible');
   }
 
   /* ─────────────────────────────────────────────

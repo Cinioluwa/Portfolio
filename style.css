@@ -141,19 +141,7 @@ img { display: block; max-width: 100%; }
   z-index: 0;
 }
 
-/* Ball canvas overlay */
-#ball-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-
-#ball-canvas.live { opacity: 1; }
+/* Removed #ball-canvas */
 
 /* Tagline under the 3D name */
 #tagline {
@@ -987,8 +975,6 @@ footer p {
 
   .cap-name { font-size: clamp(1.2rem, 6vw, 2rem); }
   .project { padding: 28px; }
-
-  #ball-canvas { display: none; }
 }
 
 /* ============================
@@ -1008,30 +994,96 @@ footer p {
     color: var(--paper);
   }
   #tagline, #scroll-cue, #cta, #controls, .project, .capability, .t-entry, .reveal-inner { opacity: 1 !important; transform: none !important; }
-  #ball-canvas { display: none; }
 }
 
 /* ============================
-   14. Physics Ball Interaction
+   Spotlight Effect
    ============================ */
-.ball-hit {
-  outline: 1.5px solid rgba(242, 236, 224, 0.38);
-  transition: outline 0.36s ease;
+#spotlight-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  background: radial-gradient(circle at 50% 50%, transparent 5%, rgba(6, 6, 6, 0.92) 60%);
+  opacity: 0;
+  transition: opacity 0.6s ease, background 0.1s linear;
 }
 
-.project.ball-hit {
-  background: rgba(242, 236, 224, 0.035);
-  transition: background 0.36s ease, outline 0.36s ease;
+#spotlight-overlay.active {
+  opacity: 1;
 }
 
-h2.ball-hit {
+/* ============================
+   14. Section Guide
+   ============================ */
+#section-guide {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#section-guide.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.guide-icon-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(242, 236, 224, 0.02);
+  border: 1px solid rgba(242, 236, 224, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease;
+  overflow: hidden;
+}
+
+.guide-icon-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.guide-icon-container.pop {
+  transform: scale(1.1);
+  background: rgba(242, 236, 224, 0.08);
+}
+
+.guide-tooltip {
+  background: rgba(13, 13, 13, 0.85);
+  border: 1px solid rgba(242, 236, 224, 0.1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--paper);
   letter-spacing: 0.05em;
-  transition: letter-spacing 0.36s ease, outline 0.36s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.capability.ball-hit .cap-name {
-  opacity: 0.6;
-  transition: opacity 0.36s ease;
+.guide-tooltip.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 600px) {
+  #section-guide { display: none; }
 }
 
 /* ============================
