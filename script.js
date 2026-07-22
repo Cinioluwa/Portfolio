@@ -388,14 +388,6 @@
     if (tier !== 'slow') {
       setTimeout(function () { initGuide(); }, 900);
     }
-
-    /* Start ambient music — fires after intro, on first user interaction */
-    if (typeof Audio !== 'undefined' && tier !== 'slow') {
-      if (Audio.isArmed && Audio.isArmed()) {
-        Audio.startAmbient();
-      }
-      /* If not yet armed, arm hook in audio.js will start it automatically */
-    }
   }
 
   /* ─────────────────────────────────────────────
@@ -515,7 +507,7 @@
                 clearTimeout(spotlightTimer);
                 spotlightTimer = setTimeout(function() {
                   spotlightEl.classList.remove('active');
-                }, 2700); // Spotlight duration
+                }, 1900); // Spotlight duration
               }
 
               setTimeout(function() {
@@ -549,18 +541,6 @@
     guideEl.classList.add('visible');
   }
 
-  /* ─────────────────────────────────────────────
-     SOUND TOGGLE BUTTON
-  ───────────────────────────────────────────── */
-  var soundToggleBtn = document.getElementById('sound-toggle');
-  if (soundToggleBtn && typeof Audio !== 'undefined') {
-    soundToggleBtn.addEventListener('click', function () {
-      var nowMuted = !Audio.isMuted();
-      Audio.setMuted(nowMuted);
-      soundToggleBtn.classList.toggle('muted', nowMuted);
-      soundToggleBtn.setAttribute('aria-label', nowMuted ? 'Enable ambient sound' : 'Mute ambient sound');
-    });
-  }
 
   /* ─────────────────────────────────────────────
      MOBILE DOT NAV HAMBURGER
