@@ -525,11 +525,9 @@
         atDy = targetY - py;
       }
 
-      /* 1 — Spring pull toward target (boost during active scroll) */
-      var scrollBoost = Math.min(Math.abs(scrollVySmoothed) * 0.00008, 1.2);
-      var effectiveK  = ATTRACT_K * (1 + scrollBoost);
-      vx += atDx * effectiveK;
-      vy += atDy * effectiveK;
+      /* 1 — Spring pull toward target */
+      vx += atDx * ATTRACT_K;
+      vy += atDy * ATTRACT_K;
 
       /* 2 — Cursor repulsion */
       var mDx   = px - mouseX;
@@ -597,26 +595,28 @@
         }
       });
 
-      /* 7 — Soft viewport boundary — wider margin so ball drifts back early */
-      var M = ORB_R + Math.round(VH * 0.18);
-      if (px < M)      vx += (M - px) * 0.3;
-      if (px > W - M)  vx -= (px - (W - M)) * 0.3;
-      if (py < M)      vy += (M - py) * 0.3;
-      if (py > VH - M) vy -= (py - (VH - M)) * 0.3;
+      /* 7 — Soft viewport boundary — gentle early push, not a hard clamp */
+      var M = ORB_R + 60;  // 60px inset: ball drifts back before reaching edge
+      if (px < M)      vx += (M - px) * 0.18;
+      if (px > W - M)  vx -= (px - (W - M)) * 0.18;
+      if (py < M)      vy += (M - py) * 0.18;
+      if (py > VH - M) vy -= (py - (VH - M)) * 0.18;
 
       /* 8 — Ambient music proximity: full volume near elements, dim when floating */
-      if (typeof Audio !== 'undefined') {
-        var PROX_R = 180;
-        var ballNearEl = false;
-        document.querySelectorAll(SELECTORS).forEach(function (el) {
-          if (ballNearEl) return;
-          var r = el.getBoundingClientRect();
-          if (r.bottom < 0 || r.top > VH) return;
-          var elCx = r.left + r.width  / 2;
-          var elCy = r.top  + r.height / 2;
-          if (Math.hypot(px - elCx, py - elCy) < PROX_R) ballNearEl = true;
-        });
-        Audio.setAmbientLevel(ballNearEl ? 'full' : 'dim');
+      if (typeof Audio !== 'undefined' && Audio.setAmbientLevel) {
+        try {
+          var PROX_R = 180;
+          var ballNearEl = false;
+          document.querySelectorAll(SELECTORS).forEach(function (el) {
+            if (ballNearEl) return;
+            var r = el.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > VH) return;
+            var elCx = r.left + r.width  / 2;
+            var elCy = r.top  + r.height / 2;
+            if (Math.hypot(px - elCx, py - elCy) < PROX_R) ballNearEl = true;
+          });
+          Audio.setAmbientLevel(ballNearEl ? 'full' : 'dim');
+        } catch(e) {}
       }
 
       /* ─── DRAW ─── */

@@ -10,6 +10,7 @@ const Audio = (() => {
   let droneNodes  = [];    // oscillators + noise source
   let lfoNode     = null;  // slow volume LFO
   let ambientLive = false;
+  let lastLevel   = null;  // 'full' | 'dim' — avoids rescheduling every frame
 
   /* Volume levels */
   const VOL_FULL  = 1.0;   // ball near elements
@@ -95,7 +96,9 @@ const Audio = (() => {
     ambientLive = true;
 
     /* Fade in gently over 2s */
+    masterGain.gain.setValueAtTime(0, ctx.currentTime);
     masterGain.gain.linearRampToValueAtTime(BASE_GAIN * VOL_FULL, ctx.currentTime + 2.0);
+    lastLevel = 'full';
   }
 
   function stopAmbient() {
@@ -117,11 +120,18 @@ const Audio = (() => {
    */
   function setAmbientLevel(level) {
     if (!masterGain || !ctx || muted) return;
-    const target  = level === 'full' ? BASE_GAIN * VOL_FULL : BASE_GAIN * VOL_DIM;
-    const rampSec = level === 'full' ? RAMP_UP : RAMP_DOWN;
-    /* Cancel any in-flight ramp, then schedule new one */
-    masterGain.gain.cancelAndHoldAtTime(ctx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(target, ctx.currentTime + rampSec);
+    if (level === lastLevel) return; // no change — don't reschedule
+    lastLevel = level;
+    try {
+      const target  = level === 'full' ? BASE_GAIN * VOL_FULL : BASE_GAIN * VOL_DIM;
+      const rampSec = level === 'full' ? RAMP_UP : RAMP_DOWN;
+      /* cancelScheduledValues is universally supported; snapshot current value first */
+      const now = ctx.currentTime;
+      const current = masterGain.gain.value;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(current, now);
+      masterGain.gain.linearRampToValueAtTime(target, now + rampSec);
+    } catch (e) { /* never let audio errors kill the RAF loop */ }
   }
 
   /* ── One-shot SFX ── */
