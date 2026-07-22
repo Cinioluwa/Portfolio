@@ -507,7 +507,7 @@
                 clearTimeout(spotlightTimer);
                 spotlightTimer = setTimeout(function() {
                   spotlightEl.classList.remove('active');
-                }, 1900); // Spotlight duration
+                }, 500); // Spotlight duration
               }
 
               setTimeout(function() {
