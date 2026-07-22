@@ -391,6 +391,14 @@
     if (tier !== 'slow') {
       setTimeout(function () { initTracer(); }, 900);
     }
+
+    /* Start ambient music — fires after intro, on first user interaction */
+    if (typeof Audio !== 'undefined' && tier !== 'slow') {
+      if (Audio.isArmed && Audio.isArmed()) {
+        Audio.startAmbient();
+      }
+      /* If not yet armed, arm hook in audio.js will start it automatically */
+    }
   }
 
   /* ─────────────────────────────────────────────
@@ -460,6 +468,15 @@
     var targetX  = W / 2;
     var targetY  = VH * 0.58;
 
+    /* Adaptive findTarget interval — faster during scroll */
+    var isScrolling = false;
+    var scrollEndTimer = null;
+    window.addEventListener('scroll', function() {
+      isScrolling = true;
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(function() { isScrolling = false; }, 150);
+    }, { passive: true });
+
     function findTarget() {
       var vcx = W / 2, vcy = VH / 2;
       var bestDist = Infinity;
@@ -477,10 +494,14 @@
       });
 
       if (bestEl) targetEl = bestEl;
+
+      /* Schedule next call — 60ms during scroll, 180ms at idle */
+      clearTimeout(findTargetTimer);
+      findTargetTimer = setTimeout(findTarget, isScrolling ? 60 : 180);
     }
 
+    var findTargetTimer = null;
     findTarget();
-    var targetInterval = setInterval(findTarget, 180);
 
     /* ── Hit throttle ── */
     var lastHitTime = 0;
@@ -504,9 +525,11 @@
         atDy = targetY - py;
       }
 
-      /* 1 — Spring pull toward target */
-      vx += atDx * ATTRACT_K;
-      vy += atDy * ATTRACT_K;
+      /* 1 — Spring pull toward target (boost during active scroll) */
+      var scrollBoost = Math.min(Math.abs(scrollVySmoothed) * 0.00008, 1.2);
+      var effectiveK  = ATTRACT_K * (1 + scrollBoost);
+      vx += atDx * effectiveK;
+      vy += atDy * effectiveK;
 
       /* 2 — Cursor repulsion */
       var mDx   = px - mouseX;
@@ -574,12 +597,27 @@
         }
       });
 
-      /* 7 — Soft viewport boundary (counter-force, not hard clamp) */
-      var M = ORB_R + 4;
+      /* 7 — Soft viewport boundary — wider margin so ball drifts back early */
+      var M = ORB_R + Math.round(VH * 0.18);
       if (px < M)      vx += (M - px) * 0.3;
       if (px > W - M)  vx -= (px - (W - M)) * 0.3;
       if (py < M)      vy += (M - py) * 0.3;
       if (py > VH - M) vy -= (py - (VH - M)) * 0.3;
+
+      /* 8 — Ambient music proximity: full volume near elements, dim when floating */
+      if (typeof Audio !== 'undefined') {
+        var PROX_R = 180;
+        var ballNearEl = false;
+        document.querySelectorAll(SELECTORS).forEach(function (el) {
+          if (ballNearEl) return;
+          var r = el.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > VH) return;
+          var elCx = r.left + r.width  / 2;
+          var elCy = r.top  + r.height / 2;
+          if (Math.hypot(px - elCx, py - elCy) < PROX_R) ballNearEl = true;
+        });
+        Audio.setAmbientLevel(ballNearEl ? 'full' : 'dim');
+      }
 
       /* ─── DRAW ─── */
       ctx.clearRect(0, 0, W, VH);
@@ -661,7 +699,20 @@
 
     setTimeout(function () { canvas.classList.add('live'); }, 400);
 
-    window.addEventListener('pagehide', function () { clearInterval(targetInterval); });
+    window.addEventListener('pagehide', function () { clearTimeout(findTargetTimer); });
+  }
+
+  /* ─────────────────────────────────────────────
+     SOUND TOGGLE BUTTON
+  ───────────────────────────────────────────── */
+  var soundToggleBtn = document.getElementById('sound-toggle');
+  if (soundToggleBtn && typeof Audio !== 'undefined') {
+    soundToggleBtn.addEventListener('click', function () {
+      var nowMuted = !Audio.isMuted();
+      Audio.setMuted(nowMuted);
+      soundToggleBtn.classList.toggle('muted', nowMuted);
+      soundToggleBtn.setAttribute('aria-label', nowMuted ? 'Enable ambient sound' : 'Mute ambient sound');
+    });
   }
 
   /* ─────────────────────────────────────────────
