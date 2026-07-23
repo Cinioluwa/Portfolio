@@ -92,9 +92,7 @@
      PROJECT CARD CLICKS
   ───────────────────────────────────────────── */
   document.querySelectorAll('.project[data-href]').forEach(function (card) {
-    card.addEventListener('mouseenter', function () {
-      if (typeof Audio !== 'undefined') Audio.glassTap();
-    });
+    card.addEventListener('mouseenter', function () {});
     card.addEventListener('click', function () {
       var href = card.dataset.href;
       if (href) window.open(href, '_blank', 'noopener');
@@ -387,6 +385,7 @@
 
     if (tier !== 'slow') {
       setTimeout(function () { initGuide(); }, 900);
+      setTimeout(function () { initTracer(); }, 1100);
     }
   }
 
@@ -473,11 +472,11 @@
     if (!guideEl || !tooltipEl || !iconContainerEl) return;
 
     var sections = [
-      { id: 'hero', text: 'Welcome. I am the floating geometric shape of judgment.' },
-      { id: 'work', text: 'Ah, Work. Also known as: "Things that definitely worked on the first try."' },
-      { id: 'domain', text: 'Skills. Basically a list of things I Googled at 3 AM.' },
-      { id: 'timeline', text: 'The Timeline. "My History of Panic Attacks" was too long.' },
-      { id: 'reveal', text: 'The Reveal. Spoiler: I am actually three raccoons in a trench coat.' }
+      { id: 'hero',     text: 'Welcome. I rotate. I judge. I am the most consistent thing on this page.' },
+      { id: 'work',     text: 'The Work. Shipped. Deployed. Trusted by actual organizations. Geometry approved.' },
+      { id: 'domain',   text: 'The Domain. Tools used in production — not just listed on a résumé.' },
+      { id: 'timeline', text: 'The Timeline. A documented pattern of showing up and doing things.' },
+      { id: 'reveal',   text: 'The Reveal. One developer. Whole product, ground up. No outsourcing. No raccoons.' }
     ];
 
     var currentSection = '';
@@ -507,7 +506,7 @@
                 clearTimeout(spotlightTimer);
                 spotlightTimer = setTimeout(function() {
                   spotlightEl.classList.remove('active');
-                }, 500); // Spotlight duration
+                }, 100); // Spotlight duration
               }
 
               setTimeout(function() {
@@ -541,10 +540,291 @@
     guideEl.classList.add('visible');
   }
 
-
   /* ─────────────────────────────────────────────
-     MOBILE DOT NAV HAMBURGER
+     TRACER — electromagnetic orb that seeks the
+     nearest DOM element. Never settles: underdamped
+     spring + heartbeat nudge + cursor repulsion.
   ───────────────────────────────────────────── */
+  function initTracer() {
+    if (window.innerWidth <= 600) return;
+    setupTracer(tier !== 'mid');
+  }
+
+  function setupTracer(fancy) {
+    var canvas = document.getElementById('ball-canvas');
+    if (!canvas) return;
+
+    var W  = window.innerWidth;
+    var VH = window.innerHeight;
+    canvas.width  = W;
+    canvas.height = VH;
+    var ctx = canvas.getContext('2d');
+
+    /* ── Physics constants ── */
+    var ORB_R            = 11;
+    var ATTRACT_K        = 0.004;
+    var MAX_FORCE        = 0.14;
+    var MAX_SPEED        = 5.5;
+    var DAMPING          = 0.88;
+    var CURSOR_REPEL_R   = 120;
+    var CURSOR_REPEL_STR = 0.85;
+    var EL_REPEL_ZONE    = ORB_R + 22;
+    var EL_REPEL_STR     = 0.32;
+    var FIELD_R          = 76;
+    var HEARTBEAT        = 0.038;
+    var TARGET_LERP      = 0.032;
+
+    /* ── State ── */
+    var px = W / 2, py = VH * 0.58, vx = 0.4, vy = 0, time = 0;
+    var smoothX = px, smoothY = py, targetX = px, targetY = py;
+
+    /* ── Morph state ──
+       morphAlpha: 0 = full orb, 1 = full symbol
+       morphSym:   string currently displayed
+       morphPhase: 'near' | 'hit' | null             */
+    var morphAlpha = 0;
+    var morphSym   = null;
+    var morphPhase = null;
+
+    /* Symbol map — what the orb becomes near each element type */
+    var MORPH = {
+      'project':    { near: '>_',  hit: '< >' },
+      'capability': { near: '?',   hit: '!'   },
+      't-entry':    { near: '◦',   hit: '↗'   },
+      'h2':         { near: '//',  hit: '#'   },
+      'reveal':     { near: '…',   hit: '★'   },
+      'tagline':    { near: '~',   hit: '→'   }
+    };
+
+    function elType(el) {
+      if (!el) return null;
+      var cls = (typeof el.className === 'string') ? el.className : '';
+      var tag = (el.tagName || '').toLowerCase();
+      if (cls.indexOf('project')    >= 0) return 'project';
+      if (cls.indexOf('capability') >= 0) return 'capability';
+      if (cls.indexOf('t-entry')    >= 0) return 't-entry';
+      if (tag === 'h2')                   return 'h2';
+      if (cls.indexOf('reveal')     >= 0) return 'reveal';
+      if (el.id === 'tagline')            return 'tagline';
+      return null;
+    }
+
+    /* Cursor */
+    var mouseX = -9999, mouseY = -9999;
+    window.addEventListener('mousemove', function (e) { mouseX = e.clientX; mouseY = e.clientY; });
+    window.addEventListener('mouseleave', function () { mouseX = -9999; mouseY = -9999; });
+
+    var SELECTORS = [
+      '.project', '.capability', '.t-entry',
+      '#work h2', '#domain h2', '#timeline h2',
+      '.reveal-text', '#tagline'
+    ].join(', ');
+
+    var targetEl = null;
+
+    function findTarget() {
+      var vcx = W / 2, vcy = VH / 2;
+      var bestScore = Infinity, bestEl = null;
+      document.querySelectorAll(SELECTORS).forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > VH || r.right < 0 || r.left > W) return;
+        var ecx = r.left + r.width / 2, ecy = r.top + r.height / 2;
+        var score = Math.hypot(ecx - vcx, ecy - vcy) * 0.65
+                  + Math.hypot(ecx - px,  ecy - py)  * 0.35;
+        if (score < bestScore) { bestScore = score; bestEl = el; }
+      });
+      if (bestEl) targetEl = bestEl;
+    }
+
+    findTarget();
+    var targetInterval = setInterval(findTarget, 180);
+    var lastHitTime = 0;
+
+    (function loop() {
+      requestAnimationFrame(loop);
+      time += 0.016;
+      W = canvas.width; VH = canvas.height;
+
+      /* Real target → smooth target → spring */
+      if (targetEl) {
+        var tr = targetEl.getBoundingClientRect();
+        targetX = tr.left + tr.width  / 2;
+        targetY = tr.top  + tr.height / 2;
+      }
+      smoothX += (targetX - smoothX) * TARGET_LERP;
+      smoothY += (targetY - smoothY) * TARGET_LERP;
+
+      var atDx = smoothX - px, atDy = smoothY - py;
+      var fRaw = Math.hypot(atDx, atDy) * ATTRACT_K;
+      var fLen = Math.hypot(atDx, atDy) || 1;
+      var fCap = Math.min(fRaw, MAX_FORCE);
+      vx += (atDx / fLen) * fCap;
+      vy += (atDy / fLen) * fCap;
+
+      /* Center gravity, cursor repulsion, heartbeat */
+      vx += (W / 2 - px) * 0.00035;
+      var mDx = px - mouseX, mDy = py - mouseY, mDist = Math.hypot(mDx, mDy);
+      if (mDist < CURSOR_REPEL_R && mDist > 5) {
+        var repF = CURSOR_REPEL_STR * (1 - mDist / CURSOR_REPEL_R) / mDist;
+        vx += mDx * repF; vy += mDy * repF;
+      }
+      vx += Math.sin(time * 2.1 + 0.7) * HEARTBEAT;
+      vy += Math.cos(time * 1.6 + 1.3) * HEARTBEAT;
+
+      vx *= DAMPING; vy *= DAMPING;
+      var spd = Math.hypot(vx, vy);
+      if (spd > MAX_SPEED) { vx = vx / spd * MAX_SPEED; vy = vy / spd * MAX_SPEED; }
+      px += vx; py += vy;
+
+      /* Element repulsion + morph tracking */
+      var now = Date.now();
+      var nearestEl = null, nearestDist = Infinity, nearestPhase = null;
+
+      document.querySelectorAll(SELECTORS).forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width < 2 || r.height < 2) return;
+        var cx = Math.max(r.left, Math.min(px, r.right));
+        var cy = Math.max(r.top,  Math.min(py, r.bottom));
+        var dx = px - cx, dy = py - cy;
+        var dist = Math.hypot(dx, dy);
+
+        /* Soft repulsion push */
+        if (dist < EL_REPEL_ZONE && dist > 0.5) {
+          var str = EL_REPEL_STR * (1 - dist / EL_REPEL_ZONE);
+          vx += (dx / dist) * str;
+          vy += (dy / dist) * str;
+        }
+
+        /* Track nearest for morph */
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestEl   = el;
+          nearestPhase = (dist < ORB_R + 8) ? 'hit' : 'near';
+        }
+
+        /* Hit flash */
+        if (dist < ORB_R + 6 && now - lastHitTime > 120) {
+          lastHitTime = now;
+          el.classList.add('ball-hit');
+          clearTimeout(el._bhTimer);
+          el._bhTimer = setTimeout(function () { el.classList.remove('ball-hit'); }, 360);
+          if (typeof Audio !== 'undefined') {
+            if (el.classList.contains('project')) Audio.glassTap  && Audio.glassTap();
+            else                                  Audio.paperThud && Audio.paperThud();
+          }
+        }
+      });
+
+      /* Resolve morph target symbol */
+      var type = elType(nearestEl);
+      var targetSym   = null;
+      var targetAlpha = 0;
+      if (type && nearestDist < EL_REPEL_ZONE * 1.5) {
+        var entry = MORPH[type];
+        if (entry) {
+          targetSym   = nearestPhase === 'hit' ? entry.hit : entry.near;
+          targetAlpha = nearestPhase === 'hit' ? 1 : 0.72;
+        }
+      }
+
+      /* Update morph symbol and smooth alpha transition */
+      if (targetSym) {
+        morphSym = targetSym;
+      }
+      morphAlpha += (targetAlpha - morphAlpha) * 0.1;
+
+      /* Viewport boundary */
+      var MG = ORB_R + 6;
+      if (px < MG)      vx += (MG - px) * 0.25;
+      if (px > W - MG)  vx -= (px - (W - MG)) * 0.25;
+      if (py < MG)      vy += (MG - py) * 0.25;
+      if (py > VH - MG) vy -= (py - (VH - MG)) * 0.25;
+
+      /* ── Draw ── */
+      ctx.clearRect(0, 0, W, VH);
+      var speed    = Math.hypot(vx, vy);
+      var toTarget = Math.hypot(smoothX - px, smoothY - py);
+
+      /* Field ring — pulses faster near hit, tints subtly by type */
+      if (fancy) {
+        var pulse  = 1 + Math.sin(time * (2.8 + morphAlpha * 1.4)) * (0.06 + morphAlpha * 0.04);
+        var fR     = FIELD_R * pulse;
+        var fieldG = ctx.createRadialGradient(px, py, ORB_R + 2, px, py, fR);
+        fieldG.addColorStop(0,   'rgba(242,236,224,' + (0.08 + morphAlpha * 0.05) + ')');
+        fieldG.addColorStop(0.5, 'rgba(242,236,224,0.03)');
+        fieldG.addColorStop(1,   'rgba(242,236,224,0)');
+        ctx.beginPath(); ctx.arc(px, py, fR, 0, Math.PI * 2);
+        ctx.fillStyle = fieldG; ctx.fill();
+
+        if (toTarget > 70) {
+          var tA = Math.min(0.09, (toTarget - 70) / 280);
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(px + (smoothX - px) * 0.22, py + (smoothY - py) * 0.22);
+          ctx.strokeStyle = 'rgba(242,236,224,' + tA + ')';
+          ctx.lineWidth = 0.8; ctx.setLineDash([3, 7]); ctx.stroke(); ctx.setLineDash([]);
+        }
+      }
+
+      /* Motion streak */
+      if (speed > 1.2) {
+        var sA = Math.min(0.12, speed * 0.009);
+        var streak = ctx.createLinearGradient(px - vx * 6, py - vy * 6, px, py);
+        streak.addColorStop(0, 'rgba(242,236,224,0)');
+        streak.addColorStop(1, 'rgba(242,236,224,' + sA + ')');
+        ctx.beginPath();
+        ctx.moveTo(px - vx * 6, py - vy * 6); ctx.lineTo(px, py);
+        ctx.strokeStyle = streak; ctx.lineWidth = ORB_R * 1.6; ctx.lineCap = 'round'; ctx.stroke();
+      }
+
+      /* Orb body — fades out as symbol fades in */
+      var orbAlpha = 1 - morphAlpha;
+      if (orbAlpha > 0.02) {
+        ctx.globalAlpha = orbAlpha;
+        var orbG = ctx.createRadialGradient(
+          px - ORB_R * 0.3, py - ORB_R * 0.3, ORB_R * 0.05, px, py, ORB_R
+        );
+        orbG.addColorStop(0,   '#ffffff');
+        orbG.addColorStop(0.4, '#f2ece0');
+        orbG.addColorStop(1,   'rgba(154,126,98,0.85)');
+        ctx.beginPath(); ctx.arc(px, py, ORB_R, 0, Math.PI * 2);
+        ctx.fillStyle = orbG; ctx.fill();
+
+        /* Specular — fades with orb */
+        ctx.beginPath();
+        ctx.arc(px - ORB_R * 0.28, py - ORB_R * 0.28, ORB_R * 0.28, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      /* Symbol — fades in as orb fades out */
+      if (morphAlpha > 0.04 && morphSym) {
+        ctx.globalAlpha = morphAlpha;
+        var fontSize = nearestPhase === 'hit' ? 15 : 12;
+        ctx.font      = 'bold ' + fontSize + 'px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#f2ece0';
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        /* Subtle scale pulse on hit */
+        if (nearestPhase === 'hit') {
+          var sc = 1 + Math.sin(time * 8) * 0.06;
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.scale(sc, sc);
+          ctx.fillText(morphSym, 0, 0);
+          ctx.restore();
+        } else {
+          ctx.fillText(morphSym, px, py);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+    })();
+
+    setTimeout(function () { canvas.classList.add('live'); }, 400);
+    window.addEventListener('pagehide', function () { clearInterval(targetInterval); });
+  }
+
   var siteNav = document.getElementById('site-nav');
   if (siteNav) {
     siteNav.addEventListener('click', function (e) {
